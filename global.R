@@ -2,9 +2,16 @@ library(shiny)
 library(gridlayout)
 library(ggplot2)
 library(leaflet)
-library(raster)
+library(terra)
+library(RColorBrewer)
+library(sf)
 
 source("utils/names_to_date.R")
+
+
+borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp")
+         
+
 
 select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv") 
 select_agro_ind  <- setNames(select_agro_ind$choice, select_agro_ind$parameter)
