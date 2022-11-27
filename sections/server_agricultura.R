@@ -7,20 +7,26 @@ agr_rea <- eventReactive(input$go_agrgen,{
   perio_tip <- strsplit(input$agr_perio, "-")[[1]][2]
   perio_sub <- strsplit(input$agr_perio, "-")[[1]][1]
   
+  # citeste fisierul
+  nc <- rast(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
+  dats <- names_to_date(nc) # extrage data din nume cu fct utils
+  
+  
   # selectare slider in functie de tipul hartii
   if (input$agr_tip == "abate") {
     an1 <- input$slider_agro_abate[1]
     an2 <- input$slider_agro_abate[2]
     
-    nc <- rast(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
-    dats <- names_to_date(nc) 
     
+    dats.sub <- dats[dats >= as.Date(paste0(an1, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2 , "1231"), format = "%Y%m%d") ]
     dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
-    dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub]
-    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
+    
+    if (perio_sub != "year") { #daca ai an formateaza data diferit
+      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
+      dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
+    }
   
-    dats.sub <- dats[dats >= as.Date(paste0(an1, perio_sub, "01"), format = "%Y%m%d") & dats <= (as.Date(paste0(an2 + 1, perio_sub, "01"), format = "%Y%m%d"))]
-    dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub]
+    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
     nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
     
     ncf <- nc.abs -  nc.norm 
@@ -29,14 +35,13 @@ agr_rea <- eventReactive(input$go_agrgen,{
   } else {
     an1 <- input$slider_agro_absol[1]
     an2 <- input$slider_agro_absol[2]
+    dats.sub <- dats[dats >= as.Date(paste0(an1, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2 , "1231"), format = "%Y%m%d") ]
+    if (perio_sub != "year") { #daca ai an formateaza data diferit
+      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
+    }
     
-    nc <- rast(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
-    dats <- names_to_date(nc) # extrage data din nume cu fct utils
-    
-    dats.sub <- dats[dats >= as.Date(paste0(an1, perio_sub, "01"), format = "%Y%m%d") & dats <= (as.Date(paste0(an2 + 1, perio_sub, "01"), format = "%Y%m%d"))]
-    dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub]
-    nc <- nc[[which(dats %in% dats.sub)]] 
-    ncf <- mean(nc)
+    ncf <- nc[[which(dats %in% dats.sub)]] 
+    ncf <- mean(ncf)
   }
   print(summary(ncf))
   list(
@@ -64,14 +69,14 @@ output$agr_map <- renderLeaflet ({
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 6) %>%
-    setMaxBounds(-12, 27.58, 56, 71.5) %>% 
+    setMaxBounds(20, 43.5, 30, 48.2) |>
     #addMapPane(name = "pol", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
     addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
     addEasyButton(
       easyButton (
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
-        onClick = JS("function(btn, map){ map.setView([46, 25], 3); }")
+        onClick = JS("function(btn, map){ map.setView([46, 25], 6); }")
       )
     )   %>%
     addRasterImage(
