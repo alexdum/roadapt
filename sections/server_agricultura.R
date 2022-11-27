@@ -1,18 +1,57 @@
 
 # harta leaflet -----------------------------------------------------------
-agr_rea <- reactive({
+agr_rea <- eventReactive(input$go_agrgen,{
   
   indic <- input$agr_ind
   scena <-  input$agr_scen
-  perio <- strsplit(input$agr_perio, "-")[[1]][2]
-  nc <- raster::brick(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio,"-50_19710101_21001231.nc"))
-  nc
+  perio_tip <- strsplit(input$agr_perio, "-")[[1]][2]
+  perio_sub <- strsplit(input$agr_perio, "-")[[1]][1]
+  
+  # selectare slider in functie de tipul hartii
+  if (input$agr_tip == "abate") {
+    an1 <- input$slider_agro_abate[1]
+    an2 <- input$slider_agro_abate[2]
+    
+    nc <- rast(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
+    dats <- names_to_date(nc) 
+    
+    dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
+    dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub]
+    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
+  
+    dats.sub <- dats[dats >= as.Date(paste0(an1, perio_sub, "01"), format = "%Y%m%d") & dats <= (as.Date(paste0(an2 + 1, perio_sub, "01"), format = "%Y%m%d"))]
+    dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub]
+    nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
+    
+    ncf <- nc.abs -  nc.norm 
+    
+    
+  } else {
+    an1 <- input$slider_agro_absol[1]
+    an2 <- input$slider_agro_absol[2]
+    
+    nc <- rast(paste0("www/data/ncs/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
+    dats <- names_to_date(nc) # extrage data din nume cu fct utils
+    
+    dats.sub <- dats[dats >= as.Date(paste0(an1, perio_sub, "01"), format = "%Y%m%d") & dats <= (as.Date(paste0(an2 + 1, perio_sub, "01"), format = "%Y%m%d"))]
+    dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub]
+    nc <- nc[[which(dats %in% dats.sub)]] 
+    ncf <- mean(nc)
+  }
+  print(summary(ncf))
+  list(
+    nc = ncf, 
+    indic = indic,  scena =  scena,  perio_tip =  perio_tip,  perio_sub =  perio_sub, an1 = an1, an2 = an2,
+    min_dats_sub = as.character(min(dats.sub)), max_dats_sub = as.character(max(dats.sub))
+    
+  )
   
 })
 
 
 output$test <- renderText({
-  paste("You chose", input$agr_ind)
+  paste("You chose", agr_rea()$indic,  agr_rea()$scena,  agr_rea()$perio_tip, agr_rea()$perio_sub,
+        agr_rea()$an1, agr_rea()$an2, agr_rea()$min_dats_sub, agr_rea()$max_dats_sub)
 })
 
 
@@ -36,7 +75,7 @@ output$agr_map <- renderLeaflet ({
       )
     )   %>%
     addRasterImage(
-      agr_rea()[[1]], opacity = .8
+      agr_rea()$nc[[1]], opacity = .8
       # options = leafletOptions(pane = "raster")
     ) %>%
     addLayersControl(
