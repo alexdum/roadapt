@@ -19,7 +19,7 @@ ui_agricultura <- tabPanel(
               `Valori absolute` = "absol",
               `Abatere` = "abate"
             ),
-            selected = "abs"
+            selected = "absol"
           ),
           selectInput(
             inputId = "agr_scen",
@@ -37,15 +37,21 @@ ui_agricultura <- tabPanel(
             selected =  select_interv[1]
           ),
           conditionalPanel(
-            condition = "input.agr_tip == 'absol' && input.agr_perio == 'month'"
+            condition = "input.agr_tip == 'abate'",
+            sliderInput(
+              "slider_agro_abate", label = "Interval calcul", min = 2006, 
+              max = 2100, value = c(2021, 2050), dragRange = T, ticks = F,
+              sep = "", step = 1)
           ),
           conditionalPanel(
-            condition = "input.agr_tip == 'absol' && input.agr_perio == 'season'",
+            condition = "input.agr_tip == 'absol'",
             sliderInput(
-              "slider_agro", label = "Interval calcul", min = 1971, 
-              max = 2005, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_agro_absol", label = "Interval calcul", min = 1971, 
+              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
-          )
+          ),
+          
+          actionButton("go_agrgen", "Actualizare harta", icon("sync"))
         ),
         column(
           width = 7,
