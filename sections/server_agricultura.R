@@ -78,45 +78,14 @@ output$test <- renderText({
 
 output$agr_map_gen <- renderLeaflet ({
   
-  leaflet(
-    data = borders,
-    options = leafletOptions(
-      minZoom = 3, maxZoom = 12
-    ) 
-  ) %>%
-    leaflet.extras::addBootstrapDependency() %>%
-    setView(25, 46, zoom = 6) %>%
-    setMaxBounds(20, 43.5, 30, 48.2) |>
-    addMapPane(name = "granita", zIndex = 410) %>%
-    addMapPane(name = "maplabels", zIndex = 420) %>%
-    addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
-    addEasyButton(
-      easyButton (
-        icon    = "glyphicon glyphicon-home", title = "Reset zoom",
-        onClick = JS("function(btn, map){ map.setView([46, 25], 6); }")
-      )
-    )   %>%
-    addPolylines(
-      color = "#444444", weight = 1, smoothFactor = 0.5,
-      options = pathOptions(pane = "granita"),
-      group = "Granița") |>
-    addRasterImage(
-      isolate(agr_rea()$nc),
-      colors = isolate(agr_rea()$pal), opacity = .8
-    ) %>%
-    addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
-      overlayGroups = c("Labels", "Granița"))  %>% 
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Labels"
-    ) %>%
-    addScaleBar(
-      position = c("bottomleft"),
-      options = scaleBarOptions(metric = TRUE)
-    )  
-  
+  leaflet_fun(
+    data = borders, 
+    raster = isolate(agr_rea()$nc),
+    cols = isolate(agr_rea()$pal),
+    cols_rev = isolate(agr_rea()$pal_rev), 
+    tit_leg = isolate(agr_rea()$tit_leg),
+    domain = isolate(agr_rea()$domain)
+  )
 })
 
 observe({ 
@@ -125,7 +94,7 @@ observe({
     clearImages() %>%
     addRasterImage(
       agr_rea()$nc,
-      colors = agr_rea()$pal, opacity = .8) |> 
+      colors = agr_rea()$pal, opacity = .8) |>
     clearControls() |>
     addLegend(
       title =  agr_rea()$tit_leg,
@@ -133,5 +102,7 @@ observe({
       pal = agr_rea()$pal_rev, values = agr_rea()$domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    ) 
+    )
+  
+  
 })
