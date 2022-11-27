@@ -7,6 +7,7 @@ library(RColorBrewer)
 library(sf)
 
 source("utils/names_to_date.R")
+source("utils/leaflet_fun.R")
 
 
 borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp")
