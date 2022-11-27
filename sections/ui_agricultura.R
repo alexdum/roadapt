@@ -2,6 +2,7 @@ ui_agricultura <- tabPanel(
   title = "Agricultura",
   tabsetPanel(
     tabPanel(
+      id = "tab_agro_gen",
       title = "General",
       fluidRow(
         column(
@@ -19,7 +20,7 @@ ui_agricultura <- tabPanel(
               `Valori absolute` = "absol",
               `Abatere` = "abate"
             ),
-            selected = "absol"
+            selected = "abate"
           ),
           selectInput(
             inputId = "agr_scen",
