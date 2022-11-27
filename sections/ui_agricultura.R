@@ -1,33 +1,25 @@
-tabPanel(
+ui_agricultura <- tabPanel(
   title = "Agricultura",
   tabsetPanel(
     tabPanel(
       title = "General",
-      grid_container(
-        layout = c(
-          "area0 area1",
-          ".     .    "
-        ),
-        row_sizes = c(
-          "1fr",
-          "1fr"
-        ),
-        col_sizes = c(
-          "0.3fr",
-          "1.5fr"
-        ),
-        gap_size = "10px",
-        grid_card(
-          area = "area0",
+      fluidRow(
+        column(
+          width = 2,
           selectInput(
-            inputId = "agr_param",
-            label = "Parametru",
+            inputId = "agr_ind",
+            label = "Indicator",
+            choices = select_agro_ind,
+            selected =  select_agro_ind[1]
+          ),
+          selectInput(
+            inputId = "agr_tip",
+            label = "Tip",
             choices = list(
-              `Temperatura medie` = "tmed",
-              `Temperatura maxima` = "tmax",
-              `Temperatura minimă` = "tmin"
-              
-            )
+              `Valori absolute` = "absol",
+              `Abatere` = "abate"
+            ),
+            selected = "abs"
           ),
           selectInput(
             inputId = "agr_scen",
@@ -35,13 +27,31 @@ tabPanel(
             choices = list(
               `RCP4.5` = "rcp45",
               `RCP8.5` = "rcp85"
-            )
+            ), 
+            selected = " rcp45"
+          ),
+          selectInput(
+            inputId = "agr_perio",
+            label = "Luna/Sezon",
+            choices = select_interv,
+            selected =  select_interv[1]
+          ),
+          conditionalPanel(
+            condition = "input.agr_tip == 'absol' && input.agr_perio == 'month'"
+          ),
+          conditionalPanel(
+            condition = "input.agr_tip == 'absol' && input.agr_perio == 'season'",
+            sliderInput(
+              "slider_agro", label = "Interval calcul", min = 1971, 
+              max = 2005, value = c(1971, 2000), dragRange = T, ticks = F,
+              sep = "", step = 1)
           )
         ),
-        grid_card(
-          area = "area1",
+        column(
+          width = 7,
+          textOutput("test"),
           leafletOutput(
-           "agr_map"
+            "agr_map"
           )
         )
       )
