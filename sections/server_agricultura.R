@@ -76,7 +76,7 @@ output$test <- renderText({
 })
 
 
-output$agr_map <- renderLeaflet ({
+output$agr_map_gen <- renderLeaflet ({
   
   leaflet(
     data = borders,
@@ -101,8 +101,8 @@ output$agr_map <- renderLeaflet ({
       options = pathOptions(pane = "granita"),
       group = "Granița") |>
     addRasterImage(
-      agr_rea()$nc,
-      colors = agr_rea()$pal, opacity = .8
+      isolate(agr_rea()$nc),
+      colors = isolate(agr_rea()$pal), opacity = .8
     ) %>%
     addLayersControl(
       baseGroups = "CartoDB.PositronNoLabels",
@@ -115,14 +115,23 @@ output$agr_map <- renderLeaflet ({
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)
-    )  |> 
-    clearControls() %>%
+    )  
+  
+})
+
+observe({ 
+  
+  leafletProxy("agr_map_gen")  |>
+    clearImages() %>%
+    addRasterImage(
+      agr_rea()$nc,
+      colors = agr_rea()$pal, opacity = .8) |> 
+    clearControls() |>
     addLegend(
       title =  agr_rea()$tit_leg,
       position = "bottomright",
       pal = agr_rea()$pal_rev, values = agr_rea()$domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    )
-  
+    ) 
 })
