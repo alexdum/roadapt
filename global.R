@@ -5,6 +5,7 @@ library(leaflet)
 library(terra)
 library(RColorBrewer)
 library(sf)
+library(dplyr)
 
 source("utils/names_to_date.R")
 source("utils/leaflet_fun.R")
