@@ -1,9 +1,10 @@
 
 # harta leaflet -----------------------------------------------------------
-agr_rea <- eventReactive(input$go_agrgen,{
+agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   indic <- input$agr_ind
   scena <-  input$agr_scen
+  agr_tip <- input$agr_tip 
   perio_tip <- strsplit(input$agr_perio, "-")[[1]][2]
   perio_sub <- strsplit(input$agr_perio, "-")[[1]][1]
   
@@ -13,7 +14,7 @@ agr_rea <- eventReactive(input$go_agrgen,{
   
   
   # selectare slider in functie de tipul hartii
-  if (input$agr_tip == "abate") {
+  if (agr_tip == "abate") {
     an1 <- input$slider_agro_abate[1]
     an2 <- input$slider_agro_abate[2]
     
@@ -25,7 +26,7 @@ agr_rea <- eventReactive(input$go_agrgen,{
       dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
       dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
     }
-  
+    
     nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
     nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
     
@@ -43,11 +44,26 @@ agr_rea <- eventReactive(input$go_agrgen,{
     ncf <- nc[[which(dats %in% dats.sub)]] 
     ncf <- mean(ncf)
   }
-  print(summary(ncf))
+  
+  # pentru legenda 
+  domain <- minmax(ncf)
+  
+  if (indic == "pr") {
+    pal_rev <- colorNumeric("GnBu", domain = domain, reverse = T, na.color = "transparent")
+    pal<- colorNumeric("GnBu", domain = domain, reverse = F, na.color = "transparent")
+    tit_leg <- "mm"
+  } else {
+    pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
+    pal<- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+    tit_leg <- "°C"
+  }
+  
+  
   list(
     nc = ncf, 
     indic = indic,  scena =  scena,  perio_tip =  perio_tip,  perio_sub =  perio_sub, an1 = an1, an2 = an2,
-    min_dats_sub = as.character(min(dats.sub)), max_dats_sub = as.character(max(dats.sub))
+    min_dats_sub = as.character(min(dats.sub)), max_dats_sub = as.character(max(dats.sub)),
+    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg
     
   )
   
@@ -61,8 +77,9 @@ output$test <- renderText({
 
 
 output$agr_map <- renderLeaflet ({
+  
   leaflet(
-    #data = cities_map,
+    data = borders,
     options = leafletOptions(
       minZoom = 3, maxZoom = 12
     ) 
@@ -70,7 +87,7 @@ output$agr_map <- renderLeaflet ({
     leaflet.extras::addBootstrapDependency() %>%
     setView(25, 46, zoom = 6) %>%
     setMaxBounds(20, 43.5, 30, 48.2) |>
-    #addMapPane(name = "pol", zIndex = 410) %>%
+    addMapPane(name = "granita", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
     addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
     addEasyButton(
@@ -79,13 +96,17 @@ output$agr_map <- renderLeaflet ({
         onClick = JS("function(btn, map){ map.setView([46, 25], 6); }")
       )
     )   %>%
+    addPolylines(
+      color = "#444444", weight = 1, smoothFactor = 0.5,
+      options = pathOptions(pane = "granita"),
+      group = "Granița") |>
     addRasterImage(
-      agr_rea()$nc[[1]], opacity = .8
-      # options = leafletOptions(pane = "raster")
+      agr_rea()$nc,
+      colors = agr_rea()$pal, opacity = .8
     ) %>%
     addLayersControl(
       baseGroups = "CartoDB.PositronNoLabels",
-      overlayGroups = c("Labels", "City borders"))  %>% 
+      overlayGroups = c("Labels", "Granița"))  %>% 
     addProviderTiles(
       "CartoDB.PositronOnlyLabels",
       options = pathOptions(pane = "maplabels"),
@@ -94,6 +115,14 @@ output$agr_map <- renderLeaflet ({
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)
+    )  |> 
+    clearControls() %>%
+    addLegend(
+      title =  agr_rea()$tit_leg,
+      position = "bottomright",
+      pal = agr_rea()$pal_rev, values = agr_rea()$domain,
+      opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
   
 })
