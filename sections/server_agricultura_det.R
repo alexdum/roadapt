@@ -3,10 +3,11 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   
   param <- input$agr_ind_det
   scen <- input$agr_scen_det
-  tab <-  read_parquet(paste0("www/data/parquet/agro/", param ,"Adjust_",scen,"_month-50_19710101_21001231.parquet"))
+  tab <-  open_dataset(paste0("www/data/parquet/agro/", param ,"Adjust_",scen,"_month-50_19710101_21001231.parquet"))
   
   tab.sub <- tab |> 
-    filter(year == 2022, month == 5)
+    filter(year == 2022, month == 5) |>
+    collect()
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
   
   
