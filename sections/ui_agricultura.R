@@ -64,38 +64,33 @@ ui_agricultura <- tabPanel(
       )
     ),
     tabPanel(
+      id = "tab_agro_det",
       title = "Detalii",
-      grid_container(
-        layout = c(
-          "area0 area1",
-          ".     .    "
-        ),
-        row_sizes = c(
-          "1fr",
-          "1fr"
-        ),
-        col_sizes = c(
-          "0.47fr",
-          "1.53fr"
-        ),
-        gap_size = "10px",
-        grid_card(
-          area = "area0",
+      fluidRow(
+        column(
+          width = 2,
           selectInput(
-            inputId = "mySelectInput",
-            label = "Select Input",
+            inputId = "agr_ind_det",
+            label = "Indicator",
+            choices = select_agro_ind,
+            selected =  select_agro_ind[1]
+          ),
+          selectInput(
+            inputId = "agr_scen_det",
+            label = "Scenariu",
             choices = list(
-              `choice a` = "a",
-              `choice b` = "b"
-            )
-          )
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
+          actionButton("go_agrdet", "Actualizare harta", icon("sync"))
         ),
-        grid_card(
-          area = "area1",
-          plotlyOutput(
-            outputId = "plot",
-            width = "100%",
-            height = "400px"
+        column(
+          width = 7,
+          #textOutput("test"),
+          leafletOutput(
+            "agr_map_det"
           )
         )
       )
