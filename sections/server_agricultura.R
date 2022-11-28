@@ -30,7 +30,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
     nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
     
-    ncf <- nc.abs -  nc.norm 
+    ncf <- nc.abs - nc.norm 
     
     
   } else {
@@ -58,6 +58,8 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     tit_leg <- "°C"
   }
   
+  ncf <- project(ncf,  "EPSG:3857")
+  ncf <- terra::mask(ncf, mask)
   
   list(
     nc = ncf, 

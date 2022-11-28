@@ -12,6 +12,8 @@ source("utils/leaflet_fun.R")
 
 
 borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp")
+mask <- vect("www/data/shp/rou_border_mbufer.shp") 
+mask <- project(mask,  "EPSG:3857")
          
 
 

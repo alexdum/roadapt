@@ -4,7 +4,7 @@ leaflet_fun <- function(data, raster, domain, cols, cols_rev, tit_leg) {
   map <- leaflet(
     data =  data,
     options = leafletOptions(
-      minZoom = 3, maxZoom = 12
+      minZoom = 6, maxZoom = 12
     ) 
   ) %>%
     leaflet.extras::addBootstrapDependency() %>%
