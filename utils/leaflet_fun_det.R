@@ -16,7 +16,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
       color = "grey",
       weight = 0.5, smoothFactor = 0.1,
       opacity = 0.5, 
-      # fillOpacity = opacy ,
+      fillOpacity = 0.7,
       layerId = ~natCode,
       # options = pathOptions(pane = "pol"),
       #group = "region",
