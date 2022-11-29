@@ -7,9 +7,10 @@ library(RColorBrewer)
 library(sf)
 library(dplyr)
 library(arrow)
+library(duckdb)
 
 source("utils/names_to_date.R")
-source("utils/leaflet_fun.R")
+source("utils/leaflet_fun_gen.R")
 source("utils/leaflet_fun_det.R")
 
 
@@ -18,7 +19,7 @@ mask <- vect("www/data/shp/rou_border_mbufer.shp")
 mask <- project(mask,  "EPSG:3857")
          
 
-uat <- st_read("www/data/shp/UAT_poli_2019_merc.shp", quiet = T) |> select(natCode) |>
+uat <- st_read("www/data/shp/UAT_poli_2019_merc.shp", quiet = T) |>
      st_transform(4326)
 
 select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv") 
