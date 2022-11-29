@@ -18,7 +18,6 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     an1 <- input$slider_agro_abate[1]
     an2 <- input$slider_agro_abate[2]
     
-    
     dats.sub <- dats[dats >= as.Date(paste0(an1, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2 , "1231"), format = "%Y%m%d") ]
     dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
     
