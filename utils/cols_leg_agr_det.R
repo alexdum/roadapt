@@ -1,7 +1,7 @@
-cols_leg_agr_det <- function(ind, perio_tip, domain) {
+cols_leg_agr_det <- function(indic, perio_tip, domain) {
   
   # intervale si culori agricultura
-  if (ind == "pr") {
+  if (indic == "pr") {
     if (perio_tip == "year") {
       bins <- seq(floor(min(domain)), ceiling(max(domain)), by = 100)
     } else if (perio_sub == "season") {
