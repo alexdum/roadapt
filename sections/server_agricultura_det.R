@@ -10,8 +10,8 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   
   #subseteaza dupa tip/an
   if (agr_tip_det == "abate") {
-    an1 <- input$slider_agro_abate[1]
-    an2 <- input$slider_agro_abate[2]
+    an1 <- input$slider_agro_abate_det[1]
+    an2 <- input$slider_agro_abate_det[2]
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
@@ -29,8 +29,8 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
         collect() 
     }
   } else {
-    an1 <- input$slider_agro_absol[1]
-    an2 <- input$slider_agro_absol[2]
+    an1 <- input$slider_agro_absol_det[1]
+    an2 <- input$slider_agro_absol_det[2]
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
