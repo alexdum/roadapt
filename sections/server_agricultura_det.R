@@ -18,13 +18,13 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
         #filter( month ==  as.integer(perio_sub)) |>
         to_duckdb() |>
         mutate(norm = mean(p50[year >= 1971 & year <= 2000])) |> 
-        filter(year >= an1, year <= an2) |>
+        filter(year >= an1 & year <= an2) |>
         group_by(ID) |> summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(value = p50 - norm) |>
         collect()
     } else {
       tab.sub <- tab |> 
-        filter(year >= an1, year <= an1 ) |>
+        filter(year >= an1 & year <= an1 ) |>
         group_by(ID) |> summarise(value = mean(p50)) |>
         collect() 
     }
@@ -34,12 +34,12 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
-        filter( month ==  as.integer(perio_sub), year >= an1, year <= an2) |>
+        filter(month ==  as.integer(perio_sub) & year >= an1 & year <= an2) |>
         group_by(ID) |> summarise(value = mean(p50)) |>
         collect()
     } else {
       tab.sub <- tab |> 
-        filter(year >= an1, year <= an2) |>
+        filter(year >= an1 & year <= an2) |>
         group_by(ID) |> summarise(value = mean(p50)) |>
         collect() 
     }
