@@ -1,4 +1,4 @@
-leaflet_fun_det <- function(data) {
+leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
   
   map <- leaflet(
     data =  data,
@@ -7,7 +7,7 @@ leaflet_fun_det <- function(data) {
     )) |>
     clearShapes() %>%
     addPolygons (
-      fillColor = ~qpal(value), 
+      fillColor = ~pal(value), 
       label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name_1,
                      "<br/>",round(value,1),"</b></font><br/>
                        <font size='1' color='#E95420'>Click to
@@ -43,7 +43,14 @@ leaflet_fun_det <- function(data) {
       overlayGroups = c("Etichete")) |>
     addScaleBar(
       position = c("bottomleft"),
-      options = scaleBarOptions(metric = TRUE)) 
+      options = scaleBarOptions(metric = TRUE)) |>
+    clearControls() %>% 
+    addLegend(
+      title = paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), tit_leg,"</html>"),
+      "bottomright", pal = pal_rev, values = ~values, opacity = 1,
+      labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
+    ) 
+  
   return(map)
   
 }
