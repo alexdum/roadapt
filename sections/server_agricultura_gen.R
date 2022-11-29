@@ -32,7 +32,6 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     
     ncf <- nc.abs - nc.norm 
     
-    
   } else {
     an1 <- input$slider_agro_absol[1]
     an2 <- input$slider_agro_absol[2]
@@ -80,7 +79,7 @@ output$test <- renderText({
 
 output$agr_map_gen <- renderLeaflet ({
   
-  leaflet_fun(
+  leaflet_fun_gen(
     data = borders, 
     raster = isolate(agr_rea()$nc),
     cols = isolate(agr_rea()$pal),
