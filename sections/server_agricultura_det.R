@@ -31,6 +31,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   } else {
     an1 <- input$slider_agro_absol[1]
     an2 <- input$slider_agro_absol[2]
+    
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
         filter( month ==  as.integer(perio_sub), year >= an1, year <= an2) |>
@@ -43,12 +44,11 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
         collect() 
     }
   }
-  
   # unire cu spatial
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
   
   
-  
+  # intervale si culori
   if (ind == "pr") {
     if (perio_tip == "year") {
       bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 100)
@@ -63,7 +63,6 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
     
   } else {
     bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 2)
-    print(bins)
     pal <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins)
     pal_rev <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins,reverse = T)
     tit_leg <- "°C"
@@ -87,9 +86,9 @@ output$agr_map_det <- renderLeaflet ({
 
 
 observe({
+  #req(input$go_agrdet == "Detalii") # Only display if tab is 'Detalii'
   pal_rev =  agr_rdet()$pal_rev
   tit_leg = agr_rdet()$tit_leg
-  req(input$go_agrdet) # Only display if tab is 'Detaliil'
   data <- agr_rdet()$uat.sub
   pal <- agr_rdet()$pal
   
