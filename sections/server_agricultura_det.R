@@ -1,12 +1,12 @@
 
 agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   
-  ind <- input$agr_ind_det
+  indic <- input$agr_ind_det
   scena <- input$agr_scen_det
-  agr_tip_det <- input$agr_tip_det
+  agr_tip <- input$agr_tip_det
   perio_tip <- strsplit(input$agr_perio_det, "-")[[1]][2]
   perio_sub <- strsplit(input$agr_perio_det, "-")[[1]][1]
-  tab <-  read_parquet(paste0("www/data/parquet/agro/", ind ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  read_parquet(paste0("www/data/parquet/agro/", indic ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   print(tab)
   
   
@@ -16,16 +16,36 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
  an2_abs <- input$slider_agro_absol_det[2]
   
   # calcul abateri absolute cu funct utils/calcul_agr_det.R
-  tab.sub <- calcul_agro_det(tab, agr_tip_det, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
+  tab.sub <- calcul_agro_det(tab, agr_tip, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatia
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_agr_det.R
-  cols_leg <- cols_leg_agr_det(ind, perio_tip, domain = uat.sub$value)
+  cols_leg <- cols_leg_agr_det(indic, perio_tip, domain = uat.sub$value)
+  
+  
+  # text harta
+  param_text<- ifelse (
+    agr_tip == "abate", 
+    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+          "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"
+    ),
+    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+          "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          an1_abs,"-", an2_abs
+    )
+  )
   
   list(
-    uat.sub = uat.sub, pal =  cols_leg$pal, pal_rev =  cols_leg$pal_rev, tit_leg =  cols_leg$tit_leg
+    uat.sub = uat.sub, pal =  cols_leg$pal, pal_rev =  cols_leg$pal_rev, tit_leg =  cols_leg$tit_leg,
+    param_text = param_text, opacy = input$transp_agr_det
   )
+  
+})
+
+output$agr_text_det <- renderText({
+  agr_rdet()$param_tex
   
 })
 
@@ -45,6 +65,7 @@ observe({
   tit_leg = agr_rdet()$tit_leg
   data <- agr_rdet()$uat.sub
   pal <- agr_rdet()$pal
+  opacy <- agr_rdet()$opacy 
   
   leafletProxy("agr_map_det",  data = data)  %>%
     clearShapes() %>%
@@ -58,7 +79,7 @@ observe({
       color = "grey",
       weight = 0.5, smoothFactor = 0.1,
       opacity = 0.5,
-      # fillOpacity = opacy ,
+      fillOpacity = opacy ,
       layerId = ~natCode,
       # options = pathOptions(pane = "pol"),
       #group = "region",
