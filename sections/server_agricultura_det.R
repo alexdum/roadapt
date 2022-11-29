@@ -16,7 +16,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
  an2_abs <- input$slider_agro_absol_det[2]
   
   # calcul abateri absolute cu funct utils/calcul_agr_det.R
-  tab.sub <- calcul_agro_det(agr_tip_det, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
+  tab.sub <- calcul_agro_det(tab, agr_tip_det, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatia
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
   
