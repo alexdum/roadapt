@@ -76,6 +76,15 @@ ui_agricultura <- tabPanel(
             selected =  select_agro_ind[1]
           ),
           selectInput(
+            inputId = "agr_tip_det",
+            label = "Tip",
+            choices = list(
+              `Valori absolute` = "absol",
+              `Abatere` = "abate"
+            ),
+            selected = "abate"
+          ),
+          selectInput(
             inputId = "agr_scen_det",
             label = "Scenariu",
             choices = list(
@@ -83,6 +92,26 @@ ui_agricultura <- tabPanel(
               `RCP8.5` = "rcp85"
             ), 
             selected = " rcp45"
+          ),
+          selectInput(
+            inputId = "agr_perio_det",
+            label = "Luna/Sezon",
+            choices = select_interv,
+            selected =  select_interv[1]
+          ),
+          conditionalPanel(
+            condition = "input.agr_tip_det == 'abate'",
+            sliderInput(
+              "slider_agro_abate_det", label = "Interval calcul", min = 2006, 
+              max = 2100, value = c(2021, 2050), dragRange = T, ticks = F,
+              sep = "", step = 1)
+          ),
+          conditionalPanel(
+            condition = "input.agr_tip_det== 'absol'",
+            sliderInput(
+              "slider_agro_absol_det", label = "Interval calcul", min = 1971, 
+              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              sep = "", step = 1)
           ),
           actionButton("go_agrdet", "Actualizare harta", icon("sync"))
         ),
