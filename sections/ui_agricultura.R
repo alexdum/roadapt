@@ -52,6 +52,11 @@ ui_agricultura <- tabPanel(
               max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
+          sliderInput(
+            "transp_agr_gen", "Transparență raster",
+            min = 0, max = 1, ticks = F,
+            value = 0.8, step = 0.1,
+          ),
           
           actionButton("go_agrgen", "Actualizare harta", icon("sync"))
         ),
@@ -114,12 +119,16 @@ ui_agricultura <- tabPanel(
               max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
+          sliderInput(
+            "transp_agr_det", "Transparență poligon",
+            min = 0, max = 1, ticks = F,
+            value = 0.7, step = 0.1,
+          ),
           actionButton("go_agrdet", "Actualizare harta", icon("sync"))
         ),
         column(
           width = 7,
-          #textOutput("test"),
-        
+          textOutput("agr_text_det"),
           leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
         )
       )
