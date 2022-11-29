@@ -1,5 +1,6 @@
 ui_agricultura <- tabPanel(
   title = "Agricultura",
+  value = "#agricultura", id = "#agricultura",
   tabsetPanel(
     tabPanel(
       id = "tab_agro_gen",
