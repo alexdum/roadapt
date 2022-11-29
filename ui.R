@@ -16,6 +16,6 @@ navbarPage(
   theme = bslib::bs_theme(bootswatch = "minty"),
   
   ui_agricultura,
- ui_energie,
- ui_despre
+  ui_energie,
+  ui_despre
 )
