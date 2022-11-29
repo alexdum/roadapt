@@ -59,20 +59,29 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   ncf <- project(ncf,  "EPSG:3857")
   ncf <- terra::mask(ncf, mask)
   
+  # indicatorpentru afisare harta
+  
+  # toupper(agr_rea()$scena),  agr_rea()$perio_tip, agr_rea()$perio_sub,
+  # agr_rea()$an1, agr_rea()$an2, agr_rea()$min_dats_sub, agr_rea()$max_dats_sub)
+  tip_date <- ifelse (agr_tip == "abate", "schimbare medie", "valori medii")
+  param_text <- paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], "scenariul", toupper(scena),
+                      tip_date, names(select_interv)[which(select_interv %in% input$agr_perio)], an1, an2)
+  
+  
+  
   list(
     nc = ncf, 
     indic = indic,  scena =  scena,  perio_tip =  perio_tip,  perio_sub =  perio_sub, an1 = an1, an2 = an2,
     min_dats_sub = as.character(min(dats.sub)), max_dats_sub = as.character(max(dats.sub)),
-    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg
-    
+    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text
   )
   
 })
 
 
 output$test <- renderText({
-  paste("You chose", agr_rea()$indic,  agr_rea()$scena,  agr_rea()$perio_tip, agr_rea()$perio_sub,
-        agr_rea()$an1, agr_rea()$an2, agr_rea()$min_dats_sub, agr_rea()$max_dats_sub)
+    agr_rea()$param_tex
+    
 })
 
 
