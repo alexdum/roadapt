@@ -56,21 +56,26 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     tit_leg <- "°C"
   }
   
+  # mask raster
   ncf <- project(ncf,  "EPSG:3857")
   ncf <- terra::mask(ncf, mask)
   
-  # indicatorpentru afisare harta
+ 
+  # text harta
+  param_text<- ifelse (
+    agr_tip == "abate", 
+    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+          "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          an1,"-", an2,  "(perioada de referință 1971-2000)"
+    ),
+    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+          "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          an1,"-", an2
+    )
+  )
   
-  # toupper(agr_rea()$scena),  agr_rea()$perio_tip, agr_rea()$perio_sub,
-  # agr_rea()$an1, agr_rea()$an2, agr_rea()$min_dats_sub, agr_rea()$max_dats_sub)
-  tip_date <- ifelse (agr_tip == "abate", "schimbare medie", "valori medii")
-  param_text <- paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], "scenariul", toupper(scena),
-                      tip_date, names(select_interv)[which(select_interv %in% input$agr_perio)], 
-                      paste0(an1,"-", an2),
-                      "(perioada de referință 1971-2000_"
-                      )
   
-
+  
   list(
     nc = ncf, 
     indic = indic,  scena =  scena,  perio_tip =  perio_tip,  perio_sub =  perio_sub, an1 = an1, an2 = an2,
@@ -81,9 +86,9 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
 })
 
 
-output$test <- renderText({
-    agr_rea()$param_tex
-    
+output$agr_text_gen <- renderText({
+  agr_rea()$param_tex
+  
 })
 
 

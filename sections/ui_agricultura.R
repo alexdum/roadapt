@@ -57,7 +57,7 @@ ui_agricultura <- tabPanel(
         ),
         column(
           width = 7,
-          textOutput("test"),
+          textOutput("agr_text_gen"),
           leafletOutput(
             "agr_map_gen"
           )
