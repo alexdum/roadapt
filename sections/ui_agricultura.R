@@ -19,7 +19,7 @@ ui_agricultura <- tabPanel(
             label = "Tip",
             choices = list(
               `Valori absolute` = "absol",
-              `Abatere` = "abate"
+              `Schimbare` = "abate"
             ),
             selected = "abate"
           ),
@@ -81,7 +81,7 @@ ui_agricultura <- tabPanel(
             label = "Tip",
             choices = list(
               `Valori absolute` = "absol",
-              `Abatere` = "abate"
+              `Schimbare` = "abate"
             ),
             selected = "abate"
           ),
@@ -119,9 +119,8 @@ ui_agricultura <- tabPanel(
         column(
           width = 7,
           #textOutput("test"),
-          leafletOutput(
-            "agr_map_det"
-          )
+        
+          leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
         )
       )
     )
