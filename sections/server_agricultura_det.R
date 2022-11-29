@@ -8,71 +8,28 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   perio_sub <- strsplit(input$agr_perio_det, "-")[[1]][1]
   tab <-  read_parquet(paste0("www/data/parquet/agro/", ind ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   print(tab)
-  #subseteaza dupa tip/an
-  if (agr_tip_det == "abate") {
-    an1 <- input$slider_agro_abate_det[1]
-    an2 <- input$slider_agro_abate_det[2]
-    
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      tab.sub <- tab |> 
-        #filter( month ==  as.integer(perio_sub)) |>
-        mutate(norm = mean(p50[year >= 1971 & year <= 2000])) |> 
-        filter(year >= an1 & year <= an2) |>
-        group_by(ID) |> summarise(p50 = mean(p50) , norm = mean(norm)) |>
-        mutate(value = p50 - norm)
-    } else {
-      tab.sub <- tab |> 
-        filter(year >= an1 & year <= an1 ) |>
-        group_by(ID) |> summarise(value = mean(p50)) 
-    }
-  } else {
-    an1 <- input$slider_agro_absol_det[1]
-    an2 <- input$slider_agro_absol_det[2]
-    
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      tab.sub <- tab |> 
-        filter(month ==  as.integer(perio_sub) & year >= an1 & year <= an2) |>
-        group_by(ID) |> summarise(value = mean(p50)) 
-    } else {
-      tab.sub <- tab |> 
-        filter(year >= an1 & year <= an2) |>
-        group_by(ID) |> summarise(value = mean(p50)) 
-    }
-  }
-  # unire cu spatial
-  print(head(tab.sub))
+  
+  
+ an1_abat <- input$slider_agro_abate_det[1]
+ an2_abat <- input$slider_agro_abate_det[2]
+ an1_abs <- input$slider_agro_absol_det[1]
+ an2_abs <- input$slider_agro_absol_det[2]
+  
+  # calcul abateri absolute cu funct utils/calcul_agr_det.R
+  tab.sub <- calcul_agro_det(agr_tip_det, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
+  # unire cu spatia
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
- 
   
-  # intervale si culori
-  if (ind == "pr") {
-    if (perio_tip == "year") {
-      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 100)
-    } else if (perio_sub == "season") {
-      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 50)
-    } else {
-      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 10)
-    }
-    pal <- colorBin("GnBu", domain = uat.sub$value, bins = bins)
-    pal_rev <- colorBin("GnBu", domain = uat.sub$value, bins = bins, reverse = T)
-    tit_leg <- "mm"
-    
-  } else {
-    bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 2)
-    pal <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins, reverse = T)
-    pal_rev <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins,reverse = F)
-    tit_leg <- "°C"
-  }
+  # legenda si intervale functie utils/cols_leg_agr_det.R
+  cols_leg <- cols_leg_agr_det(ind, perio_tip, domain = uat.sub$value)
   
-  print(bins)
   list(
-    uat.sub = uat.sub, pal = pal, pal_rev = pal_rev, tit_leg = tit_leg
+    uat.sub = uat.sub, pal =  cols_leg$pal, pal_rev =  cols_leg$pal_rev, tit_leg =  cols_leg$tit_leg
   )
   
 })
 
 output$agr_map_det <- renderLeaflet ({
-  
   leaflet_fun_det(
     data = isolate(agr_rdet()$uat.sub),
     pal =  isolate(agr_rdet()$pal),
