@@ -15,7 +15,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
-        filter( month ==  as.integer(perio_sub)) |>
+        #filter( month ==  as.integer(perio_sub)) |>
         to_duckdb() |>
         mutate(norm = mean(p50[year >= 1971 & year <= 2000])) |> 
         filter(year >= an1, year <= an2) |>
@@ -24,7 +24,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
         collect()
     } else {
       tab.sub <- tab |> 
-        filter(year >= 2000, year <= 2000) |>
+        filter(year >= an1, year <= an1 ) |>
         group_by(ID) |> summarise(value = mean(p50)) |>
         collect() 
     }
@@ -50,8 +50,13 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   
   
   if (ind == "pr") {
-    
-    bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 10)
+    if (perio_tip == "year") {
+      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 100)
+    } else if (perio_sub == "season") {
+      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 50)
+    } else {
+      bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 10)
+    }
     pal <- colorBin("GnBu", domain = uat.sub$value, bins = bins)
     pal_rev <- colorBin("GnBu", domain = uat.sub$value, bins = bins, reverse = T)
     tit_leg <- "mm"
@@ -59,8 +64,8 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   } else {
     bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 2)
     print(bins)
-    pal <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins)
-    pal_rev <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins,reverse = T)
+    pal <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins, reverse = T)
+    pal_rev <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins,reverse = F)
     tit_leg <- "°C"
   }
   
