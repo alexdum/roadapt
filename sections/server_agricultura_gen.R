@@ -77,10 +77,9 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   
   list(
-    nc = ncf, 
-    indic = indic,  scena =  scena,  perio_tip =  perio_tip,  perio_sub =  perio_sub, an1 = an1, an2 = an2,
-    min_dats_sub = as.character(min(dats.sub)), max_dats_sub = as.character(max(dats.sub)),
-    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text
+    nc = ncf,
+    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
+    opacy = input$transp_agr_gen
   )
   
 })
@@ -110,7 +109,7 @@ observe({
     clearImages() %>%
     addRasterImage(
       agr_rea()$nc,
-      colors = agr_rea()$pal, opacity = .8) |>
+      colors = agr_rea()$pal, opacity = agr_rea()$opacy) |>
     clearControls() |>
     addLegend(
       title =  agr_rea()$tit_leg,
