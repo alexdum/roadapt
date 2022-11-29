@@ -57,15 +57,15 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
     } else {
       bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 10)
     }
-    pal <- colorBin("GnBu", domain = uat.sub$value, bins = bins)
-    pal_rev <- colorBin("GnBu", domain = uat.sub$value, bins = bins, reverse = T)
+    pal <- colorBin("GnBu", domain = floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), bins = bins)
+    pal_rev <- colorBin("GnBu", domain = floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), bins = bins, reverse = T)
     tit_leg <- "mm"
     
   } else {
     bins <- seq(floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), by = 2)
     print(bins)
-    pal <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins, reverse = T)
-    pal_rev <- colorBin("RdYlBu", domain = uat.sub$value, bins = bins,reverse = F)
+    pal <- colorBin("RdYlBu", domain = floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), bins = bins, reverse = T)
+    pal_rev <- colorBin("RdYlBu", domain = floor(min(uat.sub$value)), ceiling(max(uat.sub$value)), bins = bins,reverse = F)
     tit_leg <- "°C"
   }
   
