@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(sf)
 library(dplyr)
 library(arrow)
-library(duckdb)
+library(shinycssloaders)
 
 source("utils/names_to_date.R")
 source("utils/leaflet_fun_gen.R")
