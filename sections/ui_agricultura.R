@@ -74,7 +74,8 @@ ui_agricultura <- tabPanel(
           textOutput("agr_text_gen"),
           leafletOutput(
             "agr_map_gen"
-          )
+          ),
+          plotOutput("agro_timeseries_gen")
         )
       )
     ),
