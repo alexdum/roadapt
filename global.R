@@ -12,12 +12,15 @@ library(shinycssloaders)
 library(reticulate)
 
 source_python("utils/extract_point.py")
-source("utils/names_to_date.R")
-source("utils/leaflet_fun_gen.R")
-source("utils/leaflet_fun_det.R")
-source("utils/cols_leg_agr_det.R")
-source("utils/calcul_agr_det.R")
-source("utils/show_popup.R")
+source("utils/names_to_date.R") # c]mp data din fisere netcdf
+source("utils/leaflet_fun_gen.R") # harta tab general
+source("utils/leaflet_fun_det.R") # harta tab detalii
+source("utils/show_popup.R") # popup  date raster
+source("utils/cols_leg_agr_det.R") # culori legenda detalii
+source("utils/calcul_agr_det.R") # calcul anomalii normale  detalii agro
+source("utils/extract_timeserie_gen.R") # extrage time serii pentru plot din ncs
+
+
 
 
 borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp")
