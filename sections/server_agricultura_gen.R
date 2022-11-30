@@ -57,10 +57,10 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   }
   
   # mask raster
-  ncf <- project(ncf,  "EPSG:3857")
-  ncf <- terra::mask(ncf, mask)
+  ncfm <- project(ncf,  "EPSG:3857")
+  ncfm <- terra::mask(ncfm, mask)
   
- 
+  
   # text harta
   param_text<- ifelse (
     agr_tip == "abate", 
@@ -76,7 +76,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   
   list(
-    nc = ncf,
+    nc = ncfm, nc_geo = ncf, # pentru popup
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
     opacy = input$transp_agr_gen
   )
@@ -102,7 +102,6 @@ output$agr_map_gen <- renderLeaflet ({
 })
 
 observe({ 
-  
   leafletProxy("agr_map_gen")  |>
     clearImages() %>%
     addRasterImage(
@@ -116,6 +115,16 @@ observe({
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
-  
-  
+})
+
+observe({ 
+  proxy <- leafletProxy("agr_map_gen")
+  click <- input$agr_map_gen_click
+  nc_ex <- agr_rea()$nc_geo
+  # afiseaza popup sau grafic time series
+  if (input$radio_agr_gen == 1 & !is.null(click)) {
+    show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
+  } else {
+    proxy %>% clearPopups()
+  }
 })
