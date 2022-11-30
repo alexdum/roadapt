@@ -10,6 +10,7 @@ library(dplyr)
 library(arrow)
 library(shinycssloaders)
 library(reticulate)
+library(ggplot2)
 
 source_python("utils/extract_point.py")
 source("utils/names_to_date.R") # c]mp data din fisere netcdf
@@ -19,6 +20,7 @@ source("utils/show_popup.R") # popup  date raster
 source("utils/cols_leg_agr_det.R") # culori legenda detalii
 source("utils/calcul_agr_det.R") # calcul anomalii normale  detalii agro
 source("utils/extract_timeserie_gen.R") # extrage time serii pentru plot din ncs
+source("utils/plots_gen.R") # plot din date raster
 
 
 
