@@ -79,7 +79,8 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     nc = ncfm, nc_geo = ncf, # pentru popup
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
     opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip,
-    nc_fil = nc_fil, perio_sub = perio_sub # pentru procesare cu python extragere time series plot
+    nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
+    agr_tip = agr_tip
   )
   
 })
@@ -118,6 +119,9 @@ observe({
     )
 })
 
+
+variables_plot_agro_gen <- reactiveValues(input = NULL, title = NULL, cors = NULL)
+
 observe({ 
   proxy <- leafletProxy("agr_map_gen")
   click <- input$agr_map_gen_click
@@ -132,32 +136,30 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
-     # extrage variabila pentru python
+      # extrage variabila pentru python
       print(perio_sub)
       print(nc_fil)
       
       dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
       print(dd)
       
-      # pentru afisare conditional panel si titlu grafic coordonates
-      # condpan_monthly.txt <- ifelse(
-      #   is.na(mean(dd, na.rm = T)) | is.na(cell), 
-      #   "nas", 
-      #   paste0("Extracted LST ",input$param_europe_monthly," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
-      # )
-      # output$condpan_monthly <- renderText({
-      #   condpan_monthly.txt 
-      # })
-      # outputOptions(output, "condpan_monthly", suspendWhenHidden = FALSE)
-      # # subseteaza in dunctie de data selectata
-      # ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reac_lst_indicator()$index)
-      # 
+      
       # # valori pentru plot la reactive values
-      # values_plot_lst_mon$title <- condpan_monthly.txt
-      # values_plot_lst_mon$input <- ddf
-      # values_plot_lst_mon$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+      #values_plot_lst_mon$title <- condpan_monthly.txt
+      variables_plot_agro_gen$input <- dd
+      variables_plot_agro_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
     }
   }
   
+})
+
+
+# plot actualizat daca schimb si coordonatee
+output$agro_timeseries_gen <- renderPlot({
+  req(!is.na(variables_plot_agro_gen$input))
+  print(agr_rea()$agr_tip)
+  plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip)
   
 })
+
+
