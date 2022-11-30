@@ -75,7 +75,6 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   )
   
   
-  
   list(
     nc = ncf,
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
@@ -84,7 +83,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
 })
 
-
+# text harta
 output$agr_text_gen <- renderText({
   agr_rea()$param_tex
   
@@ -92,7 +91,6 @@ output$agr_text_gen <- renderText({
 
 
 output$agr_map_gen <- renderLeaflet ({
-  
   leaflet_fun_gen(
     data = borders, 
     raster = isolate(agr_rea()$nc),
