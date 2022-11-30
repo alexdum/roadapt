@@ -132,15 +132,13 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
-      variable <- strsplit(nc_fil, "/|_")[[1]][5] # extrage variabila pentru python
+     # extrage variabila pentru python
       print(perio_sub)
       print(nc_fil)
       
-      dd_50 <- extract_point(fname = nc_fil, lon = xy[1], lat = xy[2], variable = variable) 
-      if (perio_sub != "year") {
-        dd_50 <- dd_50 |> data.frame() |> dplyr::filter(format(time, "%m") %in% perio_sub)
-      }
-      print(tail(dd_50))
+      dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
+      print(dd)
+      
       # pentru afisare conditional panel si titlu grafic coordonates
       # condpan_monthly.txt <- ifelse(
       #   is.na(mean(dd, na.rm = T)) | is.na(cell), 
