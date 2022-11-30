@@ -7,3 +7,4 @@ www/data/shp/*
 www/data/grids/*
 www/data/parquet/*
 misc/*
+.venv/*
