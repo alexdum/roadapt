@@ -9,7 +9,8 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   perio_sub <- strsplit(input$agr_perio, "-")[[1]][1]
   
   # citeste fisierul
-  nc <- rast(paste0("www/data/ncs/agro/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc"))
+  nc_fil <- paste0("www/data/ncs/agro/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  nc <- rast(nc_fil)
   dats <- names_to_date(nc) # extrage data din nume cu fct utils
   
   
@@ -74,11 +75,11 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     )
   )
   
-  
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
-    opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip
+    opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip,
+    nc_fil = nc_fil, perio_sub = perio_sub # pentru procesare cu python extragere time series plot
   )
   
 })
@@ -121,16 +122,25 @@ observe({
   proxy <- leafletProxy("agr_map_gen")
   click <- input$agr_map_gen_click
   nc_ex <- agr_rea()$nc_geo
+  nc_fil <- agr_rea()$nc_fil
+  perio_sub <- agr_rea()$perio_sub
   # afiseaza popup sau grafic time series
   if (input$radio_agr_gen == 1 & !is.null(click)) {
     show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
   } else {
     proxy %>% clearPopups()
     if (!is.null(click)) {
-      dd <- terra::extract(nc_ex, cbind(click$lng, click$lat))
-      print(dd)
-    
-    
+      cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
+      xy <- terra::xyFromCell(nc_ex, cell)
+      variable <- strsplit(nc_fil, "/|_")[[1]][5] # extrage variabila pentru python
+      print(perio_sub)
+      print(nc_fil)
+      
+      dd_50 <- extract_point(fname = nc_fil, lon = xy[1], lat = xy[2], variable = variable) 
+      if (perio_sub != "year") {
+        dd_50 <- dd_50 |> data.frame() |> dplyr::filter(format(time, "%m") %in% perio_sub)
+      }
+      print(tail(dd_50))
       # pentru afisare conditional panel si titlu grafic coordonates
       # condpan_monthly.txt <- ifelse(
       #   is.na(mean(dd, na.rm = T)) | is.na(cell), 
