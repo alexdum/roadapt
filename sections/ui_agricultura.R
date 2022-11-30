@@ -58,7 +58,16 @@ ui_agricultura <- tabPanel(
             value = 0.8, step = 0.1,
           ),
           
-          actionButton("go_agrgen", "Actualizare harta", icon("sync"))
+          actionButton("go_agrgen", "Actualizare harta", icon("sync")),
+          radioButtons( # radio button show values
+            "radio_agr_gen", label = "Harta click fucncționalitate",
+            choices = 
+              list(
+                "Afișează valoare raster" = 1, 
+                "Grafic serie temporală (afișare sub hartă)" = 2
+              ), 
+            selected = 1
+          ),
         ),
         column(
           width = 7,
