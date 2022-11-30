@@ -78,7 +78,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
-    opacy = input$transp_agr_gen
+    opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip
   )
   
 })
@@ -126,5 +126,30 @@ observe({
     show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
   } else {
     proxy %>% clearPopups()
+    if (!is.null(click)) {
+      dd <- terra::extract(nc_ex, cbind(click$lng, click$lat))
+      print(dd)
+    
+    
+      # pentru afisare conditional panel si titlu grafic coordonates
+      # condpan_monthly.txt <- ifelse(
+      #   is.na(mean(dd, na.rm = T)) | is.na(cell), 
+      #   "nas", 
+      #   paste0("Extracted LST ",input$param_europe_monthly," values for point lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+      # )
+      # output$condpan_monthly <- renderText({
+      #   condpan_monthly.txt 
+      # })
+      # outputOptions(output, "condpan_monthly", suspendWhenHidden = FALSE)
+      # # subseteaza in dunctie de data selectata
+      # ddf <- data.frame(date = as.Date(names(dd)), lst = round(dd, 1)) %>% slice(1:reac_lst_indicator()$index)
+      # 
+      # # valori pentru plot la reactive values
+      # values_plot_lst_mon$title <- condpan_monthly.txt
+      # values_plot_lst_mon$input <- ddf
+      # values_plot_lst_mon$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+    }
   }
+  
+  
 })
