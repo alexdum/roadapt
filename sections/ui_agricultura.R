@@ -84,8 +84,8 @@ ui_agricultura <- tabPanel(
                   h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
                 ),
                 tabPanel(
-                  value = "Graph",
-                  title = h6("Graph"),
+                  value = "Grafic",
+                  title = h6("Grafic"),
                   wellPanel(
                     plotly::plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
                     #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
