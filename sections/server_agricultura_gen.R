@@ -63,13 +63,14 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   
   # text harta
+  name_ind <- names(select_agro_ind)[which(select_agro_ind %in% indic)] #nume indicator clar
   param_text<- ifelse (
     agr_tip == "abate", 
-    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+    paste(name_ind, " - scenariul", toupper(scena),
           "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio)], 
           an1,"-", an2,  "(perioada de referință 1971-2000)"
     ),
-    paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
+    paste( name_ind, " - scenariul", toupper(scena),
           "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio)], 
           an1,"-", an2
     )
@@ -80,7 +81,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
     opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
-    agr_tip = agr_tip
+    agr_tip = agr_tip,  name_ind =  name_ind 
   )
   
 })
@@ -128,6 +129,7 @@ observe({
   nc_ex <- agr_rea()$nc_geo
   nc_fil <- agr_rea()$nc_fil
   perio_sub <- agr_rea()$perio_sub
+  name_ind <-  agr_rea()$name_ind 
   # afiseaza popup sau grafic time series
   if (input$radio_agr_gen == 1 & !is.null(click)) {
     show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
@@ -141,9 +143,18 @@ observe({
       print(nc_fil)
       
       dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
-      print(dd)
-      
-      
+      # text conditional panel plot
+      print(is.na(cell))
+      print(is.na(mean(dd$med, na.rm = T)))
+      condpan_agro_gen_txt <- ifelse( 
+        is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
+        "nas", 
+        paste0(name_ind, ": lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+      )
+      output$condpan_agro_gen <- renderText({
+        condpan_agro_gen_txt
+      })
+      outputOptions(output, "condpan_agro_gen", suspendWhenHidden = FALSE)
       # # valori pentru plot la reactive values
       #values_plot_lst_mon$title <- condpan_monthly.txt
       variables_plot_agro_gen$input <- dd
