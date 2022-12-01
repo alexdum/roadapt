@@ -15,7 +15,13 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   
   dd <- dd_50 |> left_join(dd_max, by = c("time")) |> left_join(dd_min, by = c("time")) |>
     dplyr::rename('med' = 'value.x', 'max' = 'value.y', 'min' = 'value')  |>
-    mutate(max = round(max, 1), min = round(min, 1), med = round(med, 1)) 
+    # roling mean la extreme min max
+    mutate(
+      # max = zoo::rollmean(max, 3, na.pad = T) |> round(1),
+      # min = zoo::rollmean(min, 3, na.pad = T) |> round(1), 
+      med = round(med, 1), max = round(max, 1), min = round(min, 1),
+      data = as.Date(time)
+    ) 
   
   if (perio_sub != "year")  dd <- dd |> dplyr::filter(format(time, "%m") %in% perio_sub)
   
@@ -29,7 +35,8 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
       !varia %in% c("prAdjust", "ur") ~   (max - mean(med[an <= 2000]))  %>% round(1)),
     change_min = case_when(
       varia %in% c("prAdjust", "ur") ~  (((min*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
-      !varia %in% c("prAdjust", "ur") ~   (min - mean(med[an <= 2000]))  %>% round(1))
+      !varia %in% c("prAdjust", "ur") ~   (min - mean(med[an <= 2000]))  %>% round(1)),
+    med_ref = mean(med)
   )
   
   return(dd)
