@@ -64,14 +64,15 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   # text harta
   name_ind <- names(select_agro_ind)[which(select_agro_ind %in% indic)] #nume indicator clar
+  agro_perio <- names(select_interv)[which(select_interv %in% input$agr_perio)] # luna.sezon clar
   param_text<- ifelse (
     agr_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
-          "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          "schimbare", agro_perio , 
           an1,"-", an2,  "(perioada de referință 1971-2000)"
     ),
     paste( name_ind, " - scenariul", toupper(scena),
-          "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          "- medii multianuale - ", agro_perio , 
           an1,"-", an2
     )
   )
@@ -81,7 +82,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
     opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
-    agr_tip = agr_tip,  name_ind =  name_ind 
+    agr_tip = agr_tip,  name_ind =  name_ind, agro_perio = agro_perio 
   )
   
 })
@@ -130,6 +131,11 @@ observe({
   nc_fil <- agr_rea()$nc_fil
   perio_sub <- agr_rea()$perio_sub
   name_ind <-  agr_rea()$name_ind 
+  agro_perio <- agr_rea()$agro_perio
+  scena <-  agr_rea()$scena
+  # pentru titlu grafic
+  agr_tip <- agr_rea()$agr_tip
+  agr_tip_name_ind <- ifelse(agr_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
   # afiseaza popup sau grafic time series
   if (input$radio_agr_gen == 1 & !is.null(click)) {
     show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
@@ -139,9 +145,6 @@ observe({
       cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
       # extrage variabila pentru python
-      print(perio_sub)
-      print(nc_fil)
-      
       dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
       # text conditional panel plot
       print(is.na(cell))
@@ -149,7 +152,7 @@ observe({
       condpan_agro_gen_txt <- ifelse( 
         is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
         "nas", 
-        paste0(name_ind, ": lon = ",round(click$lng, 5)," lat = "  , round(click$lat, 5))
+        paste0(agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),")")
       )
       output$condpan_agro_gen <- renderText({
         condpan_agro_gen_txt
