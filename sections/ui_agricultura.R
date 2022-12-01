@@ -78,29 +78,28 @@ ui_agricultura <- tabPanel(
           ),
           conditionalPanel( # show graphs only when data available
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen != 'nas'",
-        
-              tabsetPanel(
-                fluidRow (
-                  h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
-                ),
-                tabPanel(
-                  value = "Grafic",
-                  title = h6("Grafic"),
-                  wellPanel(
-                    plotly::plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
-                    #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
-                  )
-                ), 
-                tabPanel(
-                  value = "Data",
-                  title = h6("Data"),
-                  wellPanel(
-                    DT::dataTableOutput("agro_timeseries_gen_data")
-                  )
-                )
-                #verbatimTextOutput("sum")
+            
+            tabsetPanel(
+              fluidRow (
+                h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
               ),
-          
+              tabPanel(
+                value = "Grafic",
+                title = h6("Grafic"),
+                wellPanel(
+                  plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
+                  #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
+                )
+              ), 
+              tabPanel(
+                value = "Data",
+                title = h6("Data"),
+                wellPanel(
+                  DT::dataTableOutput("agro_timeseries_gen_data")
+                )
+              )
+            ),
+            
           ),
           conditionalPanel(
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen == 'nas'",
@@ -170,8 +169,10 @@ ui_agricultura <- tabPanel(
         ),
         column(
           width = 7,
-          textOutput("agr_text_det"),
-          leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
+          h6(textOutput("agr_text_det"), style = "text-align:center;"),
+          wellPanel(
+            leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
+          )
         )
       )
     )
