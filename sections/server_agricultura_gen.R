@@ -93,7 +93,7 @@ output$agr_text_gen <- renderText({
   
 })
 
-
+# prima ploatare harta
 output$agr_map_gen <- renderLeaflet ({
   leaflet_fun_gen(
     data = borders, 
@@ -104,7 +104,7 @@ output$agr_map_gen <- renderLeaflet ({
     domain = isolate(agr_rea()$domain)
   )
 })
-
+# plotare actualizata harta
 observe({ 
   leafletProxy("agr_map_gen")  |>
     clearImages() %>%
@@ -120,10 +120,9 @@ observe({
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
 })
-
-
-variables_plot_agro_gen <- reactiveValues(input = NULL, title = NULL, cors = NULL)
-
+# variabile pentru plot
+variables_plot_agro_gen <- reactiveValues(input = NULL, title = NULL, cors = NULL, xy = NULL)
+# interactivitate harta
 observe({ 
   proxy <- leafletProxy("agr_map_gen")
   click <- input$agr_map_gen_click
@@ -144,8 +143,8 @@ observe({
     if (!is.null(click)) {
       cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
-      # extrage variabila pentru python
-      dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
+      dd <- extract_timeser_gen(nc_fil,  xy , perio_sub) # functie extrage time series netcdf 
+      print(head(dd))
       # text conditional panel plot
       condpan_agro_gen_txt <- ifelse( 
         is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
@@ -158,38 +157,39 @@ observe({
         condpan_agro_gen_txt
       })
       outputOptions(output, "condpan_agro_gen", suspendWhenHidden = FALSE)
-      # # valori pentru plot la reactive values
-      #values_plot_lst_mon$title <- condpan_monthly.txt
+      
       variables_plot_agro_gen$input <- dd
       variables_plot_agro_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+    
     }
   }
   
 })
 
-# plot actualizat daca schimb si coordonatee
-output$agro_timeseries_gen_plot <- renderPlotly({
-  indic <-agr_rea()$indic
-  req(!is.na(variables_plot_agro_gen$input))
-  print(agr_rea()$agr_tip)
-  plt <- plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip, indic)
-  plt$gp
-})
 
-
-output$agro_timeseries_gen_data <- DT::renderDT({
   
-  DT::datatable(
-    variables_plot_agro_gen$input, extensions = 'Buttons', rownames = F,
-    options = list(
-      dom = 'Bfrtip',
-      pageLength = 5, autoWidth = TRUE,
-      buttons = c('pageLength','copy', 'csv', 'excel'),
-      pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+  # plot actualizat daca schimb si coordonatee
+  output$agro_timeseries_gen_plot <- renderPlotly({
+    indic <- agr_rea()$indic
+    agr_tip <- agr_rea()$agr_tip
+    plt <- plots_agro_gen(variables_plot_agro_gen$input, agr_tip, indic)
+    plt$gp
+  })
+  
+  
+  output$agro_timeseries_gen_data <- DT::renderDT({
+    
+    DT::datatable(
+      variables_plot_agro_gen$input, extensions = 'Buttons', rownames = F,
+      options = list(
+        dom = 'Bfrtip',
+        pageLength = 5, autoWidth = TRUE,
+        buttons = c('pageLength','copy', 'csv', 'excel'),
+        pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+        )
       )
-      
     )
-  )
+    
+  })
   
-})
 
