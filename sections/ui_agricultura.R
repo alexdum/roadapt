@@ -71,16 +71,36 @@ ui_agricultura <- tabPanel(
         ),
         column(
           width = 7,
+          
+          h6(textOutput("agr_text_gen"), style = "text-align:center;"),
           wellPanel(
-            textOutput("agr_text_gen"),
             leafletOutput("agr_map_gen")
           ),
           conditionalPanel( # show graphs only when data available
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen != 'nas'",
-            wellPanel(
-              textOutput("condpan_agro_gen"),
-              plotlyOutput("agro_timeseries_gen")
-            )
+        
+              tabsetPanel(
+                fluidRow (
+                  h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
+                ),
+                tabPanel(
+                  value = "Graph",
+                  title = h6("Graph"),
+                  wellPanel(
+                    plotly::plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
+                    #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
+                  )
+                ), 
+                tabPanel(
+                  value = "Data",
+                  title = h6("Data"),
+                  wellPanel(
+                    DT::dataTableOutput("agro_timeseries_gen_data")
+                  )
+                )
+                #verbatimTextOutput("sum")
+              ),
+          
           ),
           conditionalPanel(
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen == 'nas'",
