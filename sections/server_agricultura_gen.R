@@ -147,8 +147,6 @@ observe({
       # extrage variabila pentru python
       dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
       # text conditional panel plot
-      print(is.na(cell))
-      print(is.na(mean(dd$med, na.rm = T)))
       condpan_agro_gen_txt <- ifelse( 
         is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
         "nas", 

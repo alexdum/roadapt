@@ -27,7 +27,7 @@ source("utils/plots_gen.R") # plot din date raster
 
 
 
-borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp")
+borders <- st_read("www/data/shp/ne_10m_admin_0_boundary_lines_land_rou.shp", quiet = T)
 mask <- vect("www/data/shp/rou_border_mbufer.shp") 
 mask <- project(mask,  "EPSG:3857")
          
