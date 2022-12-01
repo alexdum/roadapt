@@ -12,6 +12,7 @@ library(shinycssloaders)
 library(reticulate)
 library(ggplot2)
 library(plotly)
+library(DT)
 
 source_python("utils/extract_point.py")
 source("utils/names_to_date.R") # c]mp data din fisere netcdf
