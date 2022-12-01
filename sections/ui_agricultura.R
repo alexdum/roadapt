@@ -60,7 +60,7 @@ ui_agricultura <- tabPanel(
           
           actionButton("go_agrgen", "Actualizare harta", icon("sync")),
           radioButtons( # radio button show values
-            "radio_agr_gen", label = "Harta click fucncționalitate",
+            "radio_agr_gen", label = "Harta click funcționalitate",
             choices = 
               list(
                 "Afișează valoare raster" = 1, 
@@ -79,7 +79,7 @@ ui_agricultura <- tabPanel(
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen != 'nas'",
             wellPanel(
               textOutput("condpan_agro_gen"),
-              plotOutput("agro_timeseries_gen")
+              plotlyOutput("agro_timeseries_gen")
             )
           ),
           conditionalPanel(
