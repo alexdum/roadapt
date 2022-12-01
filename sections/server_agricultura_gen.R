@@ -72,8 +72,8 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
           an1,"-", an2,  "(perioada de referință 1971-2000)"
     ),
     paste( name_ind, " - scenariul", toupper(scena),
-          "- medii multianuale - ", agro_perio , 
-          an1,"-", an2
+           "- medii multianuale - ", agro_perio , 
+           an1,"-", an2
     )
   )
   
@@ -152,7 +152,9 @@ observe({
       condpan_agro_gen_txt <- ifelse( 
         is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
         "nas", 
-        paste0(agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),")")
+        paste0(
+          agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),") - perioada de referință 1971 - 2000"
+          )
       )
       output$condpan_agro_gen <- renderText({
         condpan_agro_gen_txt
@@ -169,10 +171,12 @@ observe({
 
 
 # plot actualizat daca schimb si coordonatee
-output$agro_timeseries_gen <- renderPlot({
+output$agro_timeseries_gen <- renderPlotly({
+  indic <-agr_rea()$indic
   req(!is.na(variables_plot_agro_gen$input))
   print(agr_rea()$agr_tip)
-  plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip)
+  plt <- plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip, indic)
+  plt$gp
   
 })
 
