@@ -154,7 +154,7 @@ observe({
         "nas", 
         paste0(
           agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),") - perioada de referință 1971 - 2000"
-          )
+        )
       )
       output$condpan_agro_gen <- renderText({
         condpan_agro_gen_txt
@@ -169,15 +169,29 @@ observe({
   
 })
 
-
 # plot actualizat daca schimb si coordonatee
-output$agro_timeseries_gen <- renderPlotly({
+output$agro_timeseries_gen_plot <- renderPlotly({
   indic <-agr_rea()$indic
   req(!is.na(variables_plot_agro_gen$input))
   print(agr_rea()$agr_tip)
   plt <- plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip, indic)
   plt$gp
-  
 })
 
+
+output$agro_timeseries_gen_data <- DT::renderDT({
+  
+  DT::datatable(
+    variables_plot_agro_gen$input, extensions = 'Buttons', rownames = F,
+    options = list(
+      dom = 'Bfrtip',
+      pageLength = 5, autoWidth = TRUE,
+      buttons = c('pageLength','copy', 'csv', 'excel'),
+      pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+      )
+      
+    )
+  )
+  
+})
 
