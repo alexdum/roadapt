@@ -71,11 +71,23 @@ ui_agricultura <- tabPanel(
         ),
         column(
           width = 7,
-          textOutput("agr_text_gen"),
-          leafletOutput(
-            "agr_map_gen"
+          wellPanel(
+            textOutput("agr_text_gen"),
+            leafletOutput("agr_map_gen")
           ),
-          plotOutput("agro_timeseries_gen")
+          conditionalPanel( # show graphs only when data available
+            condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen != 'nas'",
+            wellPanel(
+              textOutput("condpan_agro_gen"),
+              plotOutput("agro_timeseries_gen")
+            )
+          ),
+          conditionalPanel(
+            condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen == 'nas'",
+            wellPanel(
+              p("Trebuie selectată o regiune cu valori disponibile")
+            )
+          )
         )
       )
     ),
