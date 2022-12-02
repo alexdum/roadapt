@@ -122,7 +122,11 @@ observe({
 })
 
 
-variables_plot_agro_gen <- reactiveValues(input = NULL, title = NULL, cors = NULL)
+variables_plot_agro_gen <- reactiveValues(
+  input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
+  # variabile control pentru actualizare grafic/date
+  update_input = NULL, update_input_tip_plt = NULL 
+)
 
 observe({ 
   proxy <- leafletProxy("agr_map_gen")
@@ -130,6 +134,7 @@ observe({
   nc_ex <- agr_rea()$nc_geo
   nc_fil <- agr_rea()$nc_fil
   perio_sub <- agr_rea()$perio_sub
+  indic <- agr_rea()$indic
   name_ind <-  agr_rea()$name_ind 
   agro_perio <- agr_rea()$agro_perio
   scena <-  agr_rea()$scena
@@ -162,34 +167,58 @@ observe({
       #values_plot_lst_mon$title <- condpan_monthly.txt
       variables_plot_agro_gen$input <- dd
       variables_plot_agro_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+      variables_plot_agro_gen$indic <- indic
+      variables_plot_agro_gen$tip <- agr_tip
+      
+      
+      
     }
   }
   
 })
 
-# plot actualizat daca schimb si coordonatee
-output$agro_timeseries_gen_plot <- renderPlotly({
-  indic <-agr_rea()$indic
-  req(!is.na(variables_plot_agro_gen$input))
-  print(agr_rea()$agr_tip)
-  plt <- plots_agro_gen(variables_plot_agro_gen$input, agr_rea()$agr_tip, indic)
-  plt$gp
-})
-
-
-output$agro_timeseries_gen_data <- DT::renderDT({
+# conditie pentru update plot si data table doar daca se modifica tipul plotului (abatere/absolute)
+# sau datele de intrare in plot
+observeEvent(variables_plot_agro_gen$input ,{
   
-  DT::datatable(
-    variables_plot_agro_gen$input, extensions = 'Buttons', rownames = F,
-    options = list(
-      dom = 'Bfrtip',
-      pageLength = 5, autoWidth = TRUE,
-      buttons = c('pageLength','copy', 'csv', 'excel'),
-      pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+  print(head(variables_plot_agro_gen$input))
+  
+  if(!isTRUE(all.equal(variables_plot_agro_gen$input, variables_plot_agro_gen$update_input ))  |
+     !isTRUE(all.equal(variables_plot_agro_gen$tip, variables_plot_agro_gen$update_input_tip_plt))) {
+    
+    indic_plt <- variables_plot_agro_gen$indic
+    tip_plt <- variables_plot_agro_gen$tip
+    print(head(variables_plot_agro_gen$update_input))
+    input_plt <- variables_plot_agro_gen$input
+    # pentru comparare in caz de update
+    variables_plot_agro_gen$update_input <- input_plt 
+    variables_plot_agro_gen$update_input_tip_plt <- tip_plt 
+    
+    # pentru subtab plot
+    output$agro_timeseries_gen_plot <- renderPlotly({
+      req(!is.na(input_plt))
+      plt <- plots_agro_gen(isolate(input_plt), isolate(tip_plt), isolate(indic_plt))
+      plt$gp
+    })
+    
+    # pentru afisare subtab date
+    output$agro_timeseries_gen_data <- DT::renderDT({
+      
+      DT::datatable(
+        input_plt, extensions = 'Buttons', rownames = F,
+        options = list(
+          dom = 'Bfrtip',
+          pageLength = 5, autoWidth = TRUE,
+          buttons = c('pageLength','copy', 'csv', 'excel'),
+          pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+          )
+          
+        )
       )
       
-    )
-  )
-  
+    })
+  }
 })
+
+
 
