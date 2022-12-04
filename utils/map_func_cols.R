@@ -35,7 +35,7 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
       leaflet_titleg <- "°C"
     }  else {
       df.col <- data.frame(
-        cols = c(colintBlues(12),colintReds(15)), 
+        cols = c(rev(colintBlues(12)),colintReds(15)), 
         vals = seq(-6,7, 0.5)
       )
       leaflet_titleg <- "°C"
