@@ -8,41 +8,17 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   perio_tip <- strsplit(input$agr_perio, "-")[[1]][2]
   perio_sub <- strsplit(input$agr_perio, "-")[[1]][1]
   
+  an1_abat <- input$slider_agro_abate_gen[1]
+  an2_abat <- input$slider_agro_abate_gen[2]
+  an1_abs <- input$slider_agro_absol_gen[1]
+  an2_abs <- input$slider_agro_absol_gen[2]
+  
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/agro/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
-  nc <- rast(nc_fil)
-  dats <- names_to_date(nc) # extrage data din nume cu fct utils
-  
-  
-  # selectare slider in functie de tipul hartii
-  if (agr_tip == "abate") {
-    an1 <- input$slider_agro_abate[1]
-    an2 <- input$slider_agro_abate[2]
-    
-    dats.sub <- dats[dats >= as.Date(paste0(an1, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2 , "1231"), format = "%Y%m%d") ]
-    dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
-    
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-      dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-    }
-    
-    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
-    nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
-    
-    ncf <- nc.abs - nc.norm 
-    
-  } else {
-    an1 <- input$slider_agro_absol[1]
-    an2 <- input$slider_agro_absol[2]
-    dats.sub <- dats[dats >= as.Date(paste0(an1, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2 , "1231"), format = "%Y%m%d") ]
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-    }
-    
-    ncf <- nc[[which(dats %in% dats.sub)]] 
-    ncf <- mean(ncf)
-  }
+
+  # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
+  ncf <- calcul_agro_gen(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  print*summary(ncf)
   
   # pentru legenda 
   domain <- minmax(ncf)
@@ -69,11 +45,11 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
     agr_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
           "schimbare", agro_perio , 
-          an1,"-", an2,  "(perioada de referință 1971-2000)"
+          an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"
     ),
     paste( name_ind, " - scenariul", toupper(scena),
-           "- medii multianuale - ", agro_perio , 
-           an1,"-", an2
+           "- medii multianuale - ", agro_perio, 
+           an1_abs,"-", an2_abs
     )
   )
   
