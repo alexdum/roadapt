@@ -15,7 +15,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/agro/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
-
+  
   
   # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
   ncf <- calcul_agro_gen(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
@@ -23,17 +23,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   # pentru legenda titlu §i intervale §i culori
   domain <- terra::minmax(ncf)
   map_leg <- map_func_cols(indic, agr_tip, domain = domain, perio_tip)
-
   
-  # if (indic == "pr") {
-  #   pal_rev <- colorNumeric("GnBu", domain = domain, reverse = T, na.color = "transparent")
-  #   pal<- colorNumeric("GnBu", domain = domain, reverse = F, na.color = "transparent")
-  #   tit_leg <- "mm"
-  # } else {
-  #   pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
-  #   pal<- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
-  #   tit_leg <- "°C"
-  # }
   
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857")
@@ -91,7 +81,7 @@ observe({
       colors = agr_rea()$pal, opacity = agr_rea()$opacy) |>
     clearControls() |>
     addLegend(
-      title =  agr_rea()$tit_leg,
+      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),agr_rea()$tit_leg,"</html>"),
       position = "bottomright",
       pal = agr_rea()$pal_rev, values = agr_rea()$domain,
       opacity = 1,
