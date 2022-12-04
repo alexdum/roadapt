@@ -18,10 +18,10 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   tab.sub <- calcul_agro_det(tab, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatial
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
-  print(tab.sub)
+  #print(tab.sub)
  
   # legenda si intervale functie utils/cols_leg_agr_det.R
-  cols_leg <- cols_leg_agr_det(indic, perio_tip, perio_sub, domain = uat.sub$value)
+  map_leg <- map_func_cols(indic, agr_tip, domain = range(uat.sub$value), perio_tip)
   
   
   # text harta
@@ -38,7 +38,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   )
   
   list(
-    uat.sub = uat.sub, pal =  cols_leg$pal, pal_rev =  cols_leg$pal_rev, tit_leg =  cols_leg$tit_leg,
+    uat.sub = uat.sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
     param_text = param_text, opacy = input$transp_agr_det
   )
   
