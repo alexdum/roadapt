@@ -4,7 +4,8 @@
 # id <- "123371"
 # perio_sub <- "01"
 # indic <- "pr"
-# extract_timeser_gen(tab,id, perio_sub, indic)
+# dd <- extract_timeser_det(tab,id, perio_sub, indic)
+# plots_agro_det(dd, tip = "abate", indic = "pr")
 
 extract_timeser_det <- function(tab,id, perio_sub, indic) {
   
