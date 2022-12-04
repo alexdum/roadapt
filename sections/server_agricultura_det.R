@@ -4,11 +4,10 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   indic <- input$agr_ind_det
   scena <- input$agr_scen_det
   agr_tip <- input$agr_tip_det
-  perio_tip <- strsplit(input$agr_perio_det, "-")[[1]][2]
-  perio_sub <- strsplit(input$agr_perio_det, "-")[[1]][1]
+  perio_sub <- strsplit(input$agr_perio_det, "-")[[1]][1] # number of month
+  perio_tip <- strsplit(input$agr_perio_det, "-")[[1]][2] # month/season/year
   tab <-  read_parquet(paste0("www/data/parquet/agro/", indic ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
-  print(tab)
-  
+
   
  an1_abat <- input$slider_agro_abate_det[1]
  an2_abat <- input$slider_agro_abate_det[2]
@@ -16,12 +15,13 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
  an2_abs <- input$slider_agro_absol_det[2]
   
   # calcul abateri absolute cu funct utils/calcul_agr_det.R
-  tab.sub <- calcul_agro_det(tab, agr_tip, perio_sub, an1_abat, an2_abat, an1_abs, an2_abs)
-  # unire cu spatia
+  tab.sub <- calcul_agro_det(tab, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  # unire cu spatial
   uat.sub <- uat |> left_join(tab.sub, by = c( "natCode" = "ID"))
-  
+  print(tab.sub)
+ 
   # legenda si intervale functie utils/cols_leg_agr_det.R
-  cols_leg <- cols_leg_agr_det(indic, perio_tip, domain = uat.sub$value)
+  cols_leg <- cols_leg_agr_det(indic, perio_tip, perio_sub, domain = uat.sub$value)
   
   
   # text harta
