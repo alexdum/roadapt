@@ -172,7 +172,28 @@ ui_agricultura <- tabPanel(
           h6(textOutput("agr_text_det"), style = "text-align:center;"),
           wellPanel(
             leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
+          ),
+          tabsetPanel(
+            # fluidRow (
+            #   h6(textOutput("condpan_agro_det"), style = "text-align:center;")
+            # ),
+            tabPanel(
+              value = "Grafic",
+              title = h6("Grafic"),
+              wellPanel(
+                plotlyOutput("agro_timeseries_det_plot") |> withSpinner(size = 0.5),
+                #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
+              )
+            ), 
+            tabPanel(
+              value = "Data",
+              title = h6("Data"),
+              wellPanel(
+                #DT::dataTableOutput("agro_timeseries_gen_data")
+              )
+            )
           )
+          
         )
       )
     )
