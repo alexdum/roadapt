@@ -20,6 +20,7 @@ source("utils/leaflet_fun_gen.R") # harta tab general
 source("utils/leaflet_fun_det.R") # harta tab detalii
 source("utils/show_popup.R") # popup  date raster
 source("utils/cols_leg_agr_det.R") # culori legenda detalii
+source("utils/calcul_agr_gen.R") # calcul anomalii normale  detalii agro
 source("utils/calcul_agr_det.R") # calcul anomalii normale  detalii agro
 source("utils/extract_timeserie_gen.R") # extrage time serii pentru plot din ncs
 source("utils/plots_gen.R") # plot din date raster
