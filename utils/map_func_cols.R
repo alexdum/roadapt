@@ -3,6 +3,7 @@ colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate="linear")
 colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate="linear")
 colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate="linear")
 colintBlues <- colorRampPalette(brewer.pal(9,"Blues"), interpolate="linear")
+colintReds <- colorRampPalette(brewer.pal(9,"Reds"), interpolate="linear")
 colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate="linear")
 colintPuRd <- colorRampPalette(brewer.pal(9,"PuRd"), interpolate="linear")
 colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate="linear")
@@ -34,8 +35,8 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
       leaflet_titleg <- "°C"
     }  else {
       df.col <- data.frame(
-        cols = rev(colintRdYlBu(25)), 
-        vals = seq(-6,6, 0.5)
+        cols = c(colintBlues(12),colintReds(15)), 
+        vals = seq(-6,7, 0.5)
       )
       leaflet_titleg <- "°C"
     }
