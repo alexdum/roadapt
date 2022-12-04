@@ -15,6 +15,7 @@ library(plotly)
 library(DT)
 
 source_python("utils/extract_point.py")
+source("utils/utils.R")
 source("utils/names_to_date.R") # c]mp data din fisere netcdf
 source("utils/leaflet_fun_gen.R") # harta tab general
 source("utils/leaflet_fun_det.R") # harta tab detalii
