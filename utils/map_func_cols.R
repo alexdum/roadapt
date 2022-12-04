@@ -9,11 +9,10 @@ colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate="linear")
 colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate="linear")
 colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate="linear")
 colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate="linear")
-colintBrBGfull <- colorRampPalette( brewer.pal(11,"BrBG"),interpolate="linear")
+colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG"),interpolate="linear")
 
 map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA) {
   # culori interpolate
-  
   if (indic %in% c("tas", "tasmax", "tasmin")) {
     if(agr_tip == 'absol') {
       df.col <- data.frame(
@@ -30,11 +29,40 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
     }
   }
   
-
+  
+  if (indic %in% c("pr")) {
+    if (agr_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintGnBu(15), 
+          vals = seq(0,1400, 100)
+        ) 
+      } else if (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = colintGnBu(17), 
+          vals = seq(0,800, 50)
+        )
+      } else {
+        df.col <- data.frame(
+          cols = colintGnBu(21), 
+          vals = seq(0,500, 25)
+        )
+      }
+      leaflet_titleg <- "mm"
+    } else {
+      df.col <- data.frame(
+        cols = rev(colintBrBG (21)), 
+        vals = seq(-100,100, 10)
+      )
+      leaflet_titleg <- "%"
+    }
+  }
+  
+  
   print(head(df.col))
   print(domain)
   ints <- findInterval(domain, df.col$vals, rightmost.closed = T, left.open = F)
-
+  
   bins <-  df.col$vals[ints[1]:(ints[2] + 1)]
   cols <- df.col$cols[ints[1]:(ints[2])]
   
