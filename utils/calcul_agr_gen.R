@@ -1,4 +1,5 @@
 #subseteaza dup
+#nc_fil <- paste0("www/data/ncs/agro/tasAdjust_rcp45_season-25_19710101_21001231.nc")
 calcul_agro_gen <- function(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   
   nc <- rast(nc_fil)
@@ -26,7 +27,7 @@ calcul_agro_gen <- function(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_aba
     
   } else {
     
-    dats.sub <- dats[dats >= as.Date(paste0(an1_abs, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an1_abs , "1231"), format = "%Y%m%d") ]
+    dats.sub <- dats[dats >= as.Date(paste0(an1_abs, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2_abs , "1231"), format = "%Y%m%d") ]
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
