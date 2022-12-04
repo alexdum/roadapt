@@ -28,11 +28,11 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   param_text<- ifelse (
     agr_tip == "abate", 
     paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
-          "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          "schimbare", names(select_interv)[which(select_interv %in% input$agr_perio_det)], 
           an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"
     ),
     paste(names(select_agro_ind)[which(select_agro_ind %in% indic)], " - scenariul", toupper(scena),
-          "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio)], 
+          "- medii multianuale - ", names(select_interv)[which(select_interv %in% input$agr_perio_det)], 
           an1_abs,"-", an2_abs
     )
   )
