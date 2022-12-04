@@ -16,22 +16,24 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/agro/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
 
+  
   # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
   ncf <- calcul_agro_gen(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
-  print*summary(ncf)
   
-  # pentru legenda 
-  domain <- minmax(ncf)
+  # pentru legenda titlu §i intervale §i culori
+  domain <- terra::minmax(ncf)
+  map_leg <- map_func_cols(indic, agr_tip, domain = domain, perio_tip)
+
   
-  if (indic == "pr") {
-    pal_rev <- colorNumeric("GnBu", domain = domain, reverse = T, na.color = "transparent")
-    pal<- colorNumeric("GnBu", domain = domain, reverse = F, na.color = "transparent")
-    tit_leg <- "mm"
-  } else {
-    pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
-    pal<- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
-    tit_leg <- "°C"
-  }
+  # if (indic == "pr") {
+  #   pal_rev <- colorNumeric("GnBu", domain = domain, reverse = T, na.color = "transparent")
+  #   pal<- colorNumeric("GnBu", domain = domain, reverse = F, na.color = "transparent")
+  #   tit_leg <- "mm"
+  # } else {
+  #   pal_rev <- colorNumeric("RdYlBu", domain = domain, reverse = F, na.color = "transparent")
+  #   pal<- colorNumeric("RdYlBu", domain = domain, reverse = T, na.color = "transparent")
+  #   tit_leg <- "°C"
+  # }
   
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857")
@@ -55,7 +57,7 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
-    domain = domain, pal = pal, pal_rev = pal_rev, tit_leg  =  tit_leg, param_text = param_text,
+    domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, param_text = param_text,
     opacy = input$transp_agr_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
     agr_tip = agr_tip,  name_ind =  name_ind, agro_perio = agro_perio 
@@ -105,7 +107,7 @@ variables_plot_agro_gen <- reactiveValues(
 )
 
 observe({ 
-  proxy <- leafletProxy("agr_map_gen")
+  proxy <- leafletProxy("agr_map_gen") 
   click <- input$agr_map_gen_click
   nc_ex <- agr_rea()$nc_geo
   nc_fil <- agr_rea()$nc_fil
@@ -146,10 +148,9 @@ observe({
       variables_plot_agro_gen$indic <- indic
       variables_plot_agro_gen$tip <- agr_tip
       
-      
-      
     }
   }
+  
   
 })
 
