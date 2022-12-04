@@ -15,12 +15,24 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
   # culori interpolate
   if (indic %in% c("tas", "tasmax", "tasmin")) {
     if(agr_tip == 'absol') {
-      df.col <- data.frame(
-        cols = c(rev(colintBlues(8)), colintYlOrRd(19)), 
-        vals = seq(-16,36,2)
-      )
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = c(rev(colintBlues(3)), colintYlOrRd(9)), 
+          vals = seq(-6,16,2)
+        ) 
+      } else if  (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = c(rev(colintBlues(5)), colintYlOrRd(14)), 
+          vals = seq(-10,26,2)
+        ) 
+      } else {
+        df.col <- data.frame(
+          cols = c(rev(colintBlues(8)), colintYlOrRd(19)), 
+          vals = seq(-16,36,2)
+        ) 
+      }
       leaflet_titleg <- "°C"
-    } else {
+    }  else {
       df.col <- data.frame(
         cols = rev(colintRdYlBu(25)), 
         vals = seq(-6,6, 0.5)
@@ -28,7 +40,6 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
       leaflet_titleg <- "°C"
     }
   }
-  
   
   if (indic %in% c("pr")) {
     if (agr_tip == 'absol') {
