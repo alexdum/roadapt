@@ -148,14 +148,11 @@ observe({
 # sau datele de intrare in plot
 observeEvent(variables_plot_agro_gen$input ,{
   
-  print(head(variables_plot_agro_gen$input))
-  
   if(!isTRUE(all.equal(variables_plot_agro_gen$input, variables_plot_agro_gen$update_input ))  |
      !isTRUE(all.equal(variables_plot_agro_gen$tip, variables_plot_agro_gen$update_input_tip_plt))) {
     
     indic_plt <- variables_plot_agro_gen$indic
     tip_plt <- variables_plot_agro_gen$tip
-    print(head(variables_plot_agro_gen$update_input))
     input_plt <- variables_plot_agro_gen$input
     # pentru comparare in caz de update
     variables_plot_agro_gen$update_input <- input_plt 
