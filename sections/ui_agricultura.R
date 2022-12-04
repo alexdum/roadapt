@@ -42,7 +42,7 @@ ui_agricultura <- tabPanel(
             condition = "input.agr_tip == 'abate'",
             sliderInput(
               "slider_agro_abate_gen", label = "Interval calcul", min = 2006, 
-              max = 2100, value = c(2021, 2050), dragRange = T, ticks = F,
+              max = 2100, value = c(2071, 2100), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           conditionalPanel(
@@ -150,7 +150,7 @@ ui_agricultura <- tabPanel(
             condition = "input.agr_tip_det == 'abate'",
             sliderInput(
               "slider_agro_abate_det", label = "Interval calcul", min = 2006, 
-              max = 2100, value = c(2021, 2050), dragRange = T, ticks = F,
+              max = 2100, value = c(2071, 2100), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           conditionalPanel(
