@@ -40,19 +40,19 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
       } else if (perio_tip == "season") {
         df.col <- data.frame(
           cols = colintGnBu(17), 
-          vals = seq(0,800, 50)
+          vals = seq(0,500, 11)
         )
       } else {
         df.col <- data.frame(
-          cols = colintGnBu(21), 
-          vals = seq(0,500, 25)
+          cols = colintGnBu(9), 
+          vals = seq(0,200, 25)
         )
       }
       leaflet_titleg <- "mm"
     } else {
       df.col <- data.frame(
-        cols = rev(colintBrBG (21)), 
-        vals = seq(-100,100, 10)
+        cols = colintBrBG (11), 
+        vals = seq(-50,50, 10)
       )
       leaflet_titleg <- "%"
     }
