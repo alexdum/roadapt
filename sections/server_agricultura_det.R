@@ -17,7 +17,7 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   # calcul abateri absolute cu funct utils/calcul_agr_det.R
   tab_sub <- calcul_agro_det(tab, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatial
-  uat_sub <- uat |> left_join(tab_sub, by = c( "natCode" = "ID"))
+  uat_sub <- uat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   print(head(tab_sub))
   
   # legenda si intervale functie utils/cols_leg_agr_det.R
@@ -72,7 +72,7 @@ observe({
     clearShapes() %>%
     addPolygons (
       fillColor = ~pal(value),
-      label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name_1,
+      label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name,
                      "<br/>",round(value,1),"</b></font><br/>
                        <font size='1' color='#E95420'>Click to
                        get values and graph</font>") %>% lapply(htmltools::HTML),
@@ -81,7 +81,7 @@ observe({
       weight = 0.5, smoothFactor = 0.1,
       opacity = 0.5,
       fillOpacity = opacy ,
-      layerId = ~natCode,
+      layerId = ~natcode,
       # options = pathOptions(pane = "pol"),
       #group = "region",
       highlightOptions = highlightOptions(
