@@ -8,7 +8,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
     clearShapes() %>%
     addPolygons (
       fillColor = ~pal(value), 
-      label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name_1,
+      label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name,
                      "<br/>",round(value,1),"</b></font><br/>
                        <font size='1' color='#E95420'>Click to
                        get values and graph</font>") %>% lapply(htmltools::HTML),
@@ -17,7 +17,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
       weight = 0.5, smoothFactor = 0.1,
       opacity = 0.5, 
       fillOpacity = 0.7,
-      layerId = ~natCode,
+      layerId = ~natcode,
       # options = pathOptions(pane = "pol"),
       #group = "region",
       highlightOptions = highlightOptions(
