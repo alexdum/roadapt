@@ -36,8 +36,8 @@ mask <- vect("www/data/shp/rou_border_mbufer.shp")
 mask <- project(mask,  "EPSG:3857")
          
 
-uat <- st_read("www/data/shp/UAT_poli_2019_merc.shp", quiet = T) |>
-     st_transform(4326)
+uat <- st_read("www/data/shp/uat.topojson", quiet = T)
+ 
 
 select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv") 
 select_agro_ind  <- setNames(select_agro_ind$choice, select_agro_ind$parameter)
