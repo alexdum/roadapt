@@ -23,8 +23,8 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
         ) 
       } else if  (perio_tip == "season") {
         df.col <- data.frame(
-          cols = c(rev(colintBlues(5)), colintYlOrRd(20)), 
-          vals = seq(-10,38,2)
+          cols = c(rev(colintBlues(8)), colintYlOrRd(20)), 
+          vals = seq(-16,38,2)
         ) 
       } else {
         df.col <- data.frame(
