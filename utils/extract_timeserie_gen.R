@@ -36,7 +36,7 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
     change_min = case_when(
       varia %in% c("prAdjust", "ur") ~  (((min*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
       !varia %in% c("prAdjust", "ur") ~   (min - mean(med[an <= 2000]))  %>% round(1)),
-    med_ref = mean(med[an <= 2000]) |> round(1)
+    med_1971_2000 = mean(med[an <= 2000]) |> round(1)
   )
   
   return(dd)
