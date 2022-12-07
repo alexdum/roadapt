@@ -26,8 +26,8 @@ agr_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_agro_gen)),{
   
   
   # mask raster
-  ncfm <- project(ncf,  "EPSG:3857")
-  ncfm <- terra::mask(ncfm, mask)
+  ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
+  ncfm <- terra::mask(ncfm, mask, touches=F)
   
   
   # text harta
