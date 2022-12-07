@@ -174,9 +174,9 @@ ui_agricultura <- tabPanel(
             leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
           ),
           tabsetPanel(
-            # fluidRow (
-            #   h6(textOutput("condpan_agro_det"), style = "text-align:center;")
-            # ),
+            fluidRow (
+              h6(textOutput("condpan_agro_det"), style = "text-align:center;")
+            ),
             tabPanel(
               value = "Grafic",
               title = h6("Grafic"),
