@@ -112,7 +112,7 @@ observeEvent(input$agr_map_det_shape_click$id,{
   perio_sub <- agr_rdet()$perio_sub
   indic <- agr_rdet()$indic
   tip <- agr_rdet()$agr_tip
- 
+  
   dd <- extract_timeser_det(tab,id, perio_sub, indic)
   print(head(dd))
   variables_plot_agro_det$input <- dd
@@ -139,9 +139,10 @@ output$agro_timeseries_det_plot <- renderPlotly({
 output$agro_timeseries_det_data <- DT::renderDT({
   
   DT::datatable(
-    variables_plot_agro_det$input, extensions = 'Buttons', rownames = F,
+    variables_plot_agro_det$input |> dplyr:: mutate(across(is.numeric, round, digits = 1)),
+    extensions = 'Buttons', rownames = F,
     options = list(
-      dom = 'Bfrtip',
+      dom = 'Bfrtip',digits = 1,
       pageLength = 5, autoWidth = TRUE,
       buttons = c('pageLength','copy', 'csv', 'excel'),
       pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
