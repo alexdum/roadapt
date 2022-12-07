@@ -13,8 +13,8 @@ calcul_agro_det <- function(tab, agr_tip_det, perio_sub, indic, an1_abat, an2_ab
         group_by(ID) |> summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
           value = case_when(
-            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100)  %>% round(1),
-            !indic %in% c("pr", "ur") ~  (p50 - norm)  %>% round(1)
+            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
+            !indic %in% c("pr", "ur") ~  (p50 - norm) |> round(1)
           )
         )
       
@@ -27,8 +27,8 @@ calcul_agro_det <- function(tab, agr_tip_det, perio_sub, indic, an1_abat, an2_ab
         summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
           value = case_when(
-            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100)  %>% round(1),
-            !indic %in% c("pr", "ur") ~ (p50 - norm)  %>% round(1)
+            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
+            !indic %in% c("pr", "ur") ~ (p50 - norm)  |> round(1)
           )
         )
     }
@@ -37,11 +37,11 @@ calcul_agro_det <- function(tab, agr_tip_det, perio_sub, indic, an1_abat, an2_ab
     if (perio_sub != "year") { #daca ai an formateaza data diferit
       tab.sub <- tab |> 
         filter(month ==  as.integer(perio_sub) & year >= an1_abs & year <= an2_abs) |>
-        group_by(ID) |> summarise(value = mean(p50)) 
+        group_by(ID) |> summarise(value = mean(p50) |> round(1)) 
     } else {
       tab.sub <- tab |> 
         filter(year >= an1_abs & year <= an2_abs) |>
-        group_by(ID) |> summarise(value = mean(p50)) 
+        group_by(ID) |> summarise(value = mean(p50) |> round(1)) 
     }
   }
   return(tab.sub)
