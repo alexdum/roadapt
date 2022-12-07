@@ -31,7 +31,7 @@ plots_agro_gen <- function(dd, tip, indic) {
     
     gg <- ggplot(data = dd, aes(x = data, y = med)) + 
       geom_line(color = "black", size = 0.8) +
-      geom_line(aes(x = data,  y = med_ref), col = "red") +
+      geom_line(aes(x = data,  y = med_1971_2000), col = "red") +
       geom_ribbon(aes(x = data, ymax = max, ymin = min), alpha = 0.5, fill = "gray") +
       scale_x_date(breaks = c(as.Date("1971-01-01"), seq(as.Date("2000-01-01"), as.Date("2100-12-31"), by = "20 years")), date_labels = "%Y") +
       xlab("") + ylab(y_lab)
