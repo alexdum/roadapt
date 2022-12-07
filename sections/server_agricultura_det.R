@@ -121,7 +121,6 @@ observeEvent(input$agr_map_det_shape_click$id,{
   
 }) 
 
-
 # pentru subtab plot
 output$agro_timeseries_det_plot <- renderPlotly({
   req(!is.na(variables_plot_agro_det$input))
@@ -134,4 +133,21 @@ output$agro_timeseries_det_plot <- renderPlotly({
     variables_plot_agro_det$indic
   )
   plt$gp
+})
+
+# pentru afisare subtab date
+output$agro_timeseries_det_data <- DT::renderDT({
+  
+  DT::datatable(
+    variables_plot_agro_det$input, extensions = 'Buttons', rownames = F,
+    options = list(
+      dom = 'Bfrtip',
+      pageLength = 5, autoWidth = TRUE,
+      buttons = c('pageLength','copy', 'csv', 'excel'),
+      pagelength = 10, lengthMenu = list(c(10, 25, 100, -1), c('10', '25', '100','All')
+      )
+      
+    )
+  )
+  
 })
