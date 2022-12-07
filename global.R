@@ -30,10 +30,9 @@ source("utils/plots_det.R") # plot din date parquet
 
 
 
-# pentru adisare harta
-borders <- st_read("www/data/shp/granita.shp", quiet = T) 
-# pentru mask raster
-mask <- vect("www/data/shp/mask.shp")
+
+borders <- st_read("www/data/shp/granita.shp", quiet = T) # pentru afisare harta
+mask <- vect("www/data/shp/mask.shp") # pentru mask raster
          
 
 uat <- st_read("www/data/shp/uat.topojson", quiet = T)

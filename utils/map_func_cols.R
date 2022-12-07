@@ -51,8 +51,8 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
         ) 
       } else if (perio_tip == "season") {
         df.col <- data.frame(
-          cols = colintGnBu(17), 
-          vals = seq(0,500, 11)
+          cols = colintGnBu(13), 
+          vals = c(seq(0,100, 25), seq(150,500, 50))
         )
       } else {
         df.col <- data.frame(
