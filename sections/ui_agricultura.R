@@ -189,7 +189,7 @@ ui_agricultura <- tabPanel(
               value = "Data",
               title = h6("Data"),
               wellPanel(
-                #DT::dataTableOutput("agro_timeseries_gen_data")
+                DT::dataTableOutput("agro_timeseries_det_data")
               )
             )
           )
