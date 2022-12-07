@@ -25,7 +25,7 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
     change_min = case_when(
       indic %in% c("pr", "ur") ~  (((pmin*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
       !indic %in% c("pr", "ur") ~   (pmin - mean(p50[an <= 2000]))  %>% round(1)),
-    med_ref = mean(p50[an <= 2000]) |> round(1)
+    med_1971_2000 = mean(p50[an <= 2000]) |> round(1)
   )
   
   return(dd)
