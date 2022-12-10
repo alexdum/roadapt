@@ -27,7 +27,10 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
       !indic %in% c("pr", "ur") ~   (pmin - mean(p50[an <= 2000]))  %>% round(1)),
     med_1971_2000 = mean(p50[an <= 2000]) |> round(1)
   )
-  
+  dd <- dd |> # tidy table
+    dplyr::select(-year, -month, -p25, -p75) |>
+    dplyr::rename(max = pmax, min = pmin, med = p50)
+    
   return(dd)
 }
 
