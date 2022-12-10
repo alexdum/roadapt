@@ -76,6 +76,7 @@ ui_agricultura <- tabPanel(
           wellPanel(
             leafletOutput("agr_map_gen")
           ),
+          br(),
           conditionalPanel( # show graphs only when data available
             condition = "input.radio_agr_gen == 2 && output.condpan_agro_gen != 'nas'",
             
@@ -173,6 +174,7 @@ ui_agricultura <- tabPanel(
           wellPanel(
             leafletOutput("agr_map_det") |> withSpinner(size = 0.5)
           ),
+          br(),
           tabsetPanel(
             fluidRow (
               h6(textOutput("condpan_agro_det"), style = "text-align:center;")
