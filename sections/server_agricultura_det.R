@@ -119,7 +119,7 @@ observeEvent(input$agr_map_det_shape_click$id,{
   print(head(dd))
   # text conditional panel plot
   condpan_agro_det_txt <- ifelse( 
-    is.na(mean(dd$p50 , na.rm = T)) | is.na(id), 
+    is.na(mean(dd$med , na.rm = T)) | is.na(id), 
     "nas", 
     paste0(
       agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (",name," - județul ",county,") - perioada de referință 1971 - 2000"
@@ -144,9 +144,9 @@ observeEvent(input$agr_map_det_shape_click$id,{
 # pentru subtab plot
 output$agro_timeseries_det_plot <- renderPlotly({
   req(!is.na(variables_plot_agro_det$input))
-  print(head( variables_plot_agro_det$tip))
-  print(variables_plot_agro_det$tip)
-  print( variables_plot_agro_det$indic)
+  # print(head( variables_plot_agro_det$tip))
+  # print(variables_plot_agro_det$tip)
+  # print( variables_plot_agro_det$indic)
   plt <- plots_agro_det(
     variables_plot_agro_det$input,
     variables_plot_agro_det$tip,  
