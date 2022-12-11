@@ -18,13 +18,13 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
     an = format(date, "%Y"),
     change_med = case_when(
       indic %in% c("pr", "ur") ~  (((p50*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("pr", "ur") ~   (p50 - mean(p50[an <= 2000]))  %>% round(1)),
+      !indic %in% c("pr", "ur") ~ (p50 - mean(p50[an <= 2000]))  %>% round(1)),
     change_max = case_when(
       indic %in% c("pr", "ur") ~  (((pmax*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("pr", "ur") ~   (pmax - mean(p50[an <= 2000]))  %>% round(1)),
+      !indic %in% c("pr", "ur") ~ (pmax - mean(p50[an <= 2000]))  %>% round(1)),
     change_min = case_when(
       indic %in% c("pr", "ur") ~  (((pmin*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("pr", "ur") ~   (pmin - mean(p50[an <= 2000]))  %>% round(1)),
+      !indic %in% c("pr", "ur") ~ (pmin - mean(p50[an <= 2000]))  %>% round(1)),
     med_1971_2000 = mean(p50[an <= 2000]) |> round(1)
   )
   dd <- dd |> # tidy table
