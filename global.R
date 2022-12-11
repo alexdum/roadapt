@@ -29,13 +29,13 @@ source("utils/plots_gen.R") # plot din date raster
 source("utils/plots_det.R") # plot din date parquet
 
 
-
-
 borders <- st_read("www/data/shp/granita.shp", quiet = T) # pentru afisare harta
 mask <- vect("www/data/shp/mask.shp") # pentru mask raster
          
 
 uat <- st_read("www/data/shp/uat.topojson", quiet = T)
+jud <- st_read("www/data/shp/judete.topojson", quiet = T) |> dplyr::rename(natcode = mnemonic)
+reg <- st_read("www/data/shp/regiuni.topojson", quiet = T) |> dplyr::rename(natcode = regionId, name = region)
  
 
 select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv") 
