@@ -118,6 +118,14 @@ ui_agricultura <- tabPanel(
         column(
           width = 2,
           selectInput(
+            inputId = "agr_admin_det",
+            label = "Unitate administrativă",
+            choices = c("Regiuni dezvoltare" = "reg",
+                        "Județe" = "jud",
+                        "UAT" = "uat"),
+            selected =  "uat"
+          ),
+          selectInput(
             inputId = "agr_ind_det",
             label = "Indicator",
             choices = select_agro_ind,
