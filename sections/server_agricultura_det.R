@@ -131,8 +131,7 @@ observeEvent(list(input$go_agrdet, variables_plot_agro_det$id), {
   name_ind <- agr_rdet()$name_ind
   
   dd <- extract_timeser_det(tab, variables_plot_agro_det$id, perio_sub, indic)
-  print(head(dd))
-  
+
   variables_plot_agro_det$input <- dd
   variables_plot_agro_det$indic <-  indic 
   variables_plot_agro_det$tip <- agr_tip 
