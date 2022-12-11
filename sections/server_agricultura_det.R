@@ -1,12 +1,25 @@
 
+
 agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   
+  
+  admin <- input$agr_admin_det
   indic <- input$agr_ind_det
   scena <- input$agr_scen_det
   agr_tip <- input$agr_tip_det # absolut/abate
   perio_sub <- strsplit(input$agr_perio_det, "-")[[1]][1] # number of month
   perio_tip <- strsplit(input$agr_perio_det, "-")[[1]][2] # month/season/year
-  tab <-  read_parquet(paste0("www/data/parquet/agro/", indic ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  
+  # selectie unitate
+  switch( # alege nume indicator care să fie afișat
+    which(c("uat", "jud", "reg") %in%  admin),
+    admin_spat <- uat,
+    admin_spat <- jud,
+    admin_spat <- reg
+  )
+  
+  
+  tab <-  read_parquet(paste0("www/data/parquet/agro/",admin,"/", indic ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
   
   an1_abat <- input$slider_agro_abate_det[1]
@@ -17,10 +30,10 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   # calcul abateri absolute cu funct utils/calcul_agr_det.R
   tab_sub <- calcul_agro_det(tab, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatial
-  uat_sub <- uat |> left_join(tab_sub, by = c( "natcode" = "ID"))
+  admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_agr_det.R
-  map_leg <- map_func_cols(indic, agr_tip, domain = range(uat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, agr_tip, domain = range(admin_spat_sub$value), perio_tip)
   
   
   # text harta
@@ -34,10 +47,11 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   )
   
   list(
-    uat_sub = uat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
+    admin_spat_sub =admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
     param_text = param_text, opacy = input$transp_agr_det, tab = tab, perio_sub = perio_sub, indic = indic,
     agr_tip = agr_tip, scena = scena, name_ind = name_ind, agro_perio = agro_perio, 
-    an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs
+    an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs,
+    admin = admin
   )
   
 })
@@ -49,7 +63,7 @@ output$agr_text_det <- renderText({
 
 output$agr_map_det <- renderLeaflet ({
   leaflet_fun_det(
-    data = isolate(agr_rdet()$uat_sub),
+    data = isolate(agr_rdet()$admin_spat_sub),
     pal =  isolate(agr_rdet()$pal),
     pal_rev =  isolate(agr_rdet()$pal_rev),
     tit_leg = isolate(agr_rdet()$tit_leg)
@@ -61,7 +75,7 @@ observe({
   #req(input$go_agrdet == "Detalii") # Only display if tab is 'Detalii'
   pal_rev =  agr_rdet()$pal_rev
   tit_leg = agr_rdet()$tit_leg
-  data <- agr_rdet()$uat_sub
+  data <- agr_rdet()$admin_spat_sub
   pal <- agr_rdet()$pal
   opacy <- agr_rdet()$opacy 
   
@@ -96,42 +110,69 @@ observe({
   
 }) 
 
-variables_plot_agro_det <- reactiveValues(
-  input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
-  # variabile control pentru actualizare grafic/date
-  norm = NULL, mean = NULL, change = NULL, id = NULL, name = NULL, county = NULL
-)
+
 
 
 # reactive values plot ----------------------------------------------------
+variables_plot_agro_det <- reactiveValues(
+  input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
+  # variabile control pentru actualizare grafic/date
+  norm = NULL, mean = NULL, change = NULL, id = NULL, name = NULL, county = NULL,
+  admin = NULL, update_admin = NULL
+  
+) 
 
 observeEvent(list(isolate(input$go_agrdet), isolate(input$tab_agro_det)),{
-  uat_sub <- agr_rdet()$uat_sub
-  first_sel <- sample(1:nrow(uat_sub), 1)
-  variables_plot_agro_det$id <- uat_sub$natcode[first_sel]
-  variables_plot_agro_det$name <- uat_sub$name[uat_sub$natcode == variables_plot_agro_det$id]
-  variables_plot_agro_det$county <- uat_sub$county[uat_sub$natcode == variables_plot_agro_det$id]
+  variables_plot_agro_det$admin  <- agr_rdet()$admin
+  admin_spat_sub <- agr_rdet()$admin_spat_sub
+  first_sel <- sample(1:nrow(admin_spat_sub), 1)
+  variables_plot_agro_det$id <-admin_spat_sub$natcode[first_sel]
+  variables_plot_agro_det$name <-admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_agro_det$id]
+  variables_plot_agro_det$county <-admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_agro_det$id]
   
 })
 
+observe({
+
+  variables_plot_agro_det$admin <- agr_rdet()$admin
+  print( variables_plot_agro_det$admin)
+  print(variables_plot_agro_det$update_admin)
+ 
+  if(!isTRUE(all.equal(variables_plot_agro_det$admin, variables_plot_agro_det$update_admin)))  {
+    admin <- variables_plot_agro_det$admin
+    admin_spat_sub <- agr_rdet()$admin_spat_sub
+    first_sel <- sample(1:nrow(admin_spat_sub), 1)
+    variables_plot_agro_det$id <- admin_spat_sub$natcode[first_sel]
+    variables_plot_agro_det$name <-admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_agro_det$id]
+    variables_plot_agro_det$county <-admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_agro_det$id]
+    variables_plot_agro_det$update_admin <- admin
+   
+  }
+})
+
+
 
 observeEvent(input$agr_map_det_shape_click$id,{ 
-  uat_sub <- agr_rdet()$uat_sub
+  admin_spat_sub <- agr_rdet()$admin_spat_sub
   variables_plot_agro_det$id  <- input$agr_map_det_shape_click$id
-  variables_plot_agro_det$name <- uat_sub$name[uat_sub$natcode == input$agr_map_det_shape_click$id]
-  variables_plot_agro_det$county <- uat_sub$county[uat_sub$natcode == input$agr_map_det_shape_click$id]
+  variables_plot_agro_det$name <-admin_spat_sub$name[admin_spat_sub$natcode == input$agr_map_det_shape_click$id]
+  variables_plot_agro_det$county <-admin_spat_sub$county[admin_spat_sub$natcode == input$agr_map_det_shape_click$id]
 })
 
 
 observeEvent(list(input$go_agrdet, variables_plot_agro_det$id), {
+  
   agr_tip <- agr_rdet()$agr_tip
   tab <- agr_rdet()$tab
   perio_sub <- agr_rdet()$perio_sub
   indic <- agr_rdet()$indic
   name_ind <- agr_rdet()$name_ind
+  print(variables_plot_agro_det$id)
+  
   
   dd <- extract_timeser_det(tab, variables_plot_agro_det$id, perio_sub, indic)
-
+  print(head(dd))
+  
   variables_plot_agro_det$input <- dd
   variables_plot_agro_det$indic <-  indic 
   variables_plot_agro_det$tip <- agr_tip 
@@ -159,13 +200,13 @@ output$agro_det_stat <- renderUI({
   an2_abat <- agr_rdet()$an2_abat
   an1_abs <- agr_rdet()$an1_abs
   an2_abs <- agr_rdet()$an2_abs
-  uat_sub <- agr_rdet()$uat_sub
+  admin_spat_sub <- agr_rdet()$admin_spat_sub
   agr_tip <- agr_rdet()$agr_tip
   
   if( agr_tip == 'abate') {
-    norm <- uat_sub$norm[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
-    multimean <- uat_sub$p50[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
-    change <- uat_sub$value[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    norm <-admin_spat_sub$norm[admin_spat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    multimean <-admin_spat_sub$p50[admin_spat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    change <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_agro_det$id] |> round(1)
     print(paste(an1_abat, an2_abat, norm, multimean, change))
     
     HTML(
@@ -187,7 +228,7 @@ output$agro_det_stat <- renderUI({
       )
     )
   } else {
-    value <- uat_sub$value[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    value <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_agro_det$id] |> round(1)
     
     HTML(
       paste0(
