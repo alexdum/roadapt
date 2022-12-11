@@ -118,6 +118,7 @@ observe({
       cell <- terra::cellFromXY(nc_ex, cbind(lon = click$lng, lat = click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
       ex_ver <- terra::extract(nc_ex, xy) # pentru verificare disponilibitate valori
+      
       # extrage variabila pentru python
       if(!is.na(ex_ver)) {
         dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
@@ -136,8 +137,7 @@ observe({
         condpan_agro_gen_txt
       })
       outputOptions(output, "condpan_agro_gen", suspendWhenHidden = FALSE)
-      # # valori pentru plot la reactive values
-      #values_plot_lst_mon$title <- condpan_monthly.txt
+   
       variables_plot_agro_gen$input <- dd
       variables_plot_agro_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
       variables_plot_agro_gen$indic <- indic
@@ -166,7 +166,7 @@ observe({
     # pentru subtab plot
     output$agro_timeseries_gen_plot <- renderPlotly({
       req(!is.na(input_plt))
-      plt <- plots_agro_gen(isolate(input_plt), isolate(tip_plt), isolate(indic_plt))
+      plt <- plots_agro_gen(input_plt, tip_plt, indic_plt)
       plt$gp
     })
     
