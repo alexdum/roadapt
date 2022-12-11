@@ -4,7 +4,7 @@ ui_agricultura <- tabPanel(
   tabsetPanel(
     tabPanel(
       id = "tab_agro_gen",
-      title = "General",
+      title = h6("General"),
       fluidRow(
         column(
           width = 2,
@@ -113,7 +113,7 @@ ui_agricultura <- tabPanel(
     ),
     tabPanel(
       id = "tab_agro_det",
-      title = "Detalii",
+      title = h6("Detalii"),
       fluidRow(
         column(
           width = 2,
@@ -177,7 +177,8 @@ ui_agricultura <- tabPanel(
           br(),
           tabsetPanel(
             fluidRow (
-              h6(textOutput("condpan_agro_det"), style = "text-align:center;")
+              h6(textOutput("condpan_agro_det"), style = "text-align:center;"),
+              htmlOutput("agro_det_stat")
             ),
             tabPanel(
               value = "Grafic",
