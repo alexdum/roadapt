@@ -115,13 +115,18 @@ observe({
   } else {
     proxy %>% clearPopups()
     if (!is.null(click)) {
-      cell <- terra::cellFromXY(nc_ex, cbind(click$lng, click$lat))
+      cell <- terra::cellFromXY(nc_ex, cbind(lon = click$lng, lat = click$lat))
       xy <- terra::xyFromCell(nc_ex, cell)
+      ex_ver <- terra::extract(nc_ex, xy) # pentru verificare disponilibitate valori
       # extrage variabila pentru python
-      dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
+      if(!is.na(ex_ver)) {
+        dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
+      } else {
+        dd <- NA
+      }
       # text conditional panel plot
       condpan_agro_gen_txt <- ifelse( 
-        is.na(mean(dd$med, na.rm = T)) | is.na(cell), 
+        is.na(ex_ver), 
         "nas", 
         paste0(
           agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),") - perioada de referință 1971 - 2000"
@@ -146,7 +151,7 @@ observe({
 
 # conditie pentru update plot si data table doar daca se modifica tipul plotului (abatere/absolute)
 # sau datele de intrare in plot
-observeEvent(variables_plot_agro_gen$input ,{
+observe({
   
   if(!isTRUE(all.equal(variables_plot_agro_gen$input, variables_plot_agro_gen$update_input ))  |
      !isTRUE(all.equal(variables_plot_agro_gen$tip, variables_plot_agro_gen$update_input_tip_plt))) {
