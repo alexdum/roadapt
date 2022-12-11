@@ -78,9 +78,9 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
   bins <-  df.col$vals[ints[1]:(ints[2] + 1)]
   cols <- df.col$cols[ints[1]:(ints[2])]
   
-  print(bins)
-  print(cols)
-  
+  # print(bins)
+  # print(cols)
+  # 
   pal <- colorBin(cols, domain = domain, bins = bins, na.color = "transparent")
   pal2 <- colorBin(cols, domain = domain, bins = bins, reverse = T, na.color = "transparent")
   
