@@ -19,7 +19,6 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   # unire cu spatial
   uat_sub <- uat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
-  
   # legenda si intervale functie utils/cols_leg_agr_det.R
   map_leg <- map_func_cols(indic, agr_tip, domain = range(uat_sub$value), perio_tip)
   
@@ -37,7 +36,8 @@ agr_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_agro_det)),{
   list(
     uat_sub = uat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
     param_text = param_text, opacy = input$transp_agr_det, tab = tab, perio_sub = perio_sub, indic = indic,
-    agr_tip = agr_tip, scena = scena, name_ind = name_ind, agro_perio = agro_perio
+    agr_tip = agr_tip, scena = scena, name_ind = name_ind, agro_perio = agro_perio, 
+    an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs
   )
   
 })
@@ -99,54 +99,119 @@ observe({
 variables_plot_agro_det <- reactiveValues(
   input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
   # variabile control pentru actualizare grafic/date
-  update_input = NULL, update_input_tip_plt = NULL 
+  norm = NULL, mean = NULL, change = NULL, id = NULL, name = NULL, county = NULL
 )
 
-observeEvent(input$agr_map_det_shape_click$id,{ 
+
+# reactive values plot ----------------------------------------------------
+
+observeEvent(list(isolate(input$go_agrdet), isolate(input$tab_agro_det)),{
+  uat_sub <- agr_rdet()$uat_sub
+  first_sel <- sample(1:nrow(uat_sub), 1)
+  variables_plot_agro_det$id <- uat_sub$natcode[first_sel]
+  variables_plot_agro_det$name <- uat_sub$name[uat_sub$natcode == variables_plot_agro_det$id]
+  variables_plot_agro_det$county <- uat_sub$county[uat_sub$natcode == variables_plot_agro_det$id]
   
-  id <- input$agr_map_det_shape_click$id
+})
+
+
+observeEvent(input$agr_map_det_shape_click$id,{ 
+  uat_sub <- agr_rdet()$uat_sub
+  variables_plot_agro_det$id  <- input$agr_map_det_shape_click$id
+  variables_plot_agro_det$name <- uat_sub$name[uat_sub$natcode == input$agr_map_det_shape_click$id]
+  variables_plot_agro_det$county <- uat_sub$county[uat_sub$natcode == input$agr_map_det_shape_click$id]
+})
+
+
+observeEvent(list(input$go_agrdet, variables_plot_agro_det$id), {
+  agr_tip <- agr_rdet()$agr_tip
   tab <- agr_rdet()$tab
   perio_sub <- agr_rdet()$perio_sub
   indic <- agr_rdet()$indic
-  agr_tip <- agr_rdet()$agr_tip
-  name <- uat$name[uat$natcode == id]
-  county <- uat$county[uat$natcode == id]
-  scena <- agr_rdet()$scena
   name_ind <- agr_rdet()$name_ind
-  agr_tip_name_ind <- ifelse(agr_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
-  agro_perio <-  agr_rdet()$agro_perio 
-  dd <- extract_timeser_det(tab, id, perio_sub, indic)
+  
+  dd <- extract_timeser_det(tab, variables_plot_agro_det$id, perio_sub, indic)
   print(head(dd))
-  # text conditional panel plot
-  condpan_agro_det_txt <- ifelse( 
-    is.na(mean(dd$med , na.rm = T)) | is.na(id), 
-    "nas", 
-    paste0(
-      agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (",name," - județul ",county,") - perioada de referință 1971 - 2000"
-    )
-  )
-  output$condpan_agro_det <- renderText({
-    condpan_agro_det_txt
-  })
-  outputOptions(output, "condpan_agro_det", suspendWhenHidden = FALSE)
   
-  
-  
-  
-  
-  print(head(dd))
   variables_plot_agro_det$input <- dd
   variables_plot_agro_det$indic <-  indic 
-  variables_plot_agro_det$tip <- agr_tip
+  variables_plot_agro_det$tip <- agr_tip 
+  
   
 }) 
 
+
+output$condpan_agro_det <- renderText({
+  agro_perio <-  agr_rdet()$agro_perio 
+  name_ind <- agr_rdet()$name_ind
+  agr_tip <- agr_rdet()$agr_tip
+  scena <- agr_rdet()$scena
+  agr_tip_name_ind <- ifelse(agr_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
+  paste0(
+    agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (",variables_plot_agro_det$name," - județul ",variables_plot_agro_det$county,") - perioada de referință 1971 - 2000"
+  )
+})
+
+
+
+output$agro_det_stat <- renderUI({
+  
+  an1_abat <- agr_rdet()$an1_abat
+  an2_abat <- agr_rdet()$an2_abat
+  an1_abs <- agr_rdet()$an1_abs
+  an2_abs <- agr_rdet()$an2_abs
+  uat_sub <- agr_rdet()$uat_sub
+  agr_tip <- agr_rdet()$agr_tip
+  
+  if( agr_tip == 'abate') {
+    norm <- uat_sub$norm[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    multimean <- uat_sub$p50[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    change <- uat_sub$value[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    print(paste(an1_abat, an2_abat, norm, multimean, change))
+    
+    HTML(
+      paste0(
+        "<table>
+      <tr>
+      <td style='padding:5px 10px 5px 5px'>Media 1971- 2000</d>
+      <td style='padding:5px 10px 5px 5px'>Media ",an1_abat,"-",an2_abat,"</td>
+      <td style='padding:5px 10px 5px 5px'>Schimbare ",an1_abat,"-",an2_abat," 
+      vs. 1971- 2010</td>
+      </tr>
+      <tr>
+      <td style='padding:5px 10px 5px 5px'>",norm,"</td>
+      <td style='padding:5px 10px 5px 5px'>",multimean,"</td>
+      <td style='padding:5px 10px 5px 5px'>",change,"</td>
+     </tr>
+      </table>",
+     "<font size='2' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font>"
+      )
+    )
+  } else {
+    value <- uat_sub$value[uat_sub$natcode == variables_plot_agro_det$id] |> round(1)
+    
+    HTML(
+      paste0(
+        "<table>
+      <tr>
+      <td style='padding:5px 10px 5px 5px'>Media ",an1_abs,"-",an2_abs,"</td>
+      </tr>
+      <tr>
+      <td style='padding:5px 10px 5px 5px'>",value,"</td>
+     </tr>
+      </table>",
+     "<font size='2' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font>"
+      )
+    )
+  }
+  
+})
+
+
+
 # pentru subtab plot
 output$agro_timeseries_det_plot <- renderPlotly({
-  req(!is.na(variables_plot_agro_det$input))
-  # print(head( variables_plot_agro_det$tip))
-  # print(variables_plot_agro_det$tip)
-  # print( variables_plot_agro_det$indic)
+  #req(!is.na(variables_plot_agro_det$input))
   plt <- plots_agro_det(
     variables_plot_agro_det$input,
     variables_plot_agro_det$tip,  
@@ -159,7 +224,9 @@ output$agro_timeseries_det_plot <- renderPlotly({
 output$agro_timeseries_det_data <- DT::renderDT({
   
   DT::datatable(
-    variables_plot_agro_det$input |> dplyr:: mutate(across(is.numeric, round, digits = 1)),
+    variables_plot_agro_det$input 
+    |> dplyr:: mutate(across(is.numeric, round, digits = 1)) |>
+      dplyr::select(-ID),
     extensions = 'Buttons', rownames = F,
     options = list(
       dom = 'Bfrtip',digits = 1,
