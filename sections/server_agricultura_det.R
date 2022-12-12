@@ -132,11 +132,10 @@ observeEvent(list(isolate(input$go_agrdet), isolate(input$tab_agro_det)),{
   
 })
 
+# pentru actualizare grafic doar cand se schimba regiunea
 observe({
 
   variables_plot_agro_det$admin <- agr_rdet()$admin
-  print( variables_plot_agro_det$admin)
-  print(variables_plot_agro_det$update_admin)
  
   if(!isTRUE(all.equal(variables_plot_agro_det$admin, variables_plot_agro_det$update_admin)))  {
     admin <- variables_plot_agro_det$admin
@@ -167,11 +166,8 @@ observeEvent(list(input$go_agrdet, variables_plot_agro_det$id), {
   perio_sub <- agr_rdet()$perio_sub
   indic <- agr_rdet()$indic
   name_ind <- agr_rdet()$name_ind
-  print(variables_plot_agro_det$id)
-  
-  
+
   dd <- extract_timeser_det(tab, variables_plot_agro_det$id, perio_sub, indic)
-  print(head(dd))
   
   variables_plot_agro_det$input <- dd
   variables_plot_agro_det$indic <-  indic 
@@ -180,15 +176,22 @@ observeEvent(list(input$go_agrdet, variables_plot_agro_det$id), {
   
 }) 
 
-
+# nume grafic
 output$condpan_agro_det <- renderText({
+  admin <- agr_rdet()$admin
   agro_perio <-  agr_rdet()$agro_perio 
   name_ind <- agr_rdet()$name_ind
   agr_tip <- agr_rdet()$agr_tip
   scena <- agr_rdet()$scena
+  # ajustare nume in functie de unitat administrativa
   agr_tip_name_ind <- ifelse(agr_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
+  if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_agro_det$name)
+  if (admin == "jud") name_aadmin <- paste("județul", variables_plot_agro_det$name)
+  if (admin == "uat") name_aadmin <- paste(variables_plot_agro_det$name," - județul ",variables_plot_agro_det$county)
   paste0(
-    agr_tip_name_ind," ", agro_perio," ",toupper(scena), " (",variables_plot_agro_det$name," - județul ",variables_plot_agro_det$county,") - perioada de referință 1971 - 2000"
+    agr_tip_name_ind," ", agro_perio," ",toupper(scena), 
+    " (",name_aadmin ,") 
+    - perioada de referință 1971 - 2000"
   )
 })
 
