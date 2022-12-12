@@ -1,0 +1,6 @@
+cod,nume,name,path,definitie
+prAdjust,Cantitatea de precipitații,Precipitation amount,agro,
+tasAdjust,Temperatura medie,Mean  temperature,agro,
+tasminAdjust,Temperatura minimă,Minimum temperature,agro,
+tasmaxAdjust,Temperatura maximă,Maximum temperature,agro,
+cdd,Număr consecutiv de zile fără precipitații,Consecutive dry days,agro,
