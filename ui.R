@@ -2,6 +2,7 @@ library(plotly)
 library(shiny)
 library(gridlayout)
 
+source("sections/ui_climatgeneral.R",  local = TRUE)
 source("sections/ui_agricultura.R",  local = TRUE)
 source("sections/ui_energie.R",  local = TRUE)
 source("sections/ui_despre.R",  local = TRUE)
@@ -25,7 +26,7 @@ ui <- shinyUI(
       collapsible = TRUE,
       theme = bslib::bs_theme(bootswatch = "minty"),
       
-      
+      ui_climatgeneral,
       ui_agricultura,
       ui_energie,
       ui_despre
