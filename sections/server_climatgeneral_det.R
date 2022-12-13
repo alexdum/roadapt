@@ -1,6 +1,6 @@
 
 
-climgen_rdet <- eventReactive(list(input$go_agrdet, isolate(input$tab_climgen_det)),{
+climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climgen_det)),{
   
   
   admin <- input$climgen_admin_det
@@ -72,7 +72,7 @@ output$climgen_map_det <- renderLeaflet ({
 
 
 observe({
-  #req(input$go_agrdet == "Detalii") # Only display if tab is 'Detalii'
+  #req(input$go_climgendet == "Detalii") # Only display if tab is 'Detalii'
   pal_rev =  climgen_rdet()$pal_rev
   tit_leg = climgen_rdet()$tit_leg
   data <- climgen_rdet()$admin_spat_sub
@@ -122,7 +122,7 @@ variables_plot_climgen_det <- reactiveValues(
   
 ) 
 
-observeEvent(list(isolate(input$go_agrdet), isolate(input$tab_climgen_det)),{
+observeEvent(list(isolate(input$go_climgendet), isolate(input$tab_climgen_det)),{
   variables_plot_climgen_det$admin  <- climgen_rdet()$admin
   admin_spat_sub <- climgen_rdet()$admin_spat_sub
   first_sel <- sample(1:nrow(admin_spat_sub), 1)
@@ -159,7 +159,7 @@ observeEvent(input$climgen_map_det_shape_click$id,{
 })
 
 
-observeEvent(list(input$go_agrdet, variables_plot_climgen_det$id), {
+observeEvent(list(input$go_climgendet, variables_plot_climgen_det$id), {
   
   climgen_tip <- climgen_rdet()$climgen_tip
   tab <- climgen_rdet()$tab

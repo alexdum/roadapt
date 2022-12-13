@@ -1,6 +1,6 @@
 
 # harta leaflet -----------------------------------------------------------
-climgen_rea <- eventReactive(list(input$go_agrgen, isolate(input$tab_climgen_gen)),{
+climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen_gen)),{
   
   indic <- input$climgen_ind
   scena <-  input$climgen_scen
