@@ -6,13 +6,14 @@ output:
     theme: spacelab
 ---
 
-Această pagină oferă acces interactiv la indicatorii climatici selectați în RO-Adapt și atribuiți sectoarelor economice analizate în cadrul proiectului:
+Această pagină oferă acces interactiv la parametrii și indicatorii climatici selectați în RO-Adapt și atribuiți sectoarelor economice analizate în cadrul proiectului:
 
 
+[Apecte generale](#general)
 
 [Agricultură și dezvoltare rurală](#agricultura)
 
-Energie     
+[Energie](#energie)     
 
 Resurse de apă   
 
@@ -31,7 +32,3 @@ Turism și activități recreative
 Industrie      
 
 Asigurări     
-
-dar și la
-
-[Parametrii esențiali](#general)
