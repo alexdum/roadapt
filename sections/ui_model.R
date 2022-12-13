@@ -2,7 +2,7 @@ ui_energie <- tabPanel(
   title = "Energie",icon = icon("solar-panel"),
   value = "#energie", id = "#energie",
   tabsetPanel(
-    tabPanel(title = "Național"),
-    tabPanel(title = "Administrativ")
+    tabPanel(title = "General"),
+    tabPanel(title = "Detalii")
   )
 )

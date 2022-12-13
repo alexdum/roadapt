@@ -1,7 +1,7 @@
 #subseteaza dup
-calcul_agro_det <- function(tab, agr_tip_det, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
+calcul_climgen_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   #subseteaza dupa tip/an
-  if (agr_tip_det == "abate") {
+  if (climgen_tip_det == "abate") {
     
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit

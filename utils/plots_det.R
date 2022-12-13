@@ -5,7 +5,7 @@
 # 
 # plots_agro_gen(dd, "schimbare")
 
-plots_agro_det <- function(dd, tip, indic) {
+plots_det <- function(dd, tip, indic) {
   
   # pentru titlu axa y
   if (indic %in% c("tas" , "tasmax", "tasmin")) {

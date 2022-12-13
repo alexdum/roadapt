@@ -30,4 +30,8 @@ Turism și activități recreative
 
 Industrie      
 
-Asigurări       
+Asigurări     
+
+dar și la
+
+[Parametrii esențiali](#general)

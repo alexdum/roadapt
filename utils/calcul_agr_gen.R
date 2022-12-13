@@ -1,12 +1,12 @@
 #subseteaza dup
 #nc_fil <- paste0("www/data/ncs/agro/tasAdjust_rcp45_season-25_19710101_21001231.nc")
-calcul_agro_gen <- function(nc_fil, agr_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
+calcul_climgen_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   
   nc <- rast(nc_fil)
   dats <- names_to_date(nc) # extrage data din nume cu fct utils
   
   # selectare slider in functie de tipul hartii
-  if (agr_tip == "abate") {
+  if (climgen_tip == "abate") {
     
     dats.sub <- dats[dats >= as.Date(paste0(an1_abat, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2_abat , "1231"), format = "%Y%m%d") ]
     dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
