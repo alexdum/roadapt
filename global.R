@@ -40,6 +40,8 @@ reg <- st_read("www/data/shp/regiuni.topojson", quiet = T) |> dplyr::rename(natc
 
 select_climgen_ind <- read.csv("www/data/tabs/climgen/select_climgen_ind.csv") 
 select_climgen_ind  <- setNames(select_climgen_ind$choice, select_climgen_ind$parameter)
+select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv") 
+select_agro_ind  <- setNames(select_agro_ind$choice, select_agro_ind$parameter)
 
 select_interv <- read.csv("www/data/tabs/select_interv.csv") 
 select_interv <- setNames(select_interv$choice, select_interv$parameter)
