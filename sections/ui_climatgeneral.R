@@ -58,7 +58,7 @@ ui_climatgeneral <- tabPanel(
             value = 0.8, step = 0.1,
           ),
           
-          actionButton("go_agrgen", "Actualizare harta", icon("sync")),
+          actionButton("go_climgengen", "Actualizare harta", icon("sync")),
           radioButtons( # radio button show values
             "radio_climgen_gen", label = "Harta click funcționalitate",
             choices = 
@@ -174,7 +174,7 @@ ui_climatgeneral <- tabPanel(
             min = 0, max = 1, ticks = F,
             value = 0.7, step = 0.1,
           ),
-          actionButton("go_agrdet", "Actualizare harta", icon("sync"))
+          actionButton("go_climgendet", "Actualizare harta", icon("sync"))
         ),
         column(
           width = 7,
