@@ -8,15 +8,20 @@ source("sections/ui_despre.R",  local = TRUE)
 
 ui <- shinyUI(
   tagList(  # ascunde titlu navbar
-    tags$head(tags$style(type = 'text/css','.navbar-brand{display:none;}')),
+    tags$head(
+      tags$style(
+        type = 'text/css','.navbar-brand{display:none;}',
+        "body { padding-top: 70px;}"
+      )
+    ),
     
     navbarPage(
-
+      
       title = "RO-Adapt explorer",
       id = "tabs",
       selected = "#despre",
       fluid = T,
-      #position = "fixed-top",
+      position = "fixed-top",
       collapsible = TRUE,
       theme = bslib::bs_theme(bootswatch = "minty"),
       
