@@ -14,7 +14,7 @@ colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG"),interpolate="linear")
 
 map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA) {
   # culori interpolate
-  if (indic %in% c("tas", "tasmax", "tasmin")) {
+  if (indic %in% c("tasAdjust", "tasmaxAdjust", "tasminAdjust")) {
     if(agr_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
@@ -42,7 +42,7 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
     }
   }
   
-  if (indic %in% c("pr")) {
+  if (indic %in% c("prAdjust")) {
     if (agr_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(

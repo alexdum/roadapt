@@ -14,7 +14,7 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   an2_abs <- input$slider_climgen_absol_gen[2]
   
   # citeste fisierul
-  nc_fil <- paste0("www/data/ncs/climgen/",indic,"Adjust_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  nc_fil <- paste0("www/data/ncs/climgen/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
   
   
   # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
