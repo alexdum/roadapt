@@ -21,8 +21,7 @@ agro_rdet <- eventReactive(list(input$go_agrodet, isolate(input$tab_agro_det)),{
   
   
   tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
-  print(head(tab))
-  
+
   an1_abat <- input$slider_agro_abate_det[1]
   an2_abat <- input$slider_agro_abate_det[2]
   an1_abs <- input$slider_agro_absol_det[1]
