@@ -7,6 +7,7 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   climgen_tip <- input$climgen_tip 
   perio_tip <- strsplit(input$climgen_perio, "-")[[1]][2]
   perio_sub <- strsplit(input$climgen_perio, "-")[[1]][1]
+  indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director nc)
   
   an1_abat <- input$slider_climgen_abate_gen[1]
   an2_abat <- input$slider_climgen_abate_gen[2]
@@ -14,7 +15,7 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   an2_abs <- input$slider_climgen_absol_gen[2]
   
   # citeste fisierul
-  nc_fil <- paste0("www/data/ncs/climgen/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
   
   
   # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
