@@ -57,7 +57,6 @@ ui_climatgeneral <- tabPanel(
             min = 0, max = 1, ticks = F,
             value = 0.8, step = 0.1,
           ),
-          
           actionButton("go_climgengen", "Actualizare harta", icon("sync")),
           radioButtons( # radio button show values
             "radio_climgen_gen", label = "Harta click funcționalitate",
@@ -71,7 +70,6 @@ ui_climatgeneral <- tabPanel(
         ),
         column(
           width = 7,
-          
           h6(textOutput("climgen_text_gen"), style = "text-align:center;"),
           wellPanel(
             leafletOutput("climgen_map_gen")
@@ -100,7 +98,6 @@ ui_climatgeneral <- tabPanel(
                 )
               )
             ),
-            
           ),
           conditionalPanel(
             condition = "input.radio_climgen_gen == 2 && output.condpan_climgen_gen == 'nas'",
@@ -204,7 +201,6 @@ ui_climatgeneral <- tabPanel(
               )
             )
           )
-          
         )
       )
     )
