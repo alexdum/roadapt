@@ -16,9 +16,7 @@ agro_rea <- eventReactive(list(input$go_agrogen, isolate(input$tab_agro_gen)),{
   
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
-  print(nc_fil)
-  
-  
+
   # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
   ncf <- calcul_climgen_gen(nc_fil, agro_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
