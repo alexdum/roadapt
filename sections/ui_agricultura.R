@@ -36,7 +36,7 @@ ui_agricultura <- tabPanel(
             inputId = "agro_perio",
             label = "Luna/Sezon",
             choices = select_interv,
-            selected =  select_interv[1]
+            selected =  select_interv[17]
           ),
           conditionalPanel(
             condition = "input.agro_tip == 'abate'",
@@ -58,7 +58,7 @@ ui_agricultura <- tabPanel(
             value = 0.8, step = 0.1,
           ),
           
-          actionButton("go_agrgen", "Actualizare harta", icon("sync")),
+          actionButton("go_agrogen", "Actualizare harta", icon("sync")),
           radioButtons( # radio button show values
             "radio_agro_gen", label = "Harta click funcționalitate",
             choices = 
@@ -72,9 +72,9 @@ ui_agricultura <- tabPanel(
         column(
           width = 7,
           
-          #h6(textOutput("agro_text_gen"), style = "text-align:center;"),
+          h6(textOutput("agro_text_gen"), style = "text-align:center;"),
           wellPanel(
-            #leafletOutput("agro_map_gen")
+            leafletOutput("agro_map_gen")
           ),
           br(),
           conditionalPanel( # show graphs only when data available
@@ -82,21 +82,21 @@ ui_agricultura <- tabPanel(
             
             tabsetPanel(
               fluidRow (
-                #h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
+                h6(textOutput("condpan_agro_gen"), style = "text-align:center;")
               ),
               tabPanel(
                 value = "Grafic",
                 title = h6("Grafic"),
                 wellPanel(
-                  #plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
-                  #downloadLink('down_plot_regio_ind', label = 'Download  PNG')
+                  plotlyOutput("agro_timeseries_gen_plot") |> withSpinner(size = 0.5),
+                  downloadLink('down_plot_regio_ind', label = 'Download  PNG')
                 )
               ), 
               tabPanel(
                 value = "Data",
                 title = h6("Data"),
                 wellPanel(
-                  #DT::dataTableOutput("agro_timeseries_gen_data")
+                  DT::dataTableOutput("agro_timeseries_gen_data")
                 )
               )
             ),
