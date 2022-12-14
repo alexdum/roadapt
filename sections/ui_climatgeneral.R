@@ -10,7 +10,7 @@ ui_climatgeneral <- tabPanel(
           width = 2,
           selectInput(
             inputId = "climgen_ind",
-            label = "Indicator",
+            label = "Parametru",
             choices = select_climgen_ind,
             selected =  select_climgen_ind[1]
           ),
