@@ -8,7 +8,7 @@
 plots_det <- function(dd, tip, indic) {
   
   # pentru titlu axa y
-  if (indic %in% c("tas" , "tasmax", "tasmin")) {
+  if (indic %in% c("tasAdjust" , "tasmaxAdjust", "tasminAdjust")) {
     y_lab <- "°C"
   } else {
     y_lab = "mm"
@@ -17,7 +17,7 @@ plots_det <- function(dd, tip, indic) {
   if (tip == "abate") {
     
     # schimba in procente pentru anomalii
-    if (indic %in% c("pr")) y_lab <- "%"
+    if (indic %in% c("prAdjust")) y_lab <- "%"
     
     gg <- ggplot(data = dd, aes(x = date, y = change_med)) + 
       geom_line(color = "black", size = 0.8) +
