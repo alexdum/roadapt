@@ -8,10 +8,12 @@
 plots_gen <- function(dd, tip, indic) {
   
   # pentru titlu axa y
-  if (indic %in% c("tas" , "tasmax", "tasmin")) {
+  if (indic %in% c("tasAdjust" , "tasmaxAdjust", "tasminAdjust")) {
     y_lab <- "°C"
-  } else {
+  } else if (indic %in% c("prAdjust")) {
     y_lab = "mm"
+  } else {
+    y_lab = "zile"
   }
   
   if (tip == "abate") {
