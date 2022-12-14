@@ -9,6 +9,7 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   climgen_tip <- input$climgen_tip_det # absolut/abate
   perio_sub <- strsplit(input$climgen_perio_det, "-")[[1]][1] # number of month
   perio_tip <- strsplit(input$climgen_perio_det, "-")[[1]][2] # month/season/year
+  indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director parquet)
   
   # selectie unitate
   switch( # alege nume indicator care să fie afișat
@@ -19,7 +20,7 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   )
   
   
-  tab <-  read_parquet(paste0("www/data/parquet/climgen/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
   
   an1_abat <- input$slider_climgen_abate_det[1]
