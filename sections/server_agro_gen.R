@@ -1,29 +1,30 @@
 
 # harta leaflet -----------------------------------------------------------
-climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen_gen)),{
+agro_rea <- eventReactive(list(input$go_agrogen, isolate(input$tab_agro_gen)),{
   
-  indic <- input$climgen_ind
-  scena <-  input$climgen_scen
-  climgen_tip <- input$climgen_tip 
-  perio_tip <- strsplit(input$climgen_perio, "-")[[1]][2]
-  perio_sub <- strsplit(input$climgen_perio, "-")[[1]][1]
+  indic <- input$agro_ind
+  scena <-  input$agro_scen
+  agro_tip <- input$agro_tip 
+  perio_tip <- strsplit(input$agro_perio, "-")[[1]][2]
+  perio_sub <- strsplit(input$agro_perio, "-")[[1]][1]
   indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director nc)
   
-  an1_abat <- input$slider_climgen_abate_gen[1]
-  an2_abat <- input$slider_climgen_abate_gen[2]
-  an1_abs <- input$slider_climgen_absol_gen[1]
-  an2_abs <- input$slider_climgen_absol_gen[2]
+  an1_abat <- input$slider_agro_abate_gen[1]
+  an2_abat <- input$slider_agro_abate_gen[2]
+  an1_abs <- input$slider_agro_absol_gen[1]
+  an2_abs <- input$slider_agro_absol_gen[2]
   
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  print(nc_fil)
   
   
-  # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
-  ncf <- calcul_climgen_gen(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
+  ncf <- calcul_climgen_gen(nc_fil, agro_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
   # pentru legenda titlu §i intervale §i culori
   domain <- terra::minmax(ncf)
-  map_leg <- map_func_cols(indic, climgen_tip, domain = domain, perio_tip)
+  map_leg <- map_func_cols(indic, agro_tip, domain = domain, perio_tip)
   
   
   # mask raster
@@ -32,16 +33,16 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   
   
   # text harta
-  name_ind <- names(select_climgen_ind)[which(select_climgen_ind %in% indic)] #nume indicator clar
-  climgen_perio <- names(select_interv)[which(select_interv %in% input$climgen_perio)] # luna.sezon clar
+  name_ind <- names(select_agro_ind)[which(select_agro_ind %in% indic)] #nume indicator clar
+  agro_perio <- names(select_interv)[which(select_interv %in% input$agro_perio)] # luna.sezon clar
   param_text<- ifelse (
-    climgen_tip == "abate", 
+    agro_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
-          "schimbare", climgen_perio , 
+          "schimbare", agro_perio , 
           an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"
     ),
     paste( name_ind, " - scenariul", toupper(scena),
-           "- medii multianuale - ", climgen_perio, 
+           "- medii multianuale - ", agro_perio, 
            an1_abs,"-", an2_abs
     )
   )
@@ -49,69 +50,69 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
     domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, param_text = param_text,
-    opacy = input$transp_climgen_gen, indic = indic, scena = scena, perio_tip = perio_tip,
+    opacy = input$transp_agro_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
-    climgen_tip = climgen_tip,  name_ind =  name_ind, climgen_perio = climgen_perio 
+    agro_tip = agro_tip,  name_ind =  name_ind, agro_perio = agro_perio 
   )
   
 })
 
 # text harta
-output$climgen_text_gen <- renderText({
-  climgen_rea()$param_tex
+output$agro_text_gen <- renderText({
+  agro_rea()$param_tex
   
 })
 
 
-output$climgen_map_gen <- renderLeaflet ({
+output$agro_map_gen <- renderLeaflet ({
   leaflet_fun_gen(
     data = borders, 
-    raster = isolate(climgen_rea()$nc),
-    cols = isolate(climgen_rea()$pal),
-    cols_rev = isolate(climgen_rea()$pal_rev), 
-    tit_leg = isolate(climgen_rea()$tit_leg),
-    domain = isolate(climgen_rea()$domain)
+    raster = isolate(agro_rea()$nc),
+    cols = isolate(agro_rea()$pal),
+    cols_rev = isolate(agro_rea()$pal_rev), 
+    tit_leg = isolate(agro_rea()$tit_leg),
+    domain = isolate(agro_rea()$domain)
   )
 })
 
 observe({ 
-  leafletProxy("climgen_map_gen")  |>
+  leafletProxy("agro_map_gen")  |>
     clearImages() %>%
     addRasterImage(
-      climgen_rea()$nc,
-      colors = climgen_rea()$pal, opacity = climgen_rea()$opacy) |>
+      agro_rea()$nc,
+      colors = agro_rea()$pal, opacity = agro_rea()$opacy) |>
     clearControls() |>
     addLegend(
-      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),climgen_rea()$tit_leg,"</html>"),
+      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),agro_rea()$tit_leg,"</html>"),
       position = "bottomright",
-      pal = climgen_rea()$pal_rev, values = climgen_rea()$domain,
+      pal = agro_rea()$pal_rev, values = agro_rea()$domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     )
 })
 
 
-variables_plot_climgen_gen <- reactiveValues(
+variables_plot_agro_gen <- reactiveValues(
   input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
   # variabile control pentru actualizare grafic/date
   update_input = NULL, update_input_tip_plt = NULL 
 )
 
 observe({ 
-  proxy <- leafletProxy("climgen_map_gen") 
-  click <- input$climgen_map_gen_click
-  nc_ex <- climgen_rea()$nc_geo
-  nc_fil <- climgen_rea()$nc_fil
-  perio_sub <- climgen_rea()$perio_sub
-  indic <- climgen_rea()$indic
-  name_ind <-  climgen_rea()$name_ind 
-  climgen_perio <- climgen_rea()$climgen_perio
-  scena <-  climgen_rea()$scena
+  proxy <- leafletProxy("agro_map_gen") 
+  click <- input$agro_map_gen_click
+  nc_ex <- agro_rea()$nc_geo
+  nc_fil <- agro_rea()$nc_fil
+  perio_sub <- agro_rea()$perio_sub
+  indic <- agro_rea()$indic
+  name_ind <-  agro_rea()$name_ind 
+  agro_perio <- agro_rea()$agro_perio
+  scena <-  agro_rea()$scena
   # pentru titlu grafic
-  climgen_tip <- climgen_rea()$climgen_tip
-  climgen_tip_name_ind <- ifelse(climgen_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
+  agro_tip <- agro_rea()$agro_tip
+  agro_tip_name_ind <- ifelse(agro_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
   # afiseaza popup sau grafic time series
-  if (input$radio_climgen_gen == 1 & !is.null(click)) {
+  if (input$radio_agro_gen == 1 & !is.null(click)) {
     show_popup(x = click$lng, y = click$lat, rdat = nc_ex, proxy = proxy)
   } else {
     proxy %>% clearPopups()
@@ -127,22 +128,22 @@ observe({
         dd <- NA
       }
       # text conditional panel plot
-      condpan_climgen_gen_txt <- ifelse( 
+      condpan_agro_gen_txt <- ifelse( 
         is.na(ex_ver), 
         "nas", 
         paste0(
-          climgen_tip_name_ind," ", climgen_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),") - perioada de referință 1971 - 2000"
+          agro_tip_name_ind," ", agro_perio," ",toupper(scena), " (lon = ",round(click$lng, 5),", lat = "  , round(click$lat, 5),") - perioada de referință 1971 - 2000"
         )
       )
-      output$condpan_climgen_gen <- renderText({
-        condpan_climgen_gen_txt
+      output$condpan_agro_gen <- renderText({
+        condpan_agro_gen_txt
       })
-      outputOptions(output, "condpan_climgen_gen", suspendWhenHidden = FALSE)
+      outputOptions(output, "condpan_agro_gen", suspendWhenHidden = FALSE)
    
-      variables_plot_climgen_gen$input <- dd
-      variables_plot_climgen_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
-      variables_plot_climgen_gen$indic <- indic
-      variables_plot_climgen_gen$tip <- climgen_tip
+      variables_plot_agro_gen$input <- dd
+      variables_plot_agro_gen$cors <- paste0(round(click$lng, 5), "_", round(click$lat, 5))
+      variables_plot_agro_gen$indic <- indic
+      variables_plot_agro_gen$tip <- agro_tip
       
     }
   }
@@ -154,25 +155,25 @@ observe({
 # sau datele de intrare in plot
 observe({
   
-  if(!isTRUE(all.equal(variables_plot_climgen_gen$input, variables_plot_climgen_gen$update_input ))  |
-     !isTRUE(all.equal(variables_plot_climgen_gen$tip, variables_plot_climgen_gen$update_input_tip_plt))) {
+  if(!isTRUE(all.equal(variables_plot_agro_gen$input, variables_plot_agro_gen$update_input ))  |
+     !isTRUE(all.equal(variables_plot_agro_gen$tip, variables_plot_agro_gen$update_input_tip_plt))) {
     
-    indic_plt <- variables_plot_climgen_gen$indic
-    tip_plt <- variables_plot_climgen_gen$tip
-    input_plt <- variables_plot_climgen_gen$input
+    indic_plt <- variables_plot_agro_gen$indic
+    tip_plt <- variables_plot_agro_gen$tip
+    input_plt <- variables_plot_agro_gen$input
     # pentru comparare in caz de update
-    variables_plot_climgen_gen$update_input <- input_plt 
-    variables_plot_climgen_gen$update_input_tip_plt <- tip_plt 
+    variables_plot_agro_gen$update_input <- input_plt 
+    variables_plot_agro_gen$update_input_tip_plt <- tip_plt 
     
     # pentru subtab plot
-    output$climgen_timeseries_gen_plot <- renderPlotly({
+    output$agro_timeseries_gen_plot <- renderPlotly({
       req(!is.na(input_plt))
       plt <- plots_gen(input_plt, tip_plt, indic_plt)
       plt$gp
     })
     
     # pentru afisare subtab date
-    output$climgen_timeseries_gen_data <- DT::renderDT({
+    output$agro_timeseries_gen_data <- DT::renderDT({
       
       DT::datatable(
         input_plt, extensions = 'Buttons', rownames = F,
