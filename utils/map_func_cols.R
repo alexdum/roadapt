@@ -12,10 +12,13 @@ colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate="linear")
 colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate="linear")
 colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG"),interpolate="linear")
 
-map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA) {
+
+
+
+map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA) {
   # culori interpolate
   if (indic %in% c("tasAdjust", "tasmaxAdjust", "tasminAdjust")) {
-    if(agr_tip == 'absol') {
+    if(ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
           cols = c(rev(colintBlues(3)), colintYlOrRd(9)), 
@@ -43,7 +46,7 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
   }
   
   if (indic %in% c("prAdjust")) {
-    if (agr_tip == 'absol') {
+    if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
           cols = colintGnBu(15), 
@@ -70,9 +73,27 @@ map_func_cols <- function (indic = NA, agr_tip = NA, perio_tip = NA, domain = NA
     }
   }
   
+  if (indic %in% c("cdd")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintReds(13), 
+          vals = seq(0,60, 5)
+        ) 
+      }
+      leaflet_titleg <- "zile"
+    } else {
+      df.col <- data.frame(
+        cols = rev(brewer.pal(9,"RdYlGn")), 
+        vals = seq(-20,20, 5)
+      )
+      leaflet_titleg <- "zile"
+    }
+  }
   
-  #print(head(df.col))
-  #print(domain)
+  
+  # print(head(df.col))
+  # print(domain)
   ints <- findInterval(domain, df.col$vals, rightmost.closed = T, left.open = F)
   
   bins <-  df.col$vals[ints[1]:(ints[2] + 1)]
