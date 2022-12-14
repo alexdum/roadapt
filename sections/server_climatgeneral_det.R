@@ -211,7 +211,6 @@ output$climgen_det_stat <- renderUI({
     norm <-admin_spat_sub$norm[admin_spat_sub$natcode == variables_plot_climgen_det$id] |> round(1)
     multimean <-admin_spat_sub$p50[admin_spat_sub$natcode == variables_plot_climgen_det$id] |> round(1)
     change <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_climgen_det$id] |> round(1)
-    print(paste(an1_abat, an2_abat, norm, multimean, change))
     
     HTML(
       paste0(
@@ -270,7 +269,7 @@ output$climgen_timeseries_det_data <- DT::renderDT({
   DT::datatable(
     variables_plot_climgen_det$input 
     |> dplyr:: mutate(across(is.numeric, round, digits = 1)) |>
-      dplyr::select(-ID),
+      dplyr::select(-ID, -p01,-p25, -p75, -p99),
     extensions = 'Buttons', rownames = F,
     options = list(
       dom = 'Bfrtip',digits = 1,
