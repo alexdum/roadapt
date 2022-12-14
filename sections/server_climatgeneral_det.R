@@ -19,7 +19,7 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   )
   
   
-  tab <-  read_parquet(paste0("www/data/parquet/climgen/",admin,"/", indic ,"Adjust_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  read_parquet(paste0("www/data/parquet/climgen/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
   
   an1_abat <- input$slider_climgen_abate_det[1]
@@ -134,9 +134,9 @@ observeEvent(list(isolate(input$go_climgendet), isolate(input$tab_climgen_det)),
 
 # pentru actualizare grafic doar cand se schimba regiunea
 observe({
-
+  
   variables_plot_climgen_det$admin <- climgen_rdet()$admin
- 
+  
   if(!isTRUE(all.equal(variables_plot_climgen_det$admin, variables_plot_climgen_det$update_admin)))  {
     admin <- variables_plot_climgen_det$admin
     admin_spat_sub <- climgen_rdet()$admin_spat_sub
@@ -145,7 +145,7 @@ observe({
     variables_plot_climgen_det$name <-admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_climgen_det$id]
     variables_plot_climgen_det$county <-admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_climgen_det$id]
     variables_plot_climgen_det$update_admin <- admin
-   
+    
   }
 })
 
@@ -166,7 +166,7 @@ observeEvent(list(input$go_climgendet, variables_plot_climgen_det$id), {
   perio_sub <- climgen_rdet()$perio_sub
   indic <- climgen_rdet()$indic
   name_ind <- climgen_rdet()$name_ind
-
+  
   dd <- extract_timeser_det(tab, variables_plot_climgen_det$id, perio_sub, indic)
   
   variables_plot_climgen_det$input <- dd
