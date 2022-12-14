@@ -35,7 +35,7 @@ ui_agricultura <- tabPanel(
           selectInput(
             inputId = "agro_perio",
             label = "Luna/Sezon",
-            choices = select_interv,
+            choices = select_interv[17],
             selected =  select_interv[17]
           ),
           conditionalPanel(
@@ -149,7 +149,7 @@ ui_agricultura <- tabPanel(
           selectInput(
             inputId = "agro_perio_det",
             label = "Luna/Sezon",
-            choices = select_interv,
+            choices = select_interv[17], # avem doar anuale
             selected =  select_interv[17]
           ),
           conditionalPanel(
