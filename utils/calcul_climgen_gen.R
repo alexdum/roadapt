@@ -3,7 +3,12 @@
 calcul_climgen_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   
   nc <- rast(nc_fil)
-  dats <- names_to_date(nc) # extrage data din nume cu fct utils
+  
+  if(indic %in% c("cdd")) {
+    dats <- terra::time(nc) # extrage data din nume cu fct utils
+  } else {
+    dats <- names_to_date(nc) # extrage data din nume cu fct utils
+  }
   
   # selectare slider in functie de tipul hartii
   if (climgen_tip == "abate") {
@@ -19,7 +24,7 @@ calcul_climgen_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, 
     nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
     nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
     # calcul abatere in functie de parametru
-    if (indic %in% c("pr", "ur")) {
+    if (indic %in% c("prAdjust", "ur")) {
       ncf <- (((nc.abs*100)/nc.norm ) - 100) 
     } else {
       ncf <- nc.abs - nc.norm 
