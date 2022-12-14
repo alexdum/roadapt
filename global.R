@@ -16,17 +16,17 @@ library(DT)
 
 source_python("utils/extract_point.py")
 source("utils/utils.R")
-source("utils/names_to_date.R") # c]mp data din fisere netcdf
+source("utils/names_to_date.R") # extrage data din fisere netcdf
 source("utils/map_func_cols.R") # plot din date raster
-source("utils/leaflet_fun_gen.R") # harta tab general
-source("utils/leaflet_fun_det.R") # harta tab detalii
+source("utils/leaflet_fun_gen.R") # harta tab national
+source("utils/leaflet_fun_det.R") # harta tab administrativ
 source("utils/show_popup.R") # popup  date raster
-source("utils/calcul_agr_gen.R") # calcul anomalii normale  detalii agro
-source("utils/calcul_agr_det.R") # calcul anomalii normale  detalii agro
 source("utils/extract_timeserie_gen.R") # extrage time serii pentru plot din ncs
 source("utils/extract_timeserie_det.R") # extrage time serii pentru plot din parquet
 source("utils/plots_gen.R") # plot din date raster
 source("utils/plots_det.R") # plot din date parquet
+source("utils/calcul_climgen_gen.R") # calcul anomalii normale general climgen
+source("utils/calcul_climgen_det.R") # calcul anomalii normale  detalii climgen
 
 
 borders <- st_read("www/data/shp/granita.shp", quiet = T) # pentru afisare harta
