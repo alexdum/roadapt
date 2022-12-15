@@ -19,7 +19,7 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   
   
   # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
-  ncf <- calcul_climgen_gen(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  ncf <- calcul_gen(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
   # pentru legenda titlu §i intervale §i culori
   domain <- terra::minmax(ncf)

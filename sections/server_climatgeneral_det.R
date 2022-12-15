@@ -29,7 +29,7 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   an2_abs <- input$slider_climgen_absol_det[2]
   
   # calcul abateri absolute cu funct utils/calcul_climgen_det.R
-  tab_sub <- calcul_climgen_det(tab, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  tab_sub <- calcul_det(tab, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatial
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
