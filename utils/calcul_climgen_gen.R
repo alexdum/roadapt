@@ -4,7 +4,7 @@ calcul_climgen_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, 
   
   nc <- rast(nc_fil)
   
-  if(indic %in% c("cdd")) {
+  if(indic %in% c("cdd", "scorchno")) {
     dats <- terra::time(nc) # extrage data din nume cu fct utils
   } else {
     dats <- names_to_date(nc) # extrage data din nume cu fct utils
