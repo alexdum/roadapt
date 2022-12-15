@@ -10,7 +10,8 @@ colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate="linear")
 colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate="linear")
 colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate="linear")
 colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate="linear")
-colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG"),interpolate="linear")
+colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate="linear")
+colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate="linear")
 
 
 
@@ -104,6 +105,24 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
       df.col <- data.frame(
         cols = c(rev(colintBlues(10)[3:4]),brewer.pal(7,"Reds")), 
         vals = seq(-20,60, 10)
+      )
+      leaflet_titleg <- "zile"
+    }
+  }
+  
+  if (indic %in% c("gsl")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintYlGn(15), 
+          vals = seq(0,365, 25)
+        ) 
+      }
+      leaflet_titleg <- "zile"
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintYlOrBr(7)[3:7]),colintYlGn(9)[3:9]), 
+        vals = seq(-125,150, 25)
       )
       leaflet_titleg <- "zile"
     }
