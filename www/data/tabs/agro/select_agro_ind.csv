@@ -1,2 +1,3 @@
-parameter,choice
-Zile PP ≤ 1 mm,cdd
+﻿parameter,choice
+Zile PP <  1.0 mm,cdd
+Zile arșită,scorchno

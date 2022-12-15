@@ -1,6 +1,7 @@
-cod,nume,name,path,definitie
-prAdjust,Cantitatea de precipitații,Precipitation amount,climgen,
-tasAdjust,Temperatura medie,Mean  temperature,climgen,
-tasminAdjust,Temperatura minimă,Minimum temperature,climgen,
-tasmaxAdjust,Temperatura maximă,Maximum temperature,climgen,
-cdd, Zile maxime PP ≤ 1 mm,Consecutive dry days,agro,Numărul maxim de zile cu precipitații mai mici de 1 mm
+﻿cod,nume,name,path,definitie,defnition
+prAdjust,Cantitatea de precipitații,Precipitation amount,climgen,,
+tasAdjust,Temperatura medie,Mean  temperature,climgen,,
+tasminAdjust,Temperatura minimă,Minimum temperature,climgen,,
+tasmaxAdjust,Temperatura maximă,Maximum temperature,climgen,,
+cdd, Zile maxime PP  < 1.0 mm,Consecutive dry days,agro,Numărul maxim de zile cu precipitații mai mici de 1 mm,Maximum annual number of consecutive dry days (when precipitation < 1.0 mm
+scorchno,Zile arșită,Scorch no days ,,Număr de zile cu arșiță (Tmax. ≥ 32°C) de la 1 iunie la 31 august,Scorching heat number of days (Tmax. ≥ 32°C) from 1 June to 31 August
