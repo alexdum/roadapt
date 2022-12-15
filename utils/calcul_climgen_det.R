@@ -13,8 +13,8 @@ calcul_climgen_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat,
         group_by(ID) |> summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
           value = case_when(
-            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
-            !indic %in% c("pr", "ur") ~  (p50 - norm) |> round(1)
+            indic %in% c("prAdjust", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
+            !indic %in% c("prAdjust", "ur") ~  (p50 - norm) |> round(1)
           )
         )
       
@@ -27,8 +27,8 @@ calcul_climgen_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat,
         summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
           value = case_when(
-            indic %in% c("pr", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
-            !indic %in% c("pr", "ur") ~ (p50 - norm)  |> round(1)
+            indic %in% c("prAdjust", "ur") ~  (((p50*100)/norm) - 100) |> round(1),
+            !indic %in% c("prAdjust", "ur") ~ (p50 - norm)  |> round(1)
           )
         )
     }
