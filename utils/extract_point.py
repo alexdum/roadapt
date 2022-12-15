@@ -1,6 +1,8 @@
 import xarray as xr
 import pandas as pd
 
+indicators = pd.Series(['cdd', 'gsl'])
+
 def extract_point(fname, lon, lat, variable):
   ds = xr.open_dataset(fname)
   ds.close()
@@ -9,7 +11,7 @@ def extract_point(fname, lon, lat, variable):
   dsf = dsloc.rename_axis('index1').reset_index() # numele coloanei in coloana
   dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns') # rename columns
   # cand ai variabile formatate ca zile
-  if (variable =="cdd"): 
+  if variable in indicators.values: 
      dsf["value"] = dsf["value"].dt.days
      
   return(dsf)
@@ -18,10 +20,12 @@ def extract_point(fname, lon, lat, variable):
 
 
 
-# ds = xr.open_dataset("www/data/ncs/agro/cdd_rcp45_year-50_19710101_21001231.nc")
+# ds = xr.open_dataset("www/data/ncs/agro/gls_rcp45_year-50_19710101_21001231.nc")
 # dsloc = ds.sel(Longitude=25,Latitude=46,method='nearest')
-# dsloc = dsloc["cdd"].to_pandas()
+# dsloc = dsloc["gsl"].to_pandas()
 # dsf = dsloc.rename_axis('index1').reset_index()
 # dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns')
-
-
+# 
+# # 
+# if variable in indicators.values:
+#       print("yes")
