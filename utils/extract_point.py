@@ -1,7 +1,8 @@
 import xarray as xr
 import pandas as pd
 
-indicators = pd.Series(['cdd', 'gsl'])
+# pentru situatiile cand avem zile in netcdf si trebuie duse in integer
+indicators = ['cdd', 'gsl']
 
 def extract_point(fname, lon, lat, variable):
   ds = xr.open_dataset(fname)
@@ -11,7 +12,7 @@ def extract_point(fname, lon, lat, variable):
   dsf = dsloc.rename_axis('index1').reset_index() # numele coloanei in coloana
   dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns') # rename columns
   # cand ai variabile formatate ca zile
-  if variable in indicators.values: 
+  if variable in indicators: 
      dsf["value"] = dsf["value"].dt.days
      
   return(dsf)
@@ -26,6 +27,5 @@ def extract_point(fname, lon, lat, variable):
 # dsf = dsloc.rename_axis('index1').reset_index()
 # dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns')
 # 
-# # 
-# if variable in indicators.values:
-#       print("yes")
+
+
