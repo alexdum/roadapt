@@ -91,6 +91,24 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
     }
   }
   
+  if (indic %in% c("scorchno")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintReds(15), 
+          vals = seq(0,70, 5)
+        ) 
+      }
+      leaflet_titleg <- "zile"
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(10)[3:4]),brewer.pal(7,"Reds")), 
+        vals = seq(-20,60, 10)
+      )
+      leaflet_titleg <- "zile"
+    }
+  }
+  
   
   # print(head(df.col))
   # print(domain)
