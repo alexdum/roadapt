@@ -25,8 +25,8 @@ source("utils/extract_timeserie_gen.R") # extrage time serii pentru plot din ncs
 source("utils/extract_timeserie_det.R") # extrage time serii pentru plot din parquet
 source("utils/plots_gen.R") # plot din date raster
 source("utils/plots_det.R") # plot din date parquet
-source("utils/calcul_climgen_gen.R") # calcul anomalii normale general climgen
-source("utils/calcul_climgen_det.R") # calcul anomalii normale  detalii climgen
+source("utils/calcul_gen.R") # calcul anomalii normale general 
+source("utils/calcul_det.R") # calcul anomalii normale  detalii 
 
 
 borders <- st_read("www/data/shp/granita.shp", quiet = T) # pentru afisare harta
