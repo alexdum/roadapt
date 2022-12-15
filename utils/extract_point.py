@@ -11,7 +11,7 @@ def extract_point(fname, lon, lat, variable):
   dsloc = dsloc[variable].to_pandas() 
   dsf = dsloc.rename_axis('index1').reset_index() # numele coloanei in coloana
   dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns') # rename columns
-  # cand ai variabile formatate ca zile
+  # cand ai variabile formatate ca zile transforma in integer
   if variable in indicators: 
      dsf["value"] = dsf["value"].dt.days
      
