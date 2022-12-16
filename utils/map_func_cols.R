@@ -138,13 +138,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = c(seq(0,2000, 250), seq(3000,7000, 500))
         ) 
       }
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- "HDD (Tref = 15.5 °C)"
     } else {
       df.col <- data.frame(
         cols = c(colintBuPu(20)), 
         vals = c(seq(-2500,-1000, 500), seq(-900, 600, 100))
       )
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- "HDD (Tref = 15.5 °C)"
     }
   }
   
@@ -156,13 +156,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = c(seq(0, 100, 10),seq(150, 300, 50), seq(400, 600, 100))
         ) 
       }
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- "CDD (Tref = 22 °C)"
     } else {
       df.col <- data.frame(
         cols = c(colintPuOr(14)), 
         vals = c(seq(-75,150, 25),seq(200,500, 100))
       )
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- "CDD (Tref = 22 °C)"
     }
   }
   
