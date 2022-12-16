@@ -1,6 +1,7 @@
 ui_agricultura <- tabPanel(
   title = "Agricultura",icon = icon("tractor"),
   value = "#agricultura", id = "#agricultura",
+  h4("Agricultură și dezvoltare rurală"),
   tabsetPanel(
     tabPanel(
       id = "tab_agro_gen",

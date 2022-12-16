@@ -1,6 +1,7 @@
 ui_climatgeneral <- tabPanel(
   title = "Aspecte generale",icon = icon("file"),
   value = "#general", id = "#general",
+  h4("Aspecte generale"),
   tabsetPanel(
     tabPanel(
       id = "tab_climgen_gen",

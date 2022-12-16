@@ -24,7 +24,9 @@ ui <- shinyUI(
       fluid = T,
       position = "fixed-top",
       collapsible = TRUE,
-      theme = bslib::bs_theme(bootswatch = "minty"),
+      theme = bslib::bs_theme(
+        bootswatch = "minty", version = 5
+        ),
       
       ui_climatgeneral,
       ui_agricultura,
