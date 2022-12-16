@@ -82,7 +82,7 @@ observe({
       colors = climgen_rea()$pal, opacity = climgen_rea()$opacy) |>
     clearControls() |>
     addLegend(
-      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),climgen_rea()$tit_leg,"</html>"),
+      title = climgen_rea()$tit_leg,
       position = "bottomright",
       pal = climgen_rea()$pal_rev, values = climgen_rea()$domain,
       opacity = 1,

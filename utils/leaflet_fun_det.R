@@ -46,7 +46,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
       options = scaleBarOptions(metric = TRUE)) |>
     clearControls() %>% 
     addLegend(
-      title = paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), tit_leg,"</html>"),
+      title = tit_leg,
       "bottomright", pal = pal_rev, values = ~values, opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     ) 

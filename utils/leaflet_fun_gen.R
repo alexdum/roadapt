@@ -40,7 +40,7 @@ leaflet_fun_gen <- function(data, raster, domain, cols, cols_rev, tit_leg) {
       options = scaleBarOptions(metric = TRUE)) |>
     clearControls() |>
     addLegend(
-      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), tit_leg,"</html>"),
+      title = tit_leg,
       position = "bottomright",
       pal = cols_rev, values = domain,
       opacity = 1,

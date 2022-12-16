@@ -81,7 +81,7 @@ observe({
       colors = agro_rea()$pal, opacity = agro_rea()$opacy) |>
     clearControls() |>
     addLegend(
-      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),agro_rea()$tit_leg,"</html>"),
+      title = agro_rea()$tit_leg,
       position = "bottomright",
       pal = agro_rea()$pal_rev, values = agro_rea()$domain,
       opacity = 1,

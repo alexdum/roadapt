@@ -38,13 +38,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = seq(-16,36,2)
         ) 
       }
-      leaflet_titleg <- "°C"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "°C","</html>")
     }  else {
       df.col <- data.frame(
         cols = c(rev(colintBlues(12)),colintReds(15)), 
         vals = seq(-6,7, 0.5)
       )
-      leaflet_titleg <- "°C"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "°C","</html>")
     }
   }
   
@@ -66,13 +66,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = seq(0,200, 25)
         )
       }
-      leaflet_titleg <- "mm"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "mm","</html>")
     } else {
       df.col <- data.frame(
         cols = colintBrBG (11), 
         vals = seq(-50,50, 10)
       )
-      leaflet_titleg <- "%"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
   }
   
@@ -84,13 +84,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = seq(0,60, 5)
         ) 
       }
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     } else {
       df.col <- data.frame(
         cols = rev(brewer.pal(9,"RdYlGn")), 
         vals = seq(-20,20, 5)
       )
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
   }
   
@@ -102,13 +102,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = seq(0,70, 5)
         ) 
       }
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     } else {
       df.col <- data.frame(
         cols = c(rev(colintBlues(10)[3:4]),brewer.pal(7,"Reds")), 
         vals = seq(-20,60, 10)
       )
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
   }
   
@@ -120,13 +120,13 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
           vals = seq(0,365, 25)
         ) 
       }
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     } else {
       df.col <- data.frame(
         cols = c(rev(colintYlOrBr(7)[3:7]),colintYlGn(9)[3:9]), 
         vals = seq(-125,150, 25)
       )
-      leaflet_titleg <- "zile"
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
   }
   
@@ -165,6 +165,8 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
       leaflet_titleg <- "CDD (Tref = 22 °C)"
     }
   }
+  
+  
   
   
   # print(head(df.col))

@@ -81,7 +81,7 @@ observe({
       colors = energie_rea()$pal, opacity = energie_rea()$opacy) |>
     clearControls() |>
     addLegend(
-      title =  paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))),energie_rea()$tit_leg,"</html>"),
+      title = energie_rea()$tit_leg,
       position = "bottomright",
       pal = energie_rea()$pal_rev, values = energie_rea()$domain,
       opacity = 1,
