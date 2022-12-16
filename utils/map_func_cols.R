@@ -1,4 +1,4 @@
-# culori culori leaflet indicatori agro---------------------------------------------------------
+# culori culori leaflet ---------------------------------------------------------
 colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate="linear")
 colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate="linear")
 colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate="linear")
@@ -12,6 +12,8 @@ colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate="linear")
 colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate="linear")
 colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate="linear")
 colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate="linear")
+colintPuOr <- colorRampPalette(brewer.pal(9,"PuOr"),interpolate="linear")
+colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate="linear")
 
 
 
@@ -123,6 +125,42 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
       df.col <- data.frame(
         cols = c(rev(colintYlOrBr(7)[3:7]),colintYlGn(9)[3:9]), 
         vals = seq(-125,150, 25)
+      )
+      leaflet_titleg <- "zile"
+    }
+  }
+  
+  if (indic %in% c("hddheat15.5")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = rev(colintPuOr(18)), 
+          vals = c(seq(0,2000, 250), seq(3000,7000, 500))
+        ) 
+      }
+      leaflet_titleg <- "zile"
+    } else {
+      df.col <- data.frame(
+        cols = c(colintBuPu(20)), 
+        vals = c(seq(-2500,-1000, 500), seq(-900, 600, 100))
+      )
+      leaflet_titleg <- "zile"
+    }
+  }
+  
+  if (indic %in% c("cddcold22")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintOrRd(18), 
+          vals = c(seq(0, 100, 10),seq(150, 300, 50), seq(400, 600, 100))
+        ) 
+      }
+      leaflet_titleg <- "zile"
+    } else {
+      df.col <- data.frame(
+        cols = c(colintPuOr(14)), 
+        vals = c(seq(-75,150, 25),seq(200,500, 100))
       )
       leaflet_titleg <- "zile"
     }
