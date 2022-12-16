@@ -3,7 +3,7 @@ ui_despre <- tabPanel(
   
   
   fluidRow( 
-    h4("Despre"),
+    h5("Despre"),
     includeMarkdown("sections/server_despre.md")
   )
 )
