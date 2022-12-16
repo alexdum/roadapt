@@ -1,5 +1,5 @@
-ui_agricultura <- tabPanel(
-  title = "Agricultura",icon = icon("solar-panel"),
+ui_energie <- tabPanel(
+  title = "Energie",icon = icon("solar-panel"),
   value = "#Energie", id = "#energie",
   h5("Energie"),
   tabsetPanel(
