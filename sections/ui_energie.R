@@ -1,6 +1,6 @@
 ui_energie <- tabPanel(
   title = "Energie",icon = icon("solar-panel"),
-  value = "#Energie", id = "#energie",
+  value = "#energie", id = "#energie",
   h5("Energie"),
   tabsetPanel(
     tabPanel(
