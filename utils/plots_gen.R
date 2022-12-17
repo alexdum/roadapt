@@ -11,7 +11,11 @@ plots_gen <- function(dd, tip, indic) {
   if (indic %in% c("tasAdjust" , "tasmaxAdjust", "tasminAdjust")) {
     y_lab <- "°C"
   } else if (indic %in% c("prAdjust")) {
-    y_lab = "mm"
+    y_lab = "mm" 
+  } else if (indic %in% c("cddcold22")) {
+    y_lab = "CDD (ΣTmed > 22°C)" 
+  } else if (indic %in% c("hddheat15.5")) {
+    y_lab = "HDD (ΣTmed < 15.5°C)" 
   } else {
     y_lab = "zile"
   }
