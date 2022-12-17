@@ -15,7 +15,7 @@ ui <- shinyUI(
         "body { padding-top: 70px;}"
       )
     ),
-    
+    useShinyjs(),
     navbarPage(
       
       title = "RO-Adapt explorer",
