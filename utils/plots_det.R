@@ -12,6 +12,8 @@ plots_det <- function(dd, tip, indic) {
     y_lab <- "°C"
   } else if (indic %in% c("prAdjust")) {
     y_lab = "mm" 
+  } else if (indic %in% c("rsds")) {
+    y_lab = "W/m²" 
   } else if (indic %in% c("cddcold22")) {
     y_lab = "CDD (ΣTmed > 22°C)" 
   } else if (indic %in% c("hddheat15.5")) {

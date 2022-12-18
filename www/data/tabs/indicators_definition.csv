@@ -8,3 +8,4 @@ scorchno,Zile arșită,Scorch no days ,agro,Număr de zile cu arșiță (Tmax. �
 gsl,Durata sezonului vegetativ,Growing Season Length,agro,Numărul anual de zile între prima apariție a 6 zile consecutive cu Tmed > 5 °C și prima apariție a 6 zile consecutive cu Tmed < 5 °C,Annual number of days between the first occurrence of 6 consecutive days with TM > 5°C and the first occurrence of 6 consecutive days with TM < 5 °C
 hddheat15.5,Grade zile de încălzire ,Heating Degree Days,energie,Suma anuală a Tmed > 22 °C,Annual sum of TM - 22 (where 22 is a user-defined location-specific base temperature and TM > 22
 cddcold22,Grade zile de răcire,Cooling Degree Days,energie,Suma anuală a Tmed  <  15.5 °C,Annual sum of 15.5 - TM (where 15.5 is a user-defined location-specific base temperature and TM < 15.5)
+rsds,Radiația solară  globală,Surface Downwelling Shortwave Radiation,climgen,,
