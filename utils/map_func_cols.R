@@ -1,27 +1,25 @@
 # culori culori leaflet ---------------------------------------------------------
-colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate="linear")
-colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate="linear")
-colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate="linear")
-colintBlues <- colorRampPalette(brewer.pal(9,"Blues"), interpolate="linear")
-colintReds <- colorRampPalette(brewer.pal(9,"Reds"), interpolate="linear")
-colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate="linear")
-colintPuRd <- colorRampPalette(brewer.pal(9,"PuRd"), interpolate="linear")
-colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate="linear")
-colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate="linear")
-colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate="linear")
-colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate="linear")
-colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate="linear")
-colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate="linear")
-colintPuOr <- colorRampPalette(brewer.pal(9,"PuOr"),interpolate="linear")
-colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate="linear")
+colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate = "linear")
+colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
+colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate = "linear")
+colintBlues <- colorRampPalette(brewer.pal(9,"Blues"), interpolate = "linear")
+colintReds <- colorRampPalette(brewer.pal(9,"Reds"), interpolate = "linear")
+colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate = "linear")
+colintPuRd <- colorRampPalette(brewer.pal(9,"PuRd"), interpolate = "linear")
+colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate = "linear")
+colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate = "linear")
+colintGnBu <- colorRampPalette(brewer.pal(9,"GnBu"), interpolate = "linear")
+colintRdPu <- colorRampPalette(brewer.pal(9,"RdPu"), interpolate = "linear")
+colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate = "linear")
+colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate = "linear")
+colintPuOr <- colorRampPalette(brewer.pal(9,"PuOr"),interpolate = "linear")
+colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate = "linear")
 
 
-
-
-map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA) {
+map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA) {
   # culori interpolate
   if (indic %in% c("tasAdjust", "tasmaxAdjust", "tasminAdjust")) {
-    if(ind_tip == 'absol') {
+    if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
           cols = c(rev(colintBlues(3)), colintYlOrRd(9)), 
@@ -45,6 +43,34 @@ map_func_cols <- function (indic = NA, ind_tip = NA, perio_tip = NA, domain = NA
         vals = seq(-6,7, 0.5)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "°C","</html>")
+    }
+  }
+  
+  if (indic %in% c("rsds")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintOrRd(8), 
+          vals = seq(110,180,10)
+        ) 
+      } else if  (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = colintOrRd(15), 
+          vals = seq(20,300,20)
+        ) 
+      } else {
+        df.col <- data.frame(
+          cols = colintOrRd(16),
+          vals = seq(20,320,20)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "W/m²","</html>")
+    }  else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(6)),colintReds(7)), 
+        vals = seq(-30,30, 5)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "W/m²","</html>")
     }
   }
   
