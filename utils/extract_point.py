@@ -7,12 +7,16 @@ indicators = ['cdd', 'gsl']
 def extract_point(fname, lon, lat, variable):
   ds = xr.open_dataset(fname)
   ds.close()
-  dsloc = ds.sel(Longitude=lon,Latitude=lat,method='nearest')
+  if variable in "rsds": # cand ai coordonatele denumite alrfel
+    dsloc = ds.sel(lon=lon,lat=lat,method='nearest')
+  else:
+    dsloc = ds.sel(Longitude=lon,Latitude=lat,method='nearest')
+    
   dsloc = dsloc[variable].to_pandas() 
   dsf = dsloc.rename_axis('index1').reset_index() # numele coloanei in coloana
   dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns') # rename columns
-  # cand ai variabile formatate ca zile transforma in integer
-  if variable in indicators: 
+  
+  if variable in indicators: # cand ai variabile formatate ca zile transforma in integer
      dsf["value"] = dsf["value"].dt.days
      
   return(dsf)
@@ -21,11 +25,11 @@ def extract_point(fname, lon, lat, variable):
 
 
 
-# ds = xr.open_dataset("www/data/ncs/agro/gls_rcp45_year-50_19710101_21001231.nc")
-# dsloc = ds.sel(Longitude=25,Latitude=46,method='nearest')
-# dsloc = dsloc["gsl"].to_pandas()
+ds = xr.open_dataset("www/data/ncs/climgen/rsds_rcp45_month-10_19710101_21001231.nc")
+# dsloc = ds.sel(25,46,method='nearest')
+# dsloc = dsloc["rsds"].to_pandas()
 # dsf = dsloc.rename_axis('index1').reset_index()
 # dsf = dsf.rename({'index1':'time', 0:'value'}, axis = 'columns')
-# 
+
 
 
