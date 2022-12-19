@@ -1,6 +1,6 @@
-﻿parameter,choice
+parameter,choice
 Temperatura medie,tasAdjust
 Temperatura maximă,tasmaxAdjust
 Temperatura minimă,tasminAdjust
 Cantitate precipitații,prAdjust
-Radiația solară  globală,rsds
+Radiația solară globală,rsds
