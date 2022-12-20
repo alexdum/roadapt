@@ -104,7 +104,7 @@ observe({
     clearControls() |>
     addLegend(
       title = tit_leg,
-      "bottomright", pal = pal_rev, values = ~values, opacity = 1,
+      "bottomright", pal = pal_rev, values = ~value, opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
     ) 
   
