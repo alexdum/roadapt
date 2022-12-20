@@ -1,4 +1,22 @@
+# update select input year/season/month -----------------------------------
 
+observe({
+  indic <- input$energie_ind_det
+  if (indic %in% c("rsds")) {
+    # luni/sezona/an
+    updateSelectInput(
+      session, "energie_perio_det",
+      choices = select_interv,
+      selected = select_interv[1]
+    )
+  } else { # doara anuala cand nu le ai pe celelalte
+    updateSelectInput(
+      session, "energie_perio_det",
+      choices = select_interv[17],
+      selected = select_interv[17]
+    )
+  }
+})
 
 energie_rdet <- eventReactive(list(input$go_energiedet, isolate(input$tab_energie_det)),{
   

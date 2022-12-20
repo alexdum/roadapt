@@ -1,3 +1,22 @@
+# update select input year/season/month -----------------------------------
+
+observe({
+  indic <- input$energie_ind
+  if (indic %in% c("rsds")) {
+    # luni/sezona/an
+    updateSelectInput(
+      session, "energie_perio",
+      choices = select_interv,
+      selected = select_interv[1]
+    )
+  } else { # doara anuala cand nu le ai pe celelalte
+    updateSelectInput(
+      session, "energie_perio",
+      choices = select_interv[17],
+      selected = select_interv[17]
+    )
+  }
+})
 
 # harta leaflet -----------------------------------------------------------
 energie_rea <- eventReactive(list(input$go_energiegen, isolate(input$tab_energie_gen)),{
