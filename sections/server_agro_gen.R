@@ -165,7 +165,6 @@ observe({
     
     # pentru subtab plot
     output$agro_timeseries_gen_plot <- renderPlotly({
-      req(!is.na(input_plt))
       plt <- plots_gen(input_plt, tip_plt, indic_plt)
       plt$gp
     })
