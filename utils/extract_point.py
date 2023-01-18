@@ -25,7 +25,7 @@ def extract_point(fname, lon, lat, variable):
 
 
 
-ds = xr.open_dataset("www/data/ncs/climgen/rsds_rcp45_month-10_19710101_21001231.nc")
+#ds = xr.open_dataset("www/data/ncs/climgen/rsds_rcp45_month-10_19710101_21001231.nc")
 # dsloc = ds.sel(25,46,method='nearest')
 # dsloc = dsloc["rsds"].to_pandas()
 # dsf = dsloc.rename_axis('index1').reset_index()
