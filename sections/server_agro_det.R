@@ -47,7 +47,7 @@ agro_rdet <- eventReactive(list(input$go_agrodet, isolate(input$tab_agro_det)),{
   )
   
   list(
-    admin_spat_sub =admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
+    admin_spat_sub = admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
     param_text = param_text, opacy = input$transp_agro_det, tab = tab, perio_sub = perio_sub, indic = indic,
     agro_tip = agro_tip, scena = scena, name_ind = name_ind, agro_perio = agro_perio, 
     an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs,
