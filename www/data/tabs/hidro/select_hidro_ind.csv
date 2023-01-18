@@ -1,2 +1,4 @@
 parameter,choice
 Cantitate precipitații,prAdjust
+Zile consecutive PP <  1.0 mm,cdd
+
