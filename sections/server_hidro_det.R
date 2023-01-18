@@ -2,7 +2,7 @@
 
 observe({
   indic <- input$hidro_ind_det
-  if (indic %in% c("rsds")) {
+  if (indic %in% c("prAdjust")) {
     # luni/sezona/an
     updateSelectInput(
       session, "hidro_perio_det",
