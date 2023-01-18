@@ -45,6 +45,8 @@ select_agro_ind <- read.csv("www/data/tabs/agro/select_agro_ind.csv")
 select_agro_ind  <- setNames(select_agro_ind$choice, select_agro_ind$parameter)
 select_energie_ind <- read.csv("www/data/tabs/energie/select_energie_ind.csv") 
 select_energie_ind  <- setNames(select_energie_ind$choice, select_energie_ind$parameter)
+select_hidro_ind <- read.csv("www/data/tabs/hidro/select_hidro_ind.csv") 
+select_hidro_ind  <- setNames(select_hidro_ind$choice, select_hidro_ind$parameter)
 
 select_interv <- read.csv("www/data/tabs/select_interv.csv") 
 select_interv <- setNames(select_interv$choice, select_interv$parameter)
