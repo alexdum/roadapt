@@ -95,7 +95,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "mm","</html>")
     } else {
       df.col <- data.frame(
-        cols = colintBrBG (11), 
+        cols = colintBrBG(11), 
         vals = seq(-50,50, 10)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
@@ -192,6 +192,23 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
+  if (indic %in% c("r20mm")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBuPu(11), 
+          vals = seq(0,10, 1)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols =  colintBrBG(11), 
+        vals = seq(-10,10, 2)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
   
   
   
