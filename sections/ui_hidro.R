@@ -1,5 +1,5 @@
 ui_hidro <- tabPanel(
-  title = "hidro",icon = icon("solar-panel"),
+  title = "Resurse de apă",icon = icon("solar-panel"),
   value = "#hidro", id = "#hidro",
   h5("Resurse de apă"),
   tabsetPanel(
