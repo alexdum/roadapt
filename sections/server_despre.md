@@ -15,7 +15,7 @@ Această pagină oferă acces interactiv la parametrii și indicatorii climatici
 
 [Energie](#energie)     
 
-Resurse de apă   
+ [Resurse de apă](#hidro)
 
 Păduri  
 
