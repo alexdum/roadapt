@@ -14,6 +14,8 @@ colintBrBG <- colorRampPalette(brewer.pal(11,"BrBG"),interpolate = "linear")
 colintYlGn <- colorRampPalette(brewer.pal(9,"YlGn"),interpolate = "linear")
 colintPuOr <- colorRampPalette(brewer.pal(9,"PuOr"),interpolate = "linear")
 colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate = "linear")
+colintPRGn <- colorRampPalette( brewer.pal(11,"PRGn"),interpolate = "linear")
+windabs <- colorRampPalette(rainbow(8)[2:8],interpolate = "linear")
 
 
 map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA) {
@@ -71,6 +73,34 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
         vals = seq(-30,30, 5)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "W/m²","</html>")
+    }
+  }
+  
+  if (indic %in% c("wsgsmax")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = windabs(8), 
+          vals = c(5,6,7,8,9,10,12.5,15)
+        ) 
+      } else if  (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = windabs(10), 
+          vals = c(4,5,6,7,8,9,10,12.5,15,17.5)
+        ) 
+      } else {
+        df.col <- data.frame(
+          cols = windabs(12),
+          vals = c(3,4,5,6,7,8,9,10,12.5,15,17.5,20)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
+    }  else {
+      df.col <- data.frame(
+        cols = rev(colintPRGn(17)), 
+        vals = c(-10,-7.5,-5,-4,-3,-2,-1, -0.5, 0, 0.5, 1, 2,3,4,5,7.5,10)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
     }
   }
   

@@ -18,6 +18,8 @@ plots_det <- function(dd, tip, indic) {
     y_lab = "CDD (ΣTmed > 22°C)" 
   } else if (indic %in% c("hddheat15.5")) {
     y_lab = "HDD (ΣTmed < 15.5°C)" 
+  } else if (indic %in% c("wsgsmax")) {
+    y_lab = "m/s" 
   } else {
     y_lab = "zile"
   }

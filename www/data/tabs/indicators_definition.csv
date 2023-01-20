@@ -1,4 +1,4 @@
-cod,nume,name,path,definitie,defnition
+﻿cod,nume,name,path,definitie,defnition
 prAdjust,Cantitatea de precipitații,Precipitation amount,climgen,,
 tasAdjust,Temperatura medie,Mean  temperature,climgen,,
 tasminAdjust,Temperatura minimă,Minimum temperature,climgen,,
@@ -10,3 +10,4 @@ hddheat15.5,Grade zile de încălzire ,Heating Degree Days,energie,Suma anuală 
 cddcold22,Grade zile de răcire,Cooling Degree Days,energie,Suma anuală a Tmed  <  15.5 °C,Annual sum of 15.5 - TM (where 15.5 is a user-defined location-specific base temperature and TM < 15.5)
 rsds,Radiația solară  globală,Surface Downwelling Shortwave Radiation,climgen,,
 r20mm,Zile PP ≥ 20 mm,Number of very heavy rain days,hidro,Numărul anual de zile în care precipitațiile >= 20 mm,Annual number of days when precipitation >= 20 mm
+wsgsmax,Viteză vânt rafală,Wind gust,climgen,Viteza vîntului la rafală,Daily Maximum Near-Surface Wind Speed of Gust

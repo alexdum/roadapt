@@ -3,11 +3,12 @@ import pandas as pd
 
 # pentru situatiile cand avem zile in netcdf si trebuie duse in integer
 indicators = ['cdd', 'gsl', 'r20mm']
+variables = ["rsds", "wsgsmax"]
 
 def extract_point(fname, lon, lat, variable):
   ds = xr.open_dataset(fname)
   ds.close()
-  if variable in "rsds": # cand ai coordonatele denumite alrfel
+  if variable in variables: # cand ai coordonatele denumite alrfel
     dsloc = ds.sel(lon=lon,lat=lat,method='nearest')
   else:
     dsloc = ds.sel(Longitude=lon,Latitude=lat,method='nearest')
