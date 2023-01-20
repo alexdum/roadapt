@@ -285,8 +285,8 @@ output$hidro_timeseries_det_plot <- renderPlotly({
 output$hidro_timeseries_det_data <- DT::renderDT({
   
   DT::datatable(
-    variables_plot_hidro_det$input 
-    |> dplyr:: mutate(across(is.numeric, round, digits = 1)) |>
+    variables_plot_hidro_det$input |> 
+      dplyr::mutate(across(is.numeric, round, digits = 1)) |>
       dplyr::select(-ID, -p10, -p90),
     extensions = 'Buttons', rownames = F,
     options = list(
