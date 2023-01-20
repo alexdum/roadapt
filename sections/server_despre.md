@@ -15,9 +15,9 @@ Această pagină oferă acces interactiv la parametrii și indicatorii climatici
 
 [Energie](#energie)     
 
- [Resurse de apă](#hidro)
+[Resurse de apă](#hidro)
 
-Păduri  
+[Silvicultura](#silvicultura)
 
 Biodiversitate și servicii ecosistemice      
 

@@ -10,5 +10,7 @@ function(input, output, session) {
   source("sections/server_energie_det.R", local = T)
   source("sections/server_hidro_gen.R", local = T)
   source("sections/server_hidro_det.R", local = T)
+  source("sections/server_silvicultura_gen.R", local = T)
+  source("sections/server_silvicultura_det.R", local = T)
   
 }

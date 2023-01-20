@@ -6,6 +6,7 @@ source("sections/ui_climatgeneral.R",  local = TRUE)
 source("sections/ui_agricultura.R",  local = TRUE)
 source("sections/ui_energie.R",  local = TRUE)
 source("sections/ui_hidro.R",  local = TRUE)
+source("sections/ui_silvicultura.R",  local = TRUE)
 source("sections/ui_despre.R",  local = TRUE)
 
 ui <- shinyUI(
@@ -33,6 +34,7 @@ ui <- shinyUI(
       ui_agricultura,
       ui_energie,
       ui_hidro,
+      ui_silvicultura,
       ui_despre
       
     )
