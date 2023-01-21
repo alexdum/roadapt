@@ -1,5 +1,4 @@
 # update select input year/season/month -----------------------------------
-
 observe({
   indic <- input$silvicultura_ind_det
   if (indic %in% c("wsgsmax")) {
@@ -162,7 +161,7 @@ observe({
     variables_plot_silvicultura_det$id <- admin_spat_sub$natcode[first_sel]
     variables_plot_silvicultura_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
     variables_plot_silvicultura_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
-    variables_plot_silvicultura_det$update_admin <- adminx
+    variables_plot_silvicultura_det$update_admin <- admin
   }
 })
 
