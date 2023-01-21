@@ -6,7 +6,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
       minZoom = 6, maxZoom = 12
     )) |>
     clearShapes() %>%
-    addPolygons (
+    addPolygons(
       fillColor = ~pal(value), 
       label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name,
                      "<br/>",round(value,1),"</b></font><br/>
@@ -29,7 +29,7 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
     setView(25, 46, zoom = 6) |>
     setMaxBounds(20, 43.5, 30, 48.2) |>
     addEasyButton(
-      easyButton (
+      easyButton(
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
         onClick = JS("function(btn, map){ map.setView([46, 25], 6); }"))) |>
     addMapPane(name = "maplabels", zIndex = 420) |>
