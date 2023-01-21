@@ -49,7 +49,7 @@ plots_det <- function(dd, tip, indic) {
   
   gp <-  plotly::ggplotly(gg, dynamicTicks = F)  |>
     plotly::layout(
-      autosize=T,
+      autosize = T,
       hovermode = "x") |> 
     config(
       displaylogo = FALSE,
@@ -58,7 +58,7 @@ plots_det <- function(dd, tip, indic) {
       displayModeBar = T
     )
   
-  return (list(gg = gg, gp = gp))
+  return(list(gg = gg, gp = gp))
   
   
 }
