@@ -1,3 +1,23 @@
+# update select input year/season/month -----------------------------------
+
+observe({
+  indic <- input$silvicultura_ind
+  if (indic %in% c("wsgsmax")) {
+    # luni/sezona/an
+    updateSelectInput(
+      session, "silvicultura_perio",
+      choices = select_interv,
+      selected = select_interv[1]
+    )
+  } else { # doara anuala cand nu le ai pe celelalte
+    updateSelectInput(
+      session, "silvicultura_perio",
+      choices = select_interv[17],
+      selected = select_interv[17]
+    )
+  }
+})
+
 
 # harta leaflet -----------------------------------------------------------
 silvicultura_rea <- eventReactive(list(input$go_silviculturagen, isolate(input$tab_silvicultura_gen)),{
@@ -120,7 +140,7 @@ observe({
       ex_ver <- terra::extract(nc_ex, xy) # pentru verificare disponilibitate valori
       
       # extrage variabila pentru python
-      if(!is.na(ex_ver)) {
+      if (!is.na(ex_ver)) {
         dd <- extract_timeser_gen(nc_fil, xy, perio_sub) # functie extrage time series netcdf 
       } else {
         dd <- NA
@@ -153,7 +173,7 @@ observe({
 # sau datele de intrare in plot
 observe({
   
-  if(!isTRUE(all.equal(variables_plot_silvicultura_gen$input, variables_plot_silvicultura_gen$update_input ))  |
+  if (!isTRUE(all.equal(variables_plot_silvicultura_gen$input, variables_plot_silvicultura_gen$update_input ))  |
      !isTRUE(all.equal(variables_plot_silvicultura_gen$tip, variables_plot_silvicultura_gen$update_input_tip_plt))) {
     
     indic_plt <- variables_plot_silvicultura_gen$indic
