@@ -40,15 +40,18 @@ biodivers_rea <- eventReactive(list(input$go_biodiversgen, isolate(input$tab_bio
   # calcal abateri sau media multianuala cu functie calcul_biodivers_gen din utils
   ncf <- calcul_gen(nc_fil, biodivers_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
-  # pentru legenda titlu §i intervale §i culori
-  domain <- terra::minmax(ncf)
-  map_leg <- map_func_cols(indic, biodivers_tip, domain = domain, perio_tip)
-  
-  
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
-  ncfm <- terra::mask(ncfm, mask, touches=F)
+  ncfm <- terra::mask(ncfm, mask, touches = F)
   
+  # pentru legenda titlu si intervale §i culori
+  min_max <- map_func_min_max(indic, biodivers_tip, perio_tip)
+  if (!is.na(min_max[1])) { # verifica daca ai valori disponibile, cel putin una
+    ncfm[ncfm > min_max[2]] <- min_max[2]
+    ncfm[ncfm < min_max[1]] <- min_max[1]
+  }
+  domain <- terra::minmax(ncfm)
+  map_leg <- map_func_cols(indic, biodivers_tip, domain = domain, perio_tip)
   
   # text harta
   name_ind <- names(select_biodivers_ind)[which(select_biodivers_ind %in% indic)] #nume indicator clar
