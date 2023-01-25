@@ -19,7 +19,7 @@ Această pagină oferă acces interactiv la parametrii și indicatorii climatici
 
 [Silvicultura](#silvicultura)
 
-Biodiversitate și servicii ecosistemice      
+[Biodiversitate și servicii ecosistemice](#biodivers)  
 
 Educație și conștientizare
 
