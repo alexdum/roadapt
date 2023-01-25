@@ -17,6 +17,7 @@ library(DT)
 source_python("utils/extract_point.py")
 source("utils/utils.R")
 source("utils/names_to_date.R") # extrage data din fisere netcdf
+source("utils/map_func_min_max.R") # setare min max raster/value plotate
 source("utils/map_func_cols.R") # plot din date raster
 source("utils/leaflet_fun_gen.R") # harta tab national
 source("utils/leaflet_fun_det.R") # harta tab administrativ
