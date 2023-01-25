@@ -1,7 +1,7 @@
 ui_biodivers <- tabPanel(
   title = "Biodiversitate și servicii ecosistemice",icon = icon("fish"),
   value = "#biodivers", id = "#biodivers",
-  h5("biodivers"),
+  h5("Biodiversitate și servicii ecosistemice"),
   tabsetPanel(
     tabPanel(
       id = "tab_biodivers_gen",
