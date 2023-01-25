@@ -1,31 +1,31 @@
 # update select input year/season/month -----------------------------------
 observe({
-  indic <- input$silvicultura_ind_det
-  if (indic %in% c("wsgsmax")) {
+  indic <- input$biodivers_ind_det
+  if (indic %in% c("prAdjust")) {
     # luni/sezona/an
     updateSelectInput(
-      session, "silvicultura_perio_det",
+      session, "biodivers_perio_det",
       choices = select_interv,
       selected = select_interv[1]
     )
   } else { # doara anuala cand nu le ai pe celelalte
     updateSelectInput(
-      session, "silvicultura_perio_det",
+      session, "biodivers_perio_det",
       choices = select_interv[17],
       selected = select_interv[17]
     )
   }
 })
 
-silvicultura_rdet <- eventReactive(list(input$go_silviculturadet, isolate(input$tab_silvicultura_det)),{
+biodivers_rdet <- eventReactive(list(input$go_biodiversdet, isolate(input$tab_biodivers_det)),{
   
   
-  admin <- input$silvicultura_admin_det
-  indic <- input$silvicultura_ind_det
-  scena <- input$silvicultura_scen_det
-  silvicultura_tip <- input$silvicultura_tip_det # absolut/abate
-  perio_sub <- strsplit(input$silvicultura_perio_det, "-")[[1]][1] # number of month
-  perio_tip <- strsplit(input$silvicultura_perio_det, "-")[[1]][2] # month/season/year
+  admin <- input$biodivers_admin_det
+  indic <- input$biodivers_ind_det
+  scena <- input$biodivers_scen_det
+  biodivers_tip <- input$biodivers_tip_det # absolut/abate
+  perio_sub <- strsplit(input$biodivers_perio_det, "-")[[1]][1] # number of month
+  perio_tip <- strsplit(input$biodivers_perio_det, "-")[[1]][2] # month/season/year
   indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director parquet)
   
   # selectie unitate
@@ -39,64 +39,64 @@ silvicultura_rdet <- eventReactive(list(input$go_silviculturadet, isolate(input$
   
   tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
-  an1_abat <- input$slider_silvicultura_abate_det[1]
-  an2_abat <- input$slider_silvicultura_abate_det[2]
-  an1_abs <- input$slider_silvicultura_absol_det[1]
-  an2_abs <- input$slider_silvicultura_absol_det[2]
+  an1_abat <- input$slider_biodivers_abate_det[1]
+  an2_abat <- input$slider_biodivers_abate_det[2]
+  an1_abs <- input$slider_biodivers_absol_det[1]
+  an2_abs <- input$slider_biodivers_absol_det[2]
   
-  # calcul abateri absolute cu funct utils/calcul_silvicultura_det.R
-  tab_sub <- calcul_det(tab, silvicultura_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  # calcul abateri absolute cu funct utils/calcul_biodivers_det.R
+  tab_sub <- calcul_det(tab, biodivers_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   # unire cu spatial
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
-  # legenda si intervale functie utils/cols_leg_silvicultura_det.R
-  map_leg <- map_func_cols(indic, silvicultura_tip, domain = range(admin_spat_sub$value), perio_tip)
+  # legenda si intervale functie utils/cols_leg_biodivers_det.R
+  map_leg <- map_func_cols(indic, biodivers_tip, domain = range(admin_spat_sub$value), perio_tip)
   
   
   # text harta
   # text harta
-  name_ind <- names(select_silvicultura_ind)[which(select_silvicultura_ind %in% indic)] #nume indicator clar
-  silvicultura_perio <- names(select_interv)[which(select_interv %in% input$silvicultura_perio_det)] # luna.sezon clar
+  name_ind <- names(select_biodivers_ind)[which(select_biodivers_ind %in% indic)] #nume indicator clar
+  biodivers_perio <- names(select_interv)[which(select_interv %in% input$biodivers_perio_det)] # luna.sezon clar
   param_text<- ifelse (
-    silvicultura_tip == "abate", 
-    paste(name_ind , " - scenariul", toupper(scena), "schimbare", silvicultura_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
-    paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", silvicultura_perio, an1_abs,"-", an2_abs)
+    biodivers_tip == "abate", 
+    paste(name_ind , " - scenariul", toupper(scena), "schimbare", biodivers_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
+    paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", biodivers_perio, an1_abs,"-", an2_abs)
   )
   
   list(
     admin_spat_sub = admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
-    param_text = param_text, opacy = input$transp_silvicultura_det, tab = tab, perio_sub = perio_sub, indic = indic,
-    silvicultura_tip = silvicultura_tip, scena = scena, name_ind = name_ind, silvicultura_perio = silvicultura_perio, 
+    param_text = param_text, opacy = input$transp_biodivers_det, tab = tab, perio_sub = perio_sub, indic = indic,
+    biodivers_tip = biodivers_tip, scena = scena, name_ind = name_ind, biodivers_perio = biodivers_perio, 
     an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs,
     admin = admin
   )
   
 })
 
-output$silvicultura_text_det <- renderText({
-  silvicultura_rdet()$param_tex
+output$biodivers_text_det <- renderText({
+  biodivers_rdet()$param_tex
   
 })
 
-output$silvicultura_map_det <- renderLeaflet ({
+output$biodivers_map_det <- renderLeaflet ({
   leaflet_fun_det(
-    data = isolate(silvicultura_rdet()$admin_spat_sub),
-    pal =  isolate(silvicultura_rdet()$pal),
-    pal_rev =  isolate(silvicultura_rdet()$pal_rev),
-    tit_leg = isolate(silvicultura_rdet()$tit_leg)
+    data = isolate(biodivers_rdet()$admin_spat_sub),
+    pal =  isolate(biodivers_rdet()$pal),
+    pal_rev =  isolate(biodivers_rdet()$pal_rev),
+    tit_leg = isolate(biodivers_rdet()$tit_leg)
   )
 })
 
 
 observe({
-  #req(input$go_silviculturadet == "Detalii") # Only display if tab is 'Detalii'
-  pal_rev =  silvicultura_rdet()$pal_rev
-  tit_leg = silvicultura_rdet()$tit_leg
-  data <- silvicultura_rdet()$admin_spat_sub
-  pal <- silvicultura_rdet()$pal
-  opacy <- silvicultura_rdet()$opacy 
+  #req(input$go_biodiversdet == "Detalii") # Only display if tab is 'Detalii'
+  pal_rev =  biodivers_rdet()$pal_rev
+  tit_leg = biodivers_rdet()$tit_leg
+  data <- biodivers_rdet()$admin_spat_sub
+  pal <- biodivers_rdet()$pal
+  opacy <- biodivers_rdet()$opacy 
   
-  leafletProxy("silvicultura_map_det",  data = data)  %>%
+  leafletProxy("biodivers_map_det",  data = data)  %>%
     clearShapes() %>%
     addPolygons(
       fillColor = ~pal(value),
@@ -131,7 +131,7 @@ observe({
 
 
 # reactive values plot ----------------------------------------------------
-variables_plot_silvicultura_det <- reactiveValues(
+variables_plot_biodivers_det <- reactiveValues(
   input = NULL, title = NULL, cors = NULL, indic = NULL, tip = NULL, 
   # variabile control pentru actualizare grafic/date
   norm = NULL, mean = NULL, change = NULL, id = NULL, name = NULL, county = NULL,
@@ -139,73 +139,73 @@ variables_plot_silvicultura_det <- reactiveValues(
   
 ) 
 
-observeEvent(list(isolate(input$go_silviculturadet), isolate(input$tab_silvicultura_det)),{
-  variables_plot_silvicultura_det$admin  <- silvicultura_rdet()$admin
-  admin_spat_sub <- silvicultura_rdet()$admin_spat_sub
+observeEvent(list(isolate(input$go_biodiversdet), isolate(input$tab_biodivers_det)),{
+  variables_plot_biodivers_det$admin  <- biodivers_rdet()$admin
+  admin_spat_sub <- biodivers_rdet()$admin_spat_sub
   first_sel <- sample(1:nrow(admin_spat_sub), 1)
-  variables_plot_silvicultura_det$id <- admin_spat_sub$natcode[first_sel]
-  variables_plot_silvicultura_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
-  variables_plot_silvicultura_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
+  variables_plot_biodivers_det$id <- admin_spat_sub$natcode[first_sel]
+  variables_plot_biodivers_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_biodivers_det$id]
+  variables_plot_biodivers_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_biodivers_det$id]
   
 })
 
 # pentru actualizare grafic doar cand se schimba regiunea
 observe({
   
-  variables_plot_silvicultura_det$admin <- silvicultura_rdet()$admin
+  variables_plot_biodivers_det$admin <- biodivers_rdet()$admin
   
-  if (!isTRUE(all.equal(variables_plot_silvicultura_det$admin, variables_plot_silvicultura_det$update_admin)))  {
-    admin <- variables_plot_silvicultura_det$admin
-    admin_spat_sub <- silvicultura_rdet()$admin_spat_sub
+  if (!isTRUE(all.equal(variables_plot_biodivers_det$admin, variables_plot_biodivers_det$update_admin)))  {
+    admin <- variables_plot_biodivers_det$admin
+    admin_spat_sub <- biodivers_rdet()$admin_spat_sub
     first_sel <- sample(1:nrow(admin_spat_sub), 1)
-    variables_plot_silvicultura_det$id <- admin_spat_sub$natcode[first_sel]
-    variables_plot_silvicultura_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
-    variables_plot_silvicultura_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_silvicultura_det$id]
-    variables_plot_silvicultura_det$update_admin <- admin
+    variables_plot_biodivers_det$id <- admin_spat_sub$natcode[first_sel]
+    variables_plot_biodivers_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == variables_plot_biodivers_det$id]
+    variables_plot_biodivers_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == variables_plot_biodivers_det$id]
+    variables_plot_biodivers_det$update_admin <- admin
   }
 })
 
 
 
-observeEvent(input$silvicultura_map_det_shape_click$id,{ 
-  admin_spat_sub <- silvicultura_rdet()$admin_spat_sub
-  variables_plot_silvicultura_det$id  <- input$silvicultura_map_det_shape_click$id
-  variables_plot_silvicultura_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == input$silvicultura_map_det_shape_click$id]
-  variables_plot_silvicultura_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == input$silvicultura_map_det_shape_click$id]
+observeEvent(input$biodivers_map_det_shape_click$id,{ 
+  admin_spat_sub <- biodivers_rdet()$admin_spat_sub
+  variables_plot_biodivers_det$id  <- input$biodivers_map_det_shape_click$id
+  variables_plot_biodivers_det$name <- admin_spat_sub$name[admin_spat_sub$natcode == input$biodivers_map_det_shape_click$id]
+  variables_plot_biodivers_det$county <- admin_spat_sub$county[admin_spat_sub$natcode == input$biodivers_map_det_shape_click$id]
 })
 
 
-observeEvent(list(input$go_silviculturadet, variables_plot_silvicultura_det$id), {
+observeEvent(list(input$go_biodiversdet, variables_plot_biodivers_det$id), {
   
-  silvicultura_tip <- silvicultura_rdet()$silvicultura_tip
-  tab <- silvicultura_rdet()$tab
-  perio_sub <- silvicultura_rdet()$perio_sub
-  indic <- silvicultura_rdet()$indic
-  name_ind <- silvicultura_rdet()$name_ind
+  biodivers_tip <- biodivers_rdet()$biodivers_tip
+  tab <- biodivers_rdet()$tab
+  perio_sub <- biodivers_rdet()$perio_sub
+  indic <- biodivers_rdet()$indic
+  name_ind <- biodivers_rdet()$name_ind
   
-  dd <- extract_timeser_det(tab, variables_plot_silvicultura_det$id, perio_sub, indic)
+  dd <- extract_timeser_det(tab, variables_plot_biodivers_det$id, perio_sub, indic)
   
-  variables_plot_silvicultura_det$input <- dd
-  variables_plot_silvicultura_det$indic <-  indic 
-  variables_plot_silvicultura_det$tip <- silvicultura_tip 
+  variables_plot_biodivers_det$input <- dd
+  variables_plot_biodivers_det$indic <-  indic 
+  variables_plot_biodivers_det$tip <- biodivers_tip 
   
   
 }) 
 
 # nume grafic
-output$condpan_silvicultura_det <- renderText({
-  admin <- silvicultura_rdet()$admin
-  silvicultura_perio <-  silvicultura_rdet()$silvicultura_perio 
-  name_ind <- silvicultura_rdet()$name_ind
-  silvicultura_tip <- silvicultura_rdet()$silvicultura_tip
-  scena <- silvicultura_rdet()$scena
+output$condpan_biodivers_det <- renderText({
+  admin <- biodivers_rdet()$admin
+  biodivers_perio <-  biodivers_rdet()$biodivers_perio 
+  name_ind <- biodivers_rdet()$name_ind
+  biodivers_tip <- biodivers_rdet()$biodivers_tip
+  scena <- biodivers_rdet()$scena
   # ajustare nume in functie de unitat administrativa
-  silvicultura_tip_name_ind <- ifelse(silvicultura_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
-  if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_silvicultura_det$name)
-  if (admin == "jud") name_aadmin <- paste("județul", variables_plot_silvicultura_det$name)
-  if (admin == "uat") name_aadmin <- paste(variables_plot_silvicultura_det$name," - județul ",variables_plot_silvicultura_det$county)
+  biodivers_tip_name_ind <- ifelse(biodivers_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
+  if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_biodivers_det$name)
+  if (admin == "jud") name_aadmin <- paste("județul", variables_plot_biodivers_det$name)
+  if (admin == "uat") name_aadmin <- paste(variables_plot_biodivers_det$name," - județul ",variables_plot_biodivers_det$county)
   paste0(
-    silvicultura_tip_name_ind," ", silvicultura_perio," ",toupper(scena), 
+    biodivers_tip_name_ind," ", biodivers_perio," ",toupper(scena), 
     " (",name_aadmin ,") 
     - perioada de referință 1971 - 2000"
   )
@@ -213,19 +213,19 @@ output$condpan_silvicultura_det <- renderText({
 
 
 
-output$silvicultura_det_stat <- renderUI({
+output$biodivers_det_stat <- renderUI({
   
-  an1_abat <- silvicultura_rdet()$an1_abat
-  an2_abat <- silvicultura_rdet()$an2_abat
-  an1_abs <- silvicultura_rdet()$an1_abs
-  an2_abs <- silvicultura_rdet()$an2_abs
-  admin_spat_sub <- silvicultura_rdet()$admin_spat_sub
-  silvicultura_tip <- silvicultura_rdet()$silvicultura_tip
+  an1_abat <- biodivers_rdet()$an1_abat
+  an2_abat <- biodivers_rdet()$an2_abat
+  an1_abs <- biodivers_rdet()$an1_abs
+  an2_abs <- biodivers_rdet()$an2_abs
+  admin_spat_sub <- biodivers_rdet()$admin_spat_sub
+  biodivers_tip <- biodivers_rdet()$biodivers_tip
   
-  if (silvicultura_tip == 'abate') {
-    norm <- admin_spat_sub$norm[admin_spat_sub$natcode == variables_plot_silvicultura_det$id] |> round(1)
-    multimean <- admin_spat_sub$p50[admin_spat_sub$natcode == variables_plot_silvicultura_det$id] |> round(1)
-    change <- admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_silvicultura_det$id] |> round(1)
+  if (biodivers_tip == 'abate') {
+    norm <- admin_spat_sub$norm[admin_spat_sub$natcode == variables_plot_biodivers_det$id] |> round(1)
+    multimean <- admin_spat_sub$p50[admin_spat_sub$natcode == variables_plot_biodivers_det$id] |> round(1)
+    change <- admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_biodivers_det$id] |> round(1)
     
     HTML(
       paste0(
@@ -246,7 +246,7 @@ output$silvicultura_det_stat <- renderUI({
       )
     )
   } else {
-    value <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_silvicultura_det$id] |> round(1)
+    value <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_biodivers_det$id] |> round(1)
     
     HTML(
       paste0(
@@ -268,21 +268,21 @@ output$silvicultura_det_stat <- renderUI({
 
 
 # pentru subtab plot
-output$silvicultura_timeseries_det_plot <- renderPlotly({
-  #req(!is.na(variables_plot_silvicultura_det$input))
+output$biodivers_timeseries_det_plot <- renderPlotly({
+  #req(!is.na(variables_plot_biodivers_det$input))
   plt <- plots_det(
-    variables_plot_silvicultura_det$input,
-    variables_plot_silvicultura_det$tip,  
-    variables_plot_silvicultura_det$indic
+    variables_plot_biodivers_det$input,
+    variables_plot_biodivers_det$tip,  
+    variables_plot_biodivers_det$indic
   )
   plt$gp
 })
 
 # pentru afisare subtab date
-output$silvicultura_timeseries_det_data <- DT::renderDT({
+output$biodivers_timeseries_det_data <- DT::renderDT({
   
   DT::datatable(
-    variables_plot_silvicultura_det$input |> 
+    variables_plot_biodivers_det$input |> 
       dplyr::mutate(across(is.numeric, round, digits = 1)) |>
       dplyr::select(-ID, -p10, -p90),
     extensions = 'Buttons', rownames = F,
