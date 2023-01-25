@@ -36,6 +36,7 @@ ui <- shinyUI(
       ui_energie,
       ui_hidro,
       ui_silvicultura,
+      ui_biodivers,
       ui_despre
       
     )
