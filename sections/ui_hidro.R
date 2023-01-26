@@ -36,8 +36,8 @@ ui_hidro <- tabPanel(
           selectInput(
             inputId = "hidro_perio",
             label = "Luna/Sezon",
-            choices = select_interv[17],
-            selected =  select_interv[17]
+            choices = select_interv,
+            selected =  select_interv[1]
           ),
           conditionalPanel(
             condition = "input.hidro_tip == 'abate'",
@@ -150,8 +150,8 @@ ui_hidro <- tabPanel(
           selectInput(
             inputId = "hidro_perio_det",
             label = "Luna/Sezon",
-            choices = select_interv[17], # avem doar anuale
-            selected =  select_interv[17]
+            choices = select_interv, 
+            selected =  select_interv[1]
           ),
           conditionalPanel(
             condition = "input.hidro_tip_det == 'abate'",
