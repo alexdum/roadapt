@@ -118,10 +118,13 @@ ui_biodivers <- tabPanel(
           selectInput(
             inputId = "biodivers_admin_det",
             label = "Unitate administrativă",
-            choices = c("Regiuni dezvoltare" = "reg",
-                        "Județe" = "jud",
-                        "UAT" = "uat"),
-            selected =  "uat"
+            choices = 
+              c("LTSER" = "ltser",
+                "SCI-SPA" = "sci_spa",
+                "Regiuni dezvoltare" = "reg",
+                "Județe" = "jud",
+                "UAT" = "uat"),
+            selected =  "sci_spa"
           ),
           selectInput(
             inputId = "biodivers_ind_det",
