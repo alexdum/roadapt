@@ -73,7 +73,7 @@ ui_energie <- tabPanel(
           width = 7,
           h6(textOutput("energie_text_gen"), style = "text-align:center;"),
           wellPanel(
-            leafletOutput("energie_map_gen")
+            leafletOutput("energie_map_gen") |> withSpinner(size = 0.5)
           ),
           br(),
           conditionalPanel( # show graphs only when data available

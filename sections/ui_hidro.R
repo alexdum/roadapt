@@ -73,7 +73,7 @@ ui_hidro <- tabPanel(
           width = 7,
           h6(textOutput("hidro_text_gen"), style = "text-align:center;"),
           wellPanel(
-            leafletOutput("hidro_map_gen")
+            leafletOutput("hidro_map_gen") |> withSpinner(size = 0.5)
           ),
           br(),
           conditionalPanel( # show graphs only when data available

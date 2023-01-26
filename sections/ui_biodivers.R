@@ -73,7 +73,7 @@ ui_biodivers <- tabPanel(
           width = 7,
           h6(textOutput("biodivers_text_gen"), style = "text-align:center;"),
           wellPanel(
-            leafletOutput("biodivers_map_gen")
+            leafletOutput("biodivers_map_gen") |> withSpinner(size = 0.5)
           ),
           br(),
           conditionalPanel( # show graphs only when data available

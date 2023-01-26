@@ -73,7 +73,7 @@ ui_silvicultura <- tabPanel(
           width = 7,
           h6(textOutput("silvicultura_text_gen"), style = "text-align:center;"),
           wellPanel(
-            leafletOutput("silvicultura_map_gen")
+            leafletOutput("silvicultura_map_gen") |> withSpinner(size = 0.5)
           ),
           br(),
           conditionalPanel( # show graphs only when data available

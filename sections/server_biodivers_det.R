@@ -145,7 +145,7 @@ variables_plot_biodivers_det <- reactiveValues(
   
 ) 
 
-observeEvent(list(isolate(input$go_biodiversdet), isolate(input$tab_biodivers_det)),{
+observeEvent(list(isolate(input$go_biodiversdet)),{ #, isolate(input$tab_biodivers_det)),{
   variables_plot_biodivers_det$admin  <- biodivers_rdet()$admin
   admin_spat_sub <- biodivers_rdet()$admin_spat_sub
   first_sel <- sample(1:nrow(admin_spat_sub), 1)

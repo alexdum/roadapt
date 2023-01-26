@@ -73,7 +73,7 @@ ui_agricultura <- tabPanel(
           width = 7,
           h6(textOutput("agro_text_gen"), style = "text-align:center;"),
           wellPanel(
-            leafletOutput("agro_map_gen")
+            leafletOutput("agro_map_gen") |> withSpinner(size = 0.5)
           ),
           br(),
           conditionalPanel( # show graphs only when data available
