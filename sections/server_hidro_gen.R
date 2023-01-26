@@ -12,8 +12,8 @@ observe({
   } else { # doara anuala cand nu le ai pe celelalte
     updateSelectInput(
       session, "hidro_perio",
-      choices = select_interv[17],
-      selected = select_interv[17]
+      choices = select_interv,
+      selected = select_interv[1]
     )
   }
 })
