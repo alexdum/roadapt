@@ -30,10 +30,12 @@ biodivers_rdet <- eventReactive(list(input$go_biodiversdet, isolate(input$tab_bi
   
   # selectie unitate
   switch( # alege nume indicator care să fie afișat
-    which(c("uat", "jud", "reg") %in%  admin),
+    which(c("uat", "jud", "reg", "ltser", "sci_spa") %in%  admin),
     admin_spat <- uat,
     admin_spat <- jud,
-    admin_spat <- reg
+    admin_spat <- reg,
+    admin_spat <- ltser,
+    admin_spat <- sci_spa
   )
   
   
@@ -100,7 +102,7 @@ observe({
     clearShapes() %>%
     addPolygons(
       fillColor = ~pal(value),
-      label = ~paste("<font size='2'><b>Region type: UAT<br/>Name units:",name,
+      label = ~paste("<font size='2'><b>Name unit:",name,
                      "<br/>",round(value,1),"</b></font><br/>
                        <font size='1' color='#E95420'>Click to
                        get values and graph</font>") %>% lapply(htmltools::HTML),
@@ -203,6 +205,8 @@ output$condpan_biodivers_det <- renderText({
   biodivers_tip_name_ind <- ifelse(biodivers_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
   if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_biodivers_det$name)
   if (admin == "jud") name_aadmin <- paste("județul", variables_plot_biodivers_det$name)
+  if (admin == "ltser") name_aadmin <- paste("LTSER", variables_plot_biodivers_det$name)
+  if (admin == "sci_spa") name_aadmin <- paste("SCI-SPA", variables_plot_biodivers_det$name)
   if (admin == "uat") name_aadmin <- paste(variables_plot_biodivers_det$name," - județul ",variables_plot_biodivers_det$county)
   paste0(
     biodivers_tip_name_ind," ", biodivers_perio," ",toupper(scena), 
