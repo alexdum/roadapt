@@ -37,6 +37,10 @@ mask <- vect("www/data/shp/mask.shp") # pentru mask raster
 uat <- st_read("www/data/shp/uat.topojson", quiet = T)
 jud <- st_read("www/data/shp/judete.topojson", quiet = T) |> dplyr::rename(natcode = mnemonic)
 reg <- st_read("www/data/shp/regiuni.topojson", quiet = T) |> dplyr::rename(natcode = regionId, name = region)
+ltser <- st_read("www/data/shp/ltser.topojson", quiet = T) 
+sci_spa <- st_read("www/data/shp/sci_spa.topojson", quiet = T) 
+
+
  
 
 indicator_def <- read.csv("www/data/tabs/indicators_definition.csv")
