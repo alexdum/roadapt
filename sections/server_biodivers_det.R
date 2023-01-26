@@ -63,7 +63,7 @@ biodivers_rdet <- eventReactive(list(input$go_biodiversdet, isolate(input$tab_bi
   # text harta
   name_ind <- names(select_biodivers_ind)[which(select_biodivers_ind %in% indic)] #nume indicator clar
   biodivers_perio <- names(select_interv)[which(select_interv %in% input$biodivers_perio_det)] # luna.sezon clar
-  param_text<- ifelse (
+  param_text <- ifelse(
     biodivers_tip == "abate", 
     paste(name_ind , " - scenariul", toupper(scena), "schimbare", biodivers_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
     paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", biodivers_perio, an1_abs,"-", an2_abs)
@@ -84,7 +84,7 @@ output$biodivers_text_det <- renderText({
   
 })
 
-output$biodivers_map_det <- renderLeaflet ({
+output$biodivers_map_det <- renderLeaflet({
   leaflet_fun_det(
     data = isolate(biodivers_rdet()$admin_spat_sub),
     pal =  isolate(biodivers_rdet()$pal),
