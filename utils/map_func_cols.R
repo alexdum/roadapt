@@ -108,25 +108,25 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
-          cols = colintGnBu(15), 
-          vals = seq(0,1400, 100)
+          cols = colintGnBu(13), 
+          vals = seq(200,1400, 100)
         ) 
       } else if (perio_tip == "season") {
         df.col <- data.frame(
-          cols = colintGnBu(13), 
-          vals = c(seq(0,100, 25), seq(150,500, 50))
+          cols = colintGnBu(11), 
+          vals = c(seq(20,100, 20), seq(150,400, 50))
         )
       } else {
         df.col <- data.frame(
-          cols = colintGnBu(9), 
-          vals = seq(0,200, 25)
+          cols = colintGnBu(11), 
+          vals = c(10,20,30,40,seq(50,200, 25))
         )
       }
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "mm","</html>")
     } else {
       df.col <- data.frame(
-        cols = colintBrBG(11), 
-        vals = seq(-50,50, 10)
+        cols = colintBrBG(13), 
+        vals = c(-50, -40,-30,-20,-10,-5, 0,5,10,20,30,40,50)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
