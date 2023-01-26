@@ -2,7 +2,7 @@ import xarray as xr
 import pandas as pd
 
 # pentru situatiile cand avem zile in netcdf si trebuie duse in integer
-indicators = ['cdd', 'gsl', 'r20mm']
+indicators = ['cdd', 'gsl', 'r20mm', 'hwd']
 variables = ["rsds", "wsgsmax"]
 
 def extract_point(fname, lon, lat, variable):
@@ -26,7 +26,7 @@ def extract_point(fname, lon, lat, variable):
 
 
 
-#ds = xr.open_dataset("www/data/ncs/climgen/rsds_rcp45_month-10_19710101_21001231.nc")
+#ds = xr.open_dataset("www/data/ncs/biodivers)
 # dsloc = ds.sel(25,46,method='nearest')
 # dsloc = dsloc["rsds"].to_pandas()
 # dsf = dsloc.rename_axis('index1').reset_index()
