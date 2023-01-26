@@ -153,8 +153,8 @@ ui_biodivers <- tabPanel(
           selectInput(
             inputId = "biodivers_perio_det",
             label = "Luna/Sezon",
-            choices = select_interv[17], # avem doar anuale
-            selected =  select_interv[17]
+            choices = select_interv, # avem doar anuale
+            selected =  select_interv[1]
           ),
           conditionalPanel(
             condition = "input.biodivers_tip_det == 'abate'",
