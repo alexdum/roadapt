@@ -121,7 +121,7 @@ ui_hidro <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "uat"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "hidro_ind_det",

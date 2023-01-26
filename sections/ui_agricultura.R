@@ -121,7 +121,7 @@ ui_agricultura <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "uat"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "agro_ind_det",

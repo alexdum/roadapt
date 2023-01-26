@@ -121,7 +121,7 @@ ui_energie <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "uat"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "energie_ind_det",

@@ -121,7 +121,7 @@ ui_silvicultura <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "uat"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "silvicultura_ind_det",

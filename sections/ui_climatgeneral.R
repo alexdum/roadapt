@@ -121,7 +121,7 @@ ui_climatgeneral <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "uat"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "climgen_ind_det",
