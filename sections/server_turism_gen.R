@@ -2,7 +2,7 @@
 
 observe({
   indic <- input$turism_ind
-  if (indic %in% c("prAdjust")) {
+  if (indic %in% c("tasminAdjust")) {
     # luni/sezona/an
     updateSelectInput(
       session, "turism_perio",
