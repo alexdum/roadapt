@@ -1,7 +1,7 @@
 # update select input year/season/month -----------------------------------
 observe({
   indic <- input$turism_ind_det
-  if (indic %in% c("prAdjust")) {
+  if (indic %in% c("tasminAdjust")) {
     # luni/sezona/an
     updateSelectInput(
       session, "turism_perio_det",
