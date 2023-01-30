@@ -27,7 +27,7 @@ Sisteme urbane
 
 Transporturi    
 
-Turism și activități recreative  
+[Turism și activități recreative](#turism)
 
 Industrie      
 
