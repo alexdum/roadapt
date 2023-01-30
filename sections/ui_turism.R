@@ -119,12 +119,10 @@ ui_turism <- tabPanel(
             inputId = "turism_admin_det",
             label = "Unitate administrativă",
             choices = 
-              c("LTSER" = "ltser",
-                "SCI-SPA" = "sci_spa",
-                "Regiuni dezvoltare" = "reg",
+              c("Regiuni dezvoltare" = "reg",
                 "Județe" = "jud",
                 "UAT" = "uat"),
-            selected =  "sci_spa"
+            selected =  "jud"
           ),
           selectInput(
             inputId = "turism_ind_det",
