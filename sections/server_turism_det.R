@@ -30,12 +30,10 @@ turism_rdet <- eventReactive(list(input$go_turismdet, isolate(input$tab_turism_d
   
   # selectie unitate
   switch( # alege nume indicator care să fie afișat
-    which(c("uat", "jud", "reg", "ltser", "sci_spa") %in%  admin),
+    which(c("uat", "jud", "reg") %in%  admin),
     admin_spat <- uat,
     admin_spat <- jud,
-    admin_spat <- reg,
-    admin_spat <- ltser,
-    admin_spat <- sci_spa
+    admin_spat <- reg
   )
   
   
@@ -209,8 +207,6 @@ output$condpan_turism_det <- renderText({
   turism_tip_name_ind <- ifelse(turism_tip == "abate", paste("Schimbare în",tolower(name_ind)), name_ind) 
   if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_turism_det$name)
   if (admin == "jud") name_aadmin <- paste("județul", variables_plot_turism_det$name)
-  if (admin == "ltser") name_aadmin <- paste("LTSER", variables_plot_turism_det$name)
-  if (admin == "sci_spa") name_aadmin <- paste("SCI-SPA", variables_plot_turism_det$name)
   if (admin == "uat") name_aadmin <- paste(variables_plot_turism_det$name," - județul ",variables_plot_turism_det$county)
   paste0(
     turism_tip_name_ind," ", turism_perio," ",toupper(scena), 
