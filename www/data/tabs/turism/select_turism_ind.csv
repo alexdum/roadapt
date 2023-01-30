@@ -1,3 +1,4 @@
 parameter,choice
 Temperatura minimă,tasminAdjust
 Zile PP ≥ 20 mm,r20mm
+Grade zile de răcire,cddcold22
