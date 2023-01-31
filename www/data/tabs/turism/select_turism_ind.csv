@@ -1,4 +1,6 @@
 parameter,choice
 Temperatura minimă,tasminAdjust
 Zile PP ≥ 20 mm,r20mm
+Durată a valurilor de căldură TX 90p,wsdi
+Durata valurilor de frig TN 10p,csdi
 Zile consecutive PP <  1.0 mm,cdd
