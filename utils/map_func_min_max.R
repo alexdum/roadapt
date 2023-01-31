@@ -49,11 +49,11 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
   if (indic %in% c("wsgsmax")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
-        min_max <- NA
+        min_max <- c(6,14)
       } else if (perio_tip == "season") {
-        min_max <- NA
+        min_max <- c(5,16)
       } else {
-        min_max <- NA
+        min_max <- c(4,15)
       }
     } else {
       min_max <- NA
