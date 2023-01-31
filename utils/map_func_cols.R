@@ -240,7 +240,6 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
-  
   if (indic %in% c("hwd")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
@@ -254,6 +253,42 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       df.col <- data.frame(
         cols =  c(rev(colintBuPu(3)),colintYlOrRd(7)), 
         vals = c(-5,-2.5, 0,2.5,5,7.5, 10, 20,30,40)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("wsdi")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintYlOrBr(13), 
+          vals = c(seq(0,50,5), 75,100)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols =  c(rev(colintBuPu(3)),colintYlOrRd(9)), 
+        vals = c(seq(-5,5, 2.5),seq(10, 70, 10))
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("csdi")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBuPu(11), 
+          vals = seq(0,10,1)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols =  rev(c(rev(colintBuPu(4)),colintYlOrRd(10)[1:5])), 
+        vals = c(-5,-3,-2,-1,0,1,2,3,5)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
