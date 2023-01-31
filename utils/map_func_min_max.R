@@ -32,7 +32,7 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
     }
   }
   
-  if (indic %in% c("wsgsmax")) {
+  if (indic %in% c("prAdjust")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         min_max <- c(200, 1400)
@@ -46,7 +46,7 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
     }
   }
   
-  if (indic %in% c("prAdjust")) {
+  if (indic %in% c("wsgsmax")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         min_max <- NA
