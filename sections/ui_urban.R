@@ -1,7 +1,7 @@
 ui_urban <- tabPanel(
-  title = "Urbanism și sisteme urbane",icon = icon("tree"),
+  title = "Sisteme urbane",icon = icon("city"),
   value = "#urban", id = "#urban",
-  h5("Urbanism și sisteme urbane"),
+  h5("Sisteme urbane"),
   tabsetPanel(
     tabPanel(
       id = "tab_urban_gen",
