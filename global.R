@@ -58,6 +58,8 @@ select_biodivers_ind <- read.csv("www/data/tabs/biodivers/select_biodivers_ind.c
 select_biodivers_ind  <- setNames(select_biodivers_ind$choice, select_biodivers_ind$parameter)
 select_turism_ind <- read.csv("www/data/tabs/turism/select_turism_ind.csv") 
 select_turism_ind  <- setNames(select_turism_ind$choice, select_turism_ind$parameter)
+select_urban_ind <- read.csv("www/data/tabs/urban/select_urban_ind.csv") 
+select_urban_ind  <- setNames(select_urban_ind$choice, select_urban_ind$parameter)
 
 select_interv <- read.csv("www/data/tabs/select_interv.csv") 
 select_interv <- setNames(select_interv$choice, select_interv$parameter)
