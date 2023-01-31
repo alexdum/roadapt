@@ -130,6 +130,27 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
       min_max <- c(-3,40) # pentru plotare cu reclasificare raster valori maxime izolate
     }
   }
+  
+  if (indic %in% c("wsdi")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        min_max <- c(0,100) # pentru plotare cu reclasificare raster valori maxime izolate
+      }
+    } else {
+      min_max <- c(-5,70) # pentru plotare cu reclasificare raster valori maxime izolate
+    }
+  }
+  
+  if (indic %in% c("csdi")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        min_max <- c(0,10) # pentru plotare cu reclasificare raster valori maxime izolate
+      }
+    } else {
+      min_max <- c(-5,5) # pentru plotare cu reclasificare raster valori maxime izolate
+    }
+  }
+  
   return(min_max)
 }
 
