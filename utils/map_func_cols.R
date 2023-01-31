@@ -80,18 +80,18 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
-          cols = windabs(8), 
-          vals = c(5,6,7,8,9,10,12.5,15)
+          cols = windabs(9), 
+          vals = c(6,7,8,9,10,11,12,13,14)
         ) 
       } else if  (perio_tip == "season") {
         df.col <- data.frame(
-          cols = windabs(10), 
-          vals = c(4,5,6,7,8,9,10,12.5,15,17.5)
+          cols = windabs(11), 
+          vals = c(5,6,7,8,9,10,12,13,14,15,16)
         ) 
       } else {
         df.col <- data.frame(
-          cols = windabs(12),
-          vals = c(3,4,5,6,7,8,9,10,12.5,15,17.5,20)
+          cols = windabs(11),
+          vals = c(4,5,6,7,8,9,10,12,13,14,15)
         ) 
       }
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
