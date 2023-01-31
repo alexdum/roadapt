@@ -56,7 +56,7 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
         min_max <- c(4,15)
       }
     } else {
-      min_max <- NA
+      min_max <- c(-5,5)
     }
   }
   

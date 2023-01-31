@@ -97,8 +97,8 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
     }  else {
       df.col <- data.frame(
-        cols = rev(colintPRGn(17)), 
-        vals = c(-10,-7.5,-5,-4,-3,-2,-1, -0.5, 0, 0.5, 1, 2,3,4,5,7.5,10)
+        cols = rev(colintPRGn(13)), 
+        vals = c(-5,-4,-3,-2,-1, -0.5, 0, 0.5, 1, 2,3,4,5)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
     }
