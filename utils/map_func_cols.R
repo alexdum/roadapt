@@ -17,8 +17,11 @@ colintOrRd <- colorRampPalette( brewer.pal(9,"OrRd"),interpolate = "linear")
 colintPRGn <- colorRampPalette( brewer.pal(11,"PRGn"),interpolate = "linear")
 colintPiYG <- colorRampPalette( brewer.pal(11,"PiYG"),interpolate = "linear")
 windabs <- colorRampPalette(rainbow(8)[2:8],interpolate = "linear")
-windabs2 <- colorRampPalette(rev(c("#f72585","#b5179e","#7209b7","#560bad","#480ca8","#3f37c9","#4361ee","#4895ef","#4cc9f0")),interpolate = "linear")
-
+windabs2 <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", 
+                    "#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", 
+                    "#FF0000", "#990000"), interpolate = "linear")
+                    
+#windabs2 <- colorRampPalette(c("#6389B3","#5BB2B8", "#3AB284","#3AB284", "#8DCE6B", "#AEC356", "#CAB942", "#AC4D85", "#AC4D85", "#9645A3","#895CAC", "#9C49D5","#D3B4ED", "#F6DFDF" , "white"),interpolate = "linear")
 map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA) {
   # culori interpolate
   if (indic %in% c("tasAdjust", "tasmaxAdjust", "tasminAdjust")) {
