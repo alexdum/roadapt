@@ -37,7 +37,7 @@ ui_urban <- tabPanel(
             inputId = "urban_perio",
             label = "Luna/Sezon",
             choices = select_interv,
-            selected =  select_interv[1]
+            selected =  select_interv[17]
           ),
           conditionalPanel(
             condition = "input.urban_tip == 'abate'",
@@ -151,7 +151,7 @@ ui_urban <- tabPanel(
             inputId = "urban_perio_det",
             label = "Luna/Sezon",
             choices = select_interv, # avem doar anuale
-            selected =  select_interv[1]
+            selected =  select_interv[17]
           ),
           conditionalPanel(
             condition = "input.urban_tip_det == 'abate'",
