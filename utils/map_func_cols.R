@@ -19,7 +19,9 @@ colintPiYG <- colorRampPalette( brewer.pal(11,"PiYG"),interpolate = "linear")
 #windabs <- colorRampPalette(rainbow(8)[2:8],interpolate = "linear")
 windabs2 <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", "#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", "#FF0000", "#990000"), interpolate = "linear")
 colintHWD <- colorRampPalette(colors = c("#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", "#FF0000", "#CC0000", "#990000", "#660000", "#330000"),  interpolate = "linear")
-              
+colintCWDabs <- colorRampPalette(colors = c("#00FFFF", "#00CCFF", "#0099FF", "#0066FF", "#0033FF", "#0000FF", "#0000CC", "#000099", "#000066", "#000033"),  interpolate = "linear")
+colintCWDano <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", "#FFFFFF", "#CCCCFF", "#9999FF", "#6666FF", "#3333FF", "#0000FF"),  interpolate = "linear")
+
   
   
 #windabs2 <- colorRampPalette(c("#6389B3","#5BB2B8", "#3AB284","#3AB284", "#8DCE6B", "#AEC356", "#CAB942", "#AC4D85", "#AC4D85", "#9645A3","#895CAC", "#9C49D5","#D3B4ED", "#F6DFDF" , "white"),interpolate = "linear")
@@ -258,6 +260,24 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       df.col <- data.frame(
         cols =  c(rev(colintBuPu(3)),colintYlOrRd(7)), 
         vals = c(-5,-2.5, 0,2.5,5,7.5, 10, 20,30,40)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("cwd")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintCWDabs(15), 
+          vals = c(1.0,2.0,3.0,4.0,5.0,6,7,8,9,10.0,11,12,13,14,15.0)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols =  colintCWDano(11), 
+        vals = -5:5
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
