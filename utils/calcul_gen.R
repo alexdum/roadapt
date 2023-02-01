@@ -21,8 +21,8 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
       dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
     }
     
-    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean()
-    nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean()
+    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean(na.rm = T)
+    nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean(na.rm = T)
     # calcul abatere in functie de parametru
     if (indic %in% c("prAdjust", "ur")) {
       ncf <- (((nc.abs*100)/nc.norm ) - 100) 
@@ -39,7 +39,7 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     }
     
     ncf <- nc[[which(dats %in% dats.sub)]] 
-    ncf <- mean(ncf)
+    ncf <- mean(ncf, na.rm = T)
   }
   
   return(ncf) 
