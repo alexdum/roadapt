@@ -2,7 +2,7 @@ import xarray as xr
 import pandas as pd
 
 # pentru situatiile cand avem zile in netcdf si trebuie duse in integer
-indicators = ['cdd', 'gsl', 'r20mm', 'hwd', 'wsdi', 'csdi']
+indicators = ['cdd', 'gsl', 'r20mm', 'hwd','cwd', 'wsdi', 'csdi']
 variables = ["rsds", "wsgsmax"]
 
 def extract_point(fname, lon, lat, variable):
