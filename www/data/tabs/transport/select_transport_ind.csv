@@ -1,0 +1,4 @@
+parameter,choice
+Temperatura maximă,tasmaxAdjust
+Temperatura minimă,tasminAdjust
+Viteza vântului la rafală,wsgsmax
