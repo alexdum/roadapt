@@ -41,7 +41,7 @@ ui <- shinyUI(
       ui_silvicultura,
       ui_biodivers,
       ui_urban,
-      ui_transporturi,
+      ui_transport,
       ui_turism,
       ui_despre
       
