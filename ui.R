@@ -18,7 +18,7 @@ ui <- shinyUI(
     tags$head(
       tags$style(
         type = 'text/css','.navbar-brand{display:none;}',
-        "body { padding-top: 70px;}"
+        "body { padding-top: 120px;}"
       )
     ),
     useShinyjs(),
