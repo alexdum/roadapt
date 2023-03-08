@@ -1,7 +1,7 @@
 ui_sanatate <- tabPanel(
   title = "Sănătate publică",icon = icon("heart-pulse"),
   value = "#sanatate", id = "#sanatate",
-  h5("sanatateuri"),
+  h5("Sănătate publică"),
   tabsetPanel(
     tabPanel(
       id = "tab_sanatate_gen",
