@@ -56,8 +56,6 @@ transport_rea <- eventReactive(list(input$go_transportgen, isolate(input$tab_tra
   
   
 
-  
-  
   # text harta
   name_ind <- names(select_transport_ind)[which(select_transport_ind %in% indic)] #nume indicator clar
   transport_perio <- names(select_interv)[which(select_interv %in% input$transport_perio)] # luna.sezon clar
