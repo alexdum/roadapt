@@ -46,13 +46,13 @@ energie_rea <- eventReactive(list(input$go_energiegen, isolate(input$tab_energie
   
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
-  ncfm <- terra::mask(ncfm, mask, touches=F)
+  ncfm <- terra::mask(ncfm, mask, touches = F)
   
   
   # text harta
   name_ind <- names(select_energie_ind)[which(select_energie_ind %in% indic)] #nume indicator clar
   energie_perio <- names(select_interv)[which(select_interv %in% input$energie_perio)] # luna.sezon clar
-  param_text<- ifelse (
+  param_text <- ifelse(
     energie_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
           "schimbare", energie_perio , 
