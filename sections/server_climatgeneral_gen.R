@@ -21,14 +21,20 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
   ncf <- calcul_gen(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
-  # pentru legenda titlu §i intervale §i culori
-  domain <- terra::minmax(ncf)
-  map_leg <- map_func_cols(indic, climgen_tip, domain = domain, perio_tip)
-  
-  
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
-  ncfm <- terra::mask(ncfm, mask, touches=F)
+  ncfm <- terra::mask(ncfm, mask, touches = F)
+  
+  
+  # pentru legenda titlu si intervale si culori
+  min_max <- map_func_min_max(indic, climgen_tip, perio_tip)
+  if (!is.na(min_max[1])) { # verifica daca ai valori disponibile, cel putin una
+    ncfm[ncfm > min_max[2]] <- min_max[2]
+    ncfm[ncfm < min_max[1]] <- min_max[1]
+  }
+  # pentru legenda titlu §i intervale §i culori
+  domain <- terra::minmax(ncfm)
+  map_leg <- map_func_cols(indic, climgen_tip, domain = domain, perio_tip)
   
   
   # text harta
