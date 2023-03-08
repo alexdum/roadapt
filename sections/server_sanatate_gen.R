@@ -2,7 +2,7 @@
 
 observe({
   indic <- input$sanatate_ind
-  if (indic %in% c("rsds")) {
+  if (indic %in% c("hurs", "tasmaxAdjust", "tasminAdjust")) {
     # luni/sezona/an
     updateSelectInput(
       session, "sanatate_perio",
