@@ -29,6 +29,8 @@ Educație și conștientizare
 
 [Turism și activități recreative](#turism)
 
+[Sănătate publică](#sanatate)
+
 Industrie      
 
 Asigurări     
