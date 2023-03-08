@@ -5,6 +5,7 @@ colintBrBG <- colorRampPalette( brewer.pal(11,"BrBG")[1:5],interpolate = "linear
 colintBlues <- colorRampPalette(brewer.pal(9,"Blues"), interpolate = "linear")
 colintReds <- colorRampPalette(brewer.pal(9,"Reds"), interpolate = "linear")
 colintBuPu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate = "linear")
+colintPuBu <- colorRampPalette(brewer.pal(9,"BuPu"), interpolate = "linear")
 colintPuRd <- colorRampPalette(brewer.pal(9,"PuRd"), interpolate = "linear")
 colintYlOrBr <- colorRampPalette(brewer.pal(9,"YlOrBr"), interpolate = "linear")
 colintinferno <- colorRampPalette(rev(viridis::inferno(14)), interpolate = "linear")
@@ -80,6 +81,34 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
         vals = seq(-30,30, 5)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "W/m²","</html>")
+    }
+  }
+  
+  if (indic %in% c("hurs")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintPuBu(7), 
+          vals = seq(55,85,5)
+        ) 
+      } else if  (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = colintPuBu(11), 
+          vals = seq(40,90,5)
+        ) 
+      } else {
+        df.col <- data.frame(
+          cols = colintPuBu(12),
+          vals = seq(35,90,5)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
+    }  else {
+      df.col <- data.frame(
+        cols = colintBrBG(13), 
+        vals = c(-50, -40,-30,-20,-10,-5, 0,5,10,20,30,40,50)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
   }
   

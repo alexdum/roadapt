@@ -12,6 +12,8 @@ plots_det <- function(dd, tip, indic) {
     y_lab <- "°C"
   } else if (indic %in% c("prAdjust")) {
     y_lab = "mm" 
+  } else if (indic %in% c("hurs")) {
+    y_lab = "%" 
   } else if (indic %in% c("rsds")) {
     y_lab = "W/m²" 
   } else if (indic %in% c("cddcold22")) {
@@ -27,7 +29,7 @@ plots_det <- function(dd, tip, indic) {
   if (tip == "abate") {
     
     # schimba in procente pentru anomalii
-    if (indic %in% c("prAdjust")) y_lab <- "%"
+    if (indic %in% c("prAdjust", "hurs")) y_lab <- "%"
     
     gg <- ggplot(data = dd, aes(x = date, y = change_med)) + 
       geom_line(color = "black", size = 0.8) +

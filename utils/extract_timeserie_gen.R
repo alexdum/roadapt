@@ -28,14 +28,14 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   dd <- dd |> mutate(
     an = format(data, "%Y"),
     change_med = case_when(
-      varia %in% c("prAdjust", "ur") ~  (((med*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
-      !varia %in% c("prAdjust", "ur") ~   (med - mean(med[an <= 2000]))  %>% round(1)),
+      varia %in% c("prAdjust", "hurs") ~  (((med*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
+      !varia %in% c("prAdjust", "hurs") ~   (med - mean(med[an <= 2000]))  %>% round(1)),
     change_max = case_when(
-      varia %in% c("prAdjust", "ur") ~  (((max*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
-      !varia %in% c("prAdjust", "ur") ~   (max - mean(med[an <= 2000]))  %>% round(1)),
+      varia %in% c("prAdjust", "hurs") ~  (((max*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
+      !varia %in% c("prAdjust", "hurs") ~   (max - mean(med[an <= 2000]))  %>% round(1)),
     change_min = case_when(
-      varia %in% c("prAdjust", "ur") ~  (((min*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
-      !varia %in% c("prAdjust", "ur") ~   (min - mean(med[an <= 2000]))  %>% round(1)),
+      varia %in% c("prAdjust", "hurs") ~  (((min*100)/mean(med[an <= 2000])) - 100)  %>% round(1),
+      !varia %in% c("prAdjust", "hurs") ~   (min - mean(med[an <= 2000]))  %>% round(1)),
     med_1971_2000 = mean(med[an <= 2000]) |> round(1)
   )
   

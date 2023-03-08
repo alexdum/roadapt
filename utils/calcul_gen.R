@@ -24,7 +24,7 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean(na.rm = T)
     nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean(na.rm = T)
     # calcul abatere in functie de parametru
-    if (indic %in% c("prAdjust", "ur")) {
+    if (indic %in% c("prAdjust", "hurs")) {
       ncf <- (((nc.abs*100)/nc.norm ) - 100) 
     } else {
       ncf <- nc.abs - nc.norm 
