@@ -121,7 +121,7 @@ ui_sanatate <- tabPanel(
             choices = c("Regiuni dezvoltare" = "reg",
                         "Județe" = "jud",
                         "UAT" = "uat"),
-            selected =  "jud"
+            selected =  "reg"
           ),
           selectInput(
             inputId = "sanatate_ind_det",
