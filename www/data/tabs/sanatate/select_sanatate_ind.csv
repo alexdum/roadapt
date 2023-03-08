@@ -1,0 +1,5 @@
+﻿parameter,choice
+Temperatura maximă,tasmaxAdjust
+Temperatura minimă,tasminAdjust
+Umezeala relativă,hurs
+Durata valurilor de căldură pe baza factorului de exces de căldură,hwd
