@@ -1,5 +1,5 @@
 ui_sanatate <- tabPanel(
-  title = "sanatateuri",icon = icon("road"),
+  title = "Sănătate publică",icon = icon("heart-pulse"),
   value = "#sanatate", id = "#sanatate",
   h5("sanatateuri"),
   tabsetPanel(

@@ -11,6 +11,7 @@ source("sections/ui_biodivers.R",  local = TRUE)
 source("sections/ui_urban.R",  local = TRUE)
 source("sections/ui_transport.R",  local = TRUE)
 source("sections/ui_turism.R",  local = TRUE)
+source("sections/ui_sanatate.R",  local = TRUE)
 source("sections/ui_despre.R",  local = TRUE)
 
 ui <- shinyUI(
@@ -43,6 +44,7 @@ ui <- shinyUI(
       ui_urban,
       ui_transport,
       ui_turism,
+      ui_sanatate,
       ui_despre
       
     )
