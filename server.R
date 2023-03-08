@@ -20,5 +20,7 @@ function(input, output, session) {
   source("sections/server_transport_det.R", local = T)
   source("sections/server_turism_gen.R", local = T)
   source("sections/server_turism_det.R", local = T)
+  source("sections/server_sanatate_gen.R", local = T)
+  source("sections/server_sanatate_det.R", local = T)
   
 }
