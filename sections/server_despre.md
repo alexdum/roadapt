@@ -21,6 +21,8 @@ Această pagină oferă acces interactiv la parametrii și indicatorii climatici
 
 [Biodiversitate și servicii ecosistemice](#biodivers)  
 
+[Patrimoniu cultural]
+
 Educație și conștientizare
 
 [Sisteme urbane](#urban)
