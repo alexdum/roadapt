@@ -17,14 +17,14 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
   dd <- tab_sub |> mutate(
     an = format(date, "%Y"),
     change_med = case_when(
-      indic %in% c("prAdjust", "hurs") ~  (((p50*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("prAdjust", "hurs") ~ (p50 - mean(p50[an <= 2000]))  %>% round(1)),
+      indic %in% c("prAdjust", "hurs","rx1day") ~  (((p50*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
+      !indic %in% c("prAdjust", "hurs","rx1day") ~ (p50 - mean(p50[an <= 2000]))  %>% round(1)),
     change_max = case_when(
-      indic %in% c("prAdjust", "hurs") ~  (((pmax*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("prAdjust", "hurs") ~ (pmax - mean(p50[an <= 2000]))  %>% round(1)),
+      indic %in% c("prAdjust", "hurs","rx1day") ~  (((pmax*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
+      !indic %in% c("prAdjust", "hurs","rx1day") ~ (pmax - mean(p50[an <= 2000]))  %>% round(1)),
     change_min = case_when(
-      indic %in% c("prAdjust", "hurs") ~  (((pmin*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
-      !indic %in% c("prAdjust", "hurs") ~ (pmin - mean(p50[an <= 2000]))  %>% round(1)),
+      indic %in% c("prAdjust", "hurs","rx1day") ~  (((pmin*100)/mean(p50[an <= 2000])) - 100)  %>% round(1),
+      !indic %in% c("prAdjust", "hurs","rx1day") ~ (pmin - mean(p50[an <= 2000]))  %>% round(1)),
     med_1971_2000 = mean(p50[an <= 2000]) |> round(1)
   )
   dd <- dd |> # tidy table

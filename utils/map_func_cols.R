@@ -348,6 +348,24 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
+  if (indic %in% c("rx1day")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBuPu(10), 
+          vals = seq(0,45,5)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "mm","</html>")
+    } else {
+      df.col <- data.frame(
+        cols = colintBrBG(13), 
+        vals = c(-50, -40,-30,-20,-10,-5, 0,5,10,20,30,40,50)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
+    }
+  }
+  
   
   
   # print(head(df.col))
