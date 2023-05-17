@@ -116,18 +116,46 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
-          cols = windabs2(9), 
+          cols = scales::viridis_pal()(9), 
           vals =  seq(6,14,1)
         ) 
       } else if  (perio_tip == "season") {
         df.col <- data.frame(
-          cols = windabs2(12), 
+          cols = scales::viridis_pal()(12), 
           vals =  seq(5,16,1)
         ) 
       } else {
         df.col <- data.frame(
-          cols = windabs2(12),
+          cols = scales::viridis_pal()(12),
           vals =  seq(4,15,1)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
+    }  else {
+      df.col <- data.frame(
+        cols = rev(colintPRGn(13)), 
+        vals = c(-5,-4,-3,-2,-1, -0.5, 0, 0.5, 1, 2,3,4,5)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
+    }
+  }
+  
+  if (indic %in% c("sfcwind")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = scales::viridis_pal()(10), 
+          vals =  seq(1,10,1)
+        ) 
+      } else if  (perio_tip == "season") {
+        df.col <- data.frame(
+          cols = scales::viridis_pal()(10), 
+          vals =  seq(1,10,1)
+        ) 
+      } else {
+        df.col <- data.frame(
+          cols = scales::viridis_pal()(10),
+          vals =  seq(1,10,1)
         ) 
       }
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")
