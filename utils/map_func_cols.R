@@ -144,18 +144,18 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
         df.col <- data.frame(
-          cols = scales::viridis_pal()(10), 
-          vals =  seq(1,10,1)
+          cols = scales::viridis_pal()(8), 
+          vals =  seq(1,8,1)
         ) 
       } else if  (perio_tip == "season") {
         df.col <- data.frame(
-          cols = scales::viridis_pal()(10), 
-          vals =  seq(1,10,1)
+          cols = scales::viridis_pal()(8), 
+          vals =  seq(1,8,1)
         ) 
       } else {
         df.col <- data.frame(
-          cols = scales::viridis_pal()(10),
-          vals =  seq(1,10,1)
+          cols = scales::viridis_pal()(8),
+          vals =  seq(1,8,1)
         ) 
       }
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "m/s","</html>")

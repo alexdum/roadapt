@@ -78,11 +78,11 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
   if (indic %in% c("sfcwind")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
-        min_max <- c(1,10)
+        min_max <- c(1,8)
       } else if (perio_tip == "season") {
-        min_max <- c(1,10)
+        min_max <- c(1,8)
       } else {
-        min_max <- c(1,10)
+        min_max <- c(1,8)
       }
     } else {
       min_max <- c(-5,5)
