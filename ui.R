@@ -27,7 +27,7 @@ ui <- shinyUI(
       
       title = "RO-Adapt explorer",
       id = "tabs",
-      selected = "#despre",
+      selected = "#general",
       fluid = T,
       position = "fixed-top",
       collapsible = TRUE,
