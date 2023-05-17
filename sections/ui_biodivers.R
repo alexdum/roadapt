@@ -124,7 +124,7 @@ ui_biodivers <- tabPanel(
                 "Regiuni dezvoltare" = "reg",
                 "Județe" = "jud",
                 "UAT" = "uat"),
-            selected =  "sci_spa"
+            selected =  "ltser"
           ),
           selectInput(
             inputId = "biodivers_ind_det",
