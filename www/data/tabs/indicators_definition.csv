@@ -17,4 +17,5 @@ hwd,Durata valurilor de căldură pe baza factorului de exces de căldură ,Heat
 wsdi,Durată a valurilor de căldură TX 90p,Warm Spell Duration Index TX 90p,turism,Numărul anual de zile care contribuie la evenimente în care 6 sau mai multe zile consecutive se înregistrează TX > percentila 90,Annual number of days contributing to events where 6 or more consecutive days experience TX > 90th percentile
 csdi,Durata valurilor de frig TN 10p,Cold Spell Duration Index TN 10p,turism,Numărul anual de zile care contribuie la evenimente în care 6 sau mai multe zile consecutive înregistrează TN < percentila 10,Annual number of days contributing to events where 6 or more consecutive days experience TN < 10th percentile
 cwd,Durata valurilor de frig pe baza factorului de exces de frig,Coldwave duration for ECF coldwaves,urban,Durata valurilor de frig pe baza factorului de exces de frig,Coldwave duration for ECF coldwaves
-rx1day,PP max 24 h,PP max 24 h,urban,Cantitatea maximă de precipitații în 24 de ore ,Maximum 1-day precipitation total
+rx1day,PP max 24 h,PP max 24 h,urban,Cantitatea maximă de precipitații în 24 de ore,Maximum 1-day precipitation total
+txge35,Număr de zile caniculare,Hot days,transport,Zilele caniculare reprezintă zilele în care temperatura maximă a aerului ≥ 35 °C,Number of days when daily maximum air temperature ≥ 35 °C

@@ -2,6 +2,7 @@ parameter,choice
 Temperatura maximă,tasmaxAdjust
 Temperatura minimă,tasminAdjust
 Viteza vântului la rafală,wsgsmax
+Număr de zile caniculare,txge35
 Durată a valurilor de căldură TX 90p,wsdi
 Durata valurilor de frig TN 10p,csdi
 Zile PP ≥ 20 mm,r20mm
