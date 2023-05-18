@@ -1,7 +1,7 @@
 ui_asigurari <- tabPanel(
   title = "Asigurări",icon = icon("house-crack"),
   value = "#asigurari", id = "#asigurari",
-  h5("asigurari"),
+  h5("Asigurări"),
   tabsetPanel(
     tabPanel(
       id = "tab_asigurari_gen",
