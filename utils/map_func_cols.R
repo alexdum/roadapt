@@ -394,6 +394,24 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
+  if (indic %in% c("txge35")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintReds(16), 
+          vals = seq(0,30,2)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(10)[2:4]),colintReds(9)), 
+        vals = c(-6,-4,-2,0,2,4,6,8,10,15,20,25)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
   
   
   # print(head(df.col))
@@ -431,5 +449,6 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
 #   )
 #   return(text.desc)
 #   
-# }
+# }1] 
+
 
