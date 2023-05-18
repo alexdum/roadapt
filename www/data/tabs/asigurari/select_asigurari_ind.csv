@@ -1,0 +1,7 @@
+parameter,choice
+Temperatura maximă,tasmaxAdjust
+Temperatura minimă,tasminAdjust
+Viteza vântului la rafală,wsgsmax
+Zile consecutive PP <  1.0 mm,cdd
+PP max 24 h,rx1day
+
