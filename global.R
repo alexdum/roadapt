@@ -64,6 +64,8 @@ select_urban_ind <- read.csv("www/data/tabs/urban/select_urban_ind.csv")
 select_urban_ind  <- setNames(select_urban_ind$choice, select_urban_ind$parameter)
 select_sanatate_ind <- read.csv("www/data/tabs/sanatate/select_sanatate_ind.csv") 
 select_sanatate_ind  <- setNames(select_sanatate_ind$choice, select_sanatate_ind$parameter)
+select_asigurari_ind <- read.csv("www/data/tabs/asigurari/select_asigurari_ind.csv") 
+select_asigurari_ind  <- setNames(select_asigurari_ind$choice, select_asigurari_ind$parameter)
 
 select_interv <- read.csv("www/data/tabs/select_interv.csv") 
 select_interv <- setNames(select_interv$choice, select_interv$parameter)
