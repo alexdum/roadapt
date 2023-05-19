@@ -143,10 +143,10 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
   if (indic %in% c("r20mm")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
-        min_max <- NA
+        min_max <- c(0,10)
       }
     } else {
-      min_max <- NA # pentru plotare cu reclasificare raster valori maxime izolate
+      min_max <- c(-5,5) # pentru plotare cu reclasificare raster valori maxime izolate
     }
   }
   

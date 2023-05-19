@@ -298,7 +298,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     } else {
       df.col <- data.frame(
         cols =  colintBrBG(11), 
-        vals = seq(-10,10, 2)
+        vals = seq(-5,5, 1)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
