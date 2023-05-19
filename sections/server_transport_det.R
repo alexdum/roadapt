@@ -46,6 +46,10 @@ transport_rdet <- eventReactive(list(input$go_transportdet, isolate(input$tab_tr
   
   # calcul abateri absolute cu funct utils/calcul_transport_det.R
   tab_sub <- calcul_det(tab, transport_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
+  # valori minime maxime pentru plotare reclasificare valori/plotare sugestiva
+  min_max <- map_func_min_max(indic = indic, ind_tip =  transport_tip, perio_tip = perio_tip)
+  tab_sub$value[tab_sub$value > min_max[2]] <- min_max[2]
+  tab_sub$value[tab_sub$value < min_max[1]] <- min_max[1]
   # unire cu spatial
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
