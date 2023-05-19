@@ -54,11 +54,6 @@ silvicultura_rea <- eventReactive(list(input$go_silviculturagen, isolate(input$t
   map_leg <- map_func_cols(indic, silvicultura_tip, domain = domain, perio_tip)
   
   
-  # mask raster
-  ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
-  ncfm <- terra::mask(ncfm, mask, touches=F)
-  
-  
   # text harta
   name_ind <- names(select_silvicultura_ind)[which(select_silvicultura_ind %in% indic)] #nume indicator clar
   silvicultura_perio <- names(select_interv)[which(select_interv %in% input$silvicultura_perio)] # luna.sezon clar
