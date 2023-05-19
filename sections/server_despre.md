@@ -35,4 +35,4 @@ Educație și conștientizare
 
 Industrie      
 
-Asigurări(#asigurari)     
+[Asigurări](#asigurari)     
