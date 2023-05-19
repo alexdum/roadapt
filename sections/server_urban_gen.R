@@ -55,13 +55,10 @@ urban_rea <- eventReactive(list(input$go_urbangen, isolate(input$tab_urban_gen))
   map_leg <- map_func_cols(indic, urban_tip, domain = domain, perio_tip)
   
   
-
-  
-  
   # text harta
   name_ind <- names(select_urban_ind)[which(select_urban_ind %in% indic)] #nume indicator clar
   urban_perio <- names(select_interv)[which(select_interv %in% input$urban_perio)] # luna.sezon clar
-  param_text<- ifelse (
+  param_text <- ifelse(
     urban_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
           "schimbare", urban_perio , 
@@ -73,9 +70,13 @@ urban_rea <- eventReactive(list(input$go_urbangen, isolate(input$tab_urban_gen))
     )
   )
   
+  # definitie indicator
+  param_def <- indicator_def$definitie[indicator_def$cod == indic] 
+  
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
-    domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, param_text = param_text,
+    domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, 
+    param_text = param_text, param_def = param_def,
     opacy = input$transp_urban_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
     urban_tip = urban_tip,  name_ind =  name_ind, urban_perio = urban_perio 
@@ -85,8 +86,9 @@ urban_rea <- eventReactive(list(input$go_urbangen, isolate(input$tab_urban_gen))
 
 # text harta
 output$urban_text_gen <- renderText({
-  urban_rea()$param_tex
   
+  paste( urban_rea()$param_tex, "<br>", urban_rea()$param_def)
+
 })
 
 

@@ -71,7 +71,8 @@ ui_urban <- tabPanel(
         ),
         column(
           width = 7,
-          h6(textOutput("urban_text_gen"), style = "text-align:center;"),
+         # h6(textOutput("urban_text_gen"), style = "text-align:center;"),
+          uiOutput(outputId = "urban_text_gen"),
           wellPanel(
             leafletOutput("urban_map_gen") |> withSpinner(size = 0.5)
           ),
@@ -176,7 +177,8 @@ ui_urban <- tabPanel(
         ),
         column(
           width = 7,
-          h6(textOutput("urban_text_det"), style = "text-align:center;"),
+          #h6(textOutput("urban_text_det"), style = "text-align:center;"),
+          uiOutput(outputId = "urban_text_det"),
           wellPanel(
             leafletOutput("urban_map_det") |> withSpinner(size = 0.5)
           ),

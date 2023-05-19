@@ -54,7 +54,6 @@ urban_rdet <- eventReactive(list(input$go_urbandet, isolate(input$tab_urban_det)
   
   
   # text harta
-  # text harta
   name_ind <- names(select_urban_ind)[which(select_urban_ind %in% indic)] #nume indicator clar
   urban_perio <- names(select_interv)[which(select_interv %in% input$urban_perio_det)] # luna.sezon clar
   param_text<- ifelse (
@@ -62,10 +61,12 @@ urban_rdet <- eventReactive(list(input$go_urbandet, isolate(input$tab_urban_det)
     paste(name_ind , " - scenariul", toupper(scena), "schimbare", urban_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
     paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", urban_perio, an1_abs,"-", an2_abs)
   )
+  # definitie indicator
+  param_def <- indicator_def$definitie[indicator_def$cod == indic] 
   
   list(
     admin_spat_sub = admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
-    param_text = param_text, opacy = input$transp_urban_det, tab = tab, perio_sub = perio_sub, indic = indic,
+    param_text = param_text, param_def = param_def,  opacy = input$transp_urban_det, tab = tab, perio_sub = perio_sub, indic = indic,
     urban_tip = urban_tip, scena = scena, name_ind = name_ind, urban_perio = urban_perio, 
     an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs,
     admin = admin
@@ -74,7 +75,8 @@ urban_rdet <- eventReactive(list(input$go_urbandet, isolate(input$tab_urban_det)
 })
 
 output$urban_text_det <- renderText({
-  urban_rdet()$param_tex
+  
+  paste( urban_rdet()$param_tex, "<br>", urban_rdet()$param_def)
   
 })
 

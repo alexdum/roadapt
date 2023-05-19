@@ -1,5 +1,5 @@
-﻿parameter,choice
-Durata valurilor de căldură pe baza factorului de exces de căldură,hwd
-Durata valurilor de frig pe baza factorului de exces de frig,cwd
-Viteza vântului la rafală,wsgsmax
+parameter,choice
+Valuri de căldură EHF,hwd
+Valuri de frig ECF,cwd
+Vânt rafală,wsgsmax
 PP max 24 h,rx1day
