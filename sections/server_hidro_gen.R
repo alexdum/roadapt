@@ -39,14 +39,21 @@ hidro_rea <- eventReactive(list(input$go_hidrogen, isolate(input$tab_hidro_gen))
   # calcal abateri sau media multianuala cu functie calcul_hidro_gen din utils
   ncf <- calcul_gen(nc_fil, hidro_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
   
-  # pentru legenda titlu §i intervale §i culori
-  domain <- terra::minmax(ncf)
-  map_leg <- map_func_cols(indic, hidro_tip, domain = domain, perio_tip)
-  
   
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
-  ncfm <- terra::mask(ncfm, mask, touches=F)
+  ncfm <- terra::mask(ncfm, mask, touches = F)
+  
+  
+  # pentru legenda titlu §i intervale §i culori
+  min_max <- map_func_min_max(indic, hidro_tip, perio_tip)
+  if (!is.na(min_max[1])) { # verifica daca ai valori disponibile, cel putin una
+    ncfm[ncfm > min_max[2]] <- min_max[2]
+    ncfm[ncfm < min_max[1]] <- min_max[1]
+  }
+  domain <- terra::minmax(ncfm)
+  map_leg <- map_func_cols(indic, hidro_tip, domain = domain, perio_tip)
+  
   
   
   # text harta
