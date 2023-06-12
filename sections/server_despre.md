@@ -33,6 +33,6 @@ Educație și conștientizare
 
 [Sănătate publică](#sanatate)
 
-Industrie      
+[Industrie](#industrie)      
 
 [Asigurări](#asigurari)     

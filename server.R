@@ -24,6 +24,8 @@ function(input, output, session) {
   source("sections/server_turism_det.R", local = T)
   source("sections/server_sanatate_gen.R", local = T)
   source("sections/server_sanatate_det.R", local = T)
+  source("sections/server_industrie_gen.R", local = T)
+  source("sections/server_industrie_det.R", local = T)
   source("sections/server_asigurari_gen.R", local = T)
   source("sections/server_asigurari_det.R", local = T)
   

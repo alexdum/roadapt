@@ -13,6 +13,7 @@ source("sections/ui_urban.R",  local = TRUE)
 source("sections/ui_transport.R",  local = TRUE)
 source("sections/ui_turism.R",  local = TRUE)
 source("sections/ui_sanatate.R",  local = TRUE)
+source("sections/ui_industrie.R",  local = TRUE)
 source("sections/ui_asigurari.R",  local = TRUE)
 source("sections/ui_despre.R",  local = TRUE)
 
@@ -48,6 +49,7 @@ ui <- shinyUI(
       ui_transport,
       ui_turism,
       ui_sanatate,
+      ui_industrie,
       ui_asigurari,
       ui_despre
       
