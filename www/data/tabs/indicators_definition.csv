@@ -20,3 +20,4 @@ cwd,Valuri de frig ECF,Coldwave duration for ECF coldwaves,urban,Durata valurilo
 rx1day,PP max 24 h,PP max 24 h,urban,Cantitatea maximă de precipitații înregistrată în 24 de ore,Maximum 1-day precipitation total
 txge35,Zile caniculare,Hot days,transport,Numărul anual de  zilele în care temperatura maximă a aerului este ≥ 35 °C,Number of days when daily maximum air temperature ≥ 35 °C
 tr,Nopți tropicale,Tropical nights,urban,Numărul anual de zile când temperatura minimă zilnică este > 20 °C,Annual count of days when daily minimum temperature > 20 °C
+fd,Zile cu îngheț,Frost day,cultura,Numărul anual de zile când temperatura minimă zilnică este < 0 °C,Annual count of days when daily minimum temperature < 0°C
