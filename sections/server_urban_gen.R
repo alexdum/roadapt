@@ -87,7 +87,7 @@ urban_rea <- eventReactive(list(input$go_urbangen, isolate(input$tab_urban_gen))
 # text harta
 output$urban_text_gen <- renderText({
   
-  paste( urban_rea()$param_tex, "<br>", urban_rea()$param_def)
+  paste( urban_rea()$param_text, "<br>", urban_rea()$param_def)
 
 })
 
