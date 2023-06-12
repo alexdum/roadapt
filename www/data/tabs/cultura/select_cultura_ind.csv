@@ -1,0 +1,4 @@
+parameter,choice
+Cantitate precipitații,prAdjust
+Zile consecutive PP < 1.0 mm,cdd
+Zile PP ≥ 20 mm,r20mm
