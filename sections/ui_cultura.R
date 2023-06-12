@@ -71,7 +71,8 @@ ui_cultura <- tabPanel(
         ),
         column(
           width = 7,
-          h6(textOutput("cultura_text_gen"), style = "text-align:center;"),
+          uiOutput(outputId = "cultura_text_gen"),
+          #h6(textOutput("cultura_text_gen"), style = "text-align:center;"),
           wellPanel(
             leafletOutput("cultura_map_gen") |> withSpinner(size = 0.5)
           ),
@@ -176,7 +177,8 @@ ui_cultura <- tabPanel(
         ),
         column(
           width = 7,
-          h6(textOutput("cultura_text_det"), style = "text-align:center;"),
+          uiOutput(outputId = "cultura_text_det"),
+          #h6(textOutput("cultura_text_det"), style = "text-align:center;"),
           wellPanel(
             leafletOutput("cultura_map_det") |> withSpinner(size = 0.5)
           ),
