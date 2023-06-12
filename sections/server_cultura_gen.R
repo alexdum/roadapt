@@ -2,7 +2,7 @@
 
 observe({
   indic <- input$cultura_ind
-  if (indic %in% c("prAdjust")) {
+  if (indic %in% c("tasmaxAdjust", "hurs")) {
     # luni/sezona/an
     updateSelectInput(
       session, "cultura_perio",
@@ -59,7 +59,7 @@ cultura_rea <- eventReactive(list(input$go_culturagen, isolate(input$tab_cultura
   # text harta
   name_ind <- names(select_cultura_ind)[which(select_cultura_ind %in% indic)] #nume indicator clar
   cultura_perio <- names(select_interv)[which(select_interv %in% input$cultura_perio)] # luna.sezon clar
-  param_text<- ifelse (
+  param_text <- ifelse (
     cultura_tip == "abate", 
     paste(name_ind, " - scenariul", toupper(scena),
           "schimbare", cultura_perio , 
@@ -71,9 +71,13 @@ cultura_rea <- eventReactive(list(input$go_culturagen, isolate(input$tab_cultura
     )
   )
   
+  # definitie indicator
+  param_def <- indicator_def$definitie[indicator_def$cod == indic] 
+  
   list(
     nc = ncfm, nc_geo = ncf, # pentru popup
-    domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, param_text = param_text,
+    domain = domain, pal =  map_leg$pal, pal_rev =  map_leg$pal_rev, tit_leg  =   map_leg$tit_leg, 
+    param_text = param_text, param_def = param_def,
     opacy = input$transp_cultura_gen, indic = indic, scena = scena, perio_tip = perio_tip,
     nc_fil = nc_fil, perio_sub = perio_sub, # pentru procesare cu python extragere time series plot
     cultura_tip = cultura_tip,  name_ind =  name_ind, cultura_perio = cultura_perio 
@@ -83,7 +87,8 @@ cultura_rea <- eventReactive(list(input$go_culturagen, isolate(input$tab_cultura
 
 # text harta
 output$cultura_text_gen <- renderText({
-  cultura_rea()$param_tex
+  paste(cultura_rea()$param_text, "<br>", cultura_rea()$param_def)
+
   
 })
 

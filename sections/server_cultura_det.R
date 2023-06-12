@@ -2,7 +2,7 @@
 
 observe({
   indic <- input$cultura_ind_det
-  if (indic %in% c("prAdjust")) {
+  if (indic %in% c("tasmaxAdjust", "hurs")) {
     # luni/sezona/an
     updateSelectInput(
       session, "cultura_perio_det",
@@ -68,9 +68,12 @@ cultura_rdet <- eventReactive(list(input$go_culturadet, isolate(input$tab_cultur
     paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", cultura_perio, an1_abs,"-", an2_abs)
   )
   
+  # definitie indicator
+  param_def <- indicator_def$definitie[indicator_def$cod == indic] 
+  
   list(
     admin_spat_sub =admin_spat_sub, pal = map_leg$pal, pal_rev = map_leg$pal_rev, tit_leg = map_leg$tit_leg,
-    param_text = param_text, opacy = input$transp_cultura_det, tab = tab, perio_sub = perio_sub, indic = indic,
+    param_text = param_text, param_def = param_def, opacy = input$transp_cultura_det, tab = tab, perio_sub = perio_sub, indic = indic,
     cultura_tip = cultura_tip, scena = scena, name_ind = name_ind, cultura_perio = cultura_perio, 
     an1_abat = an1_abat, an2_abat = an2_abat, an1_abs = an1_abs, an2_abs = an2_abs,
     admin = admin
@@ -79,7 +82,7 @@ cultura_rdet <- eventReactive(list(input$go_culturadet, isolate(input$tab_cultur
 })
 
 output$cultura_text_det <- renderText({
-  cultura_rdet()$param_tex
+  paste(cultura_rdet()$param_tex, "<br>", cultura_rdet()$param_def)
   
 })
 
