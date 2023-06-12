@@ -14,6 +14,8 @@ function(input, output, session) {
   source("sections/server_silvicultura_det.R", local = T)
   source("sections/server_biodivers_gen.R", local = T)
   source("sections/server_biodivers_det.R", local = T)
+  source("sections/server_cultura_gen.R", local = T)
+  source("sections/server_cultura_det.R", local = T)
   source("sections/server_urban_gen.R", local = T)
   source("sections/server_urban_det.R", local = T)
   source("sections/server_transport_gen.R", local = T)

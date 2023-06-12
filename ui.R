@@ -8,6 +8,7 @@ source("sections/ui_energie.R",  local = TRUE)
 source("sections/ui_hidro.R",  local = TRUE)
 source("sections/ui_silvicultura.R",  local = TRUE)
 source("sections/ui_biodivers.R",  local = TRUE)
+source("sections/ui_cultura.R",  local = TRUE)
 source("sections/ui_urban.R",  local = TRUE)
 source("sections/ui_transport.R",  local = TRUE)
 source("sections/ui_turism.R",  local = TRUE)
@@ -42,6 +43,7 @@ ui <- shinyUI(
       ui_hidro,
       ui_silvicultura,
       ui_biodivers,
+      ui_cultura,
       ui_urban,
       ui_transport,
       ui_turism,
