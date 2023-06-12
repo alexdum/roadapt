@@ -430,6 +430,23 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
+  if (indic %in% c("fd")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBlues(10), 
+          vals = c(0,10,20,30,40,50,75,100,125,150)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintReds(6)), colintBlues(10)[2:4]), 
+        vals = c(-75,-50, -25, -10, -5, 0, 5, 10, 25)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
   
   
   # print(head(df.col))
