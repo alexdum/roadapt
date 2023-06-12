@@ -235,7 +235,7 @@ output$cultura_det_stat <- renderUI({
     norm <-admin_spat_sub$norm[admin_spat_sub$natcode == variables_plot_cultura_det$id] |> round(1)
     multimean <-admin_spat_sub$p50[admin_spat_sub$natcode == variables_plot_cultura_det$id] |> round(1)
     change <-admin_spat_sub$value[admin_spat_sub$natcode == variables_plot_cultura_det$id] |> round(1)
-    print(paste(an1_abat, an2_abat, norm, multimean, change))
+   
     
     HTML(
       paste0(
