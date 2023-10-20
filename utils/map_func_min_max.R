@@ -230,6 +230,16 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
     }
   }
   
+  if (indic %in% c("hwf")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        min_max <- c(0,90) # pentru plotare cu reclasificare raster valori maxime izolate
+      }
+    } else {
+      min_max <- c(-5,100) # pentru plotare cu reclasificare raster valori maxime izolate
+    }
+  }
+  
   return(min_max)
 }
 

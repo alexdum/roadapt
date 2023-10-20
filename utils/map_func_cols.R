@@ -448,6 +448,24 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     }
   }
   
+  if (indic %in% c("hwf")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintHWD(18), 
+          vals = c(0,1,2,3,4,5,7.5,10,12.5,15, 20,30,40,50,60,70,80,90)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols =  c(rev(colintBuPu(3)),colintYlOrRd(10)), 
+        vals = c(-5,-2.5, 0,2.5,5,7.5, 10, 20,30,40,50,75,100)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
   
   # print(head(df.col))
   # print(domain)

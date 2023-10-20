@@ -1,4 +1,4 @@
-﻿cod,nume,name,path,definitie,defnition
+cod,nume,name,path,definitie,defnition
 prAdjust,Cantitatea de precipitații,Precipitation amount,climgen,,
 tasAdjust,Temperatura medie,Mean  temperature,climgen,,
 tasminAdjust,Temperatura minimă,Minimum temperature,climgen,,
@@ -13,7 +13,7 @@ rsds,Radiația solară  globală,Surface Downwelling Shortwave Radiation,climgen
 r20mm,Zile PP ≥ 20 mm,Number of very heavy rain days,hidro,Numărul anual de zile în care precipitațiile >= 20 mm,Annual number of days when precipitation >= 20 mm
 wsgsmax,Vânt rafală,Wind gust,climgen,Viteza vântului la rafală,Daily Maximum Near-Surface Wind Speed of Gust
 sfcwind,Viteza medie a vântului,Wind speed,climgen,Viteza medie a vântului,Mean wind speed
-hwd,Valuri de căldură EHF,Heatwave duration for EHF heatwaves,biodivers,Durata valurilor de căldură pe baza factorului de exces de căldură EHF,Heatwave duration for EHF heatwaves
+hwd,Valuri de căldură durată,Heatwave duration for EHF heatwaves,biodivers,Durata valurilor de căldură pe baza factorului de exces de căldură EHF,Heatwave duration for EHF heatwaves
 wsdi,Durată a valurilor de căldură TX 90p,Warm Spell Duration Index TX 90p,turism,Numărul anual de zile care contribuie la evenimente în care 6 sau mai multe zile consecutive se înregistrează TX > percentila 90,Annual number of days contributing to events where 6 or more consecutive days experience TX > 90th percentile
 csdi,Durata valurilor de frig TN 10p,Cold Spell Duration Index TN 10p,turism,Numărul anual de zile care contribuie la evenimente în care 6 sau mai multe zile consecutive înregistrează TN < percentila 10,Annual number of days contributing to events where 6 or more consecutive days experience TN < 10th percentile
 cwd,Valuri de frig ECF,Coldwave duration for ECF coldwaves,urban,Durata valurilor de frig pe baza factorului de exces de frig ECF,Coldwave duration for ECF coldwaves
@@ -21,3 +21,4 @@ rx1day,PP max 24 h,PP max 24 h,urban,Cantitatea maximă de precipitații înregi
 txge35,Zile caniculare,Hot days,transport,Numărul anual de  zilele în care temperatura maximă a aerului este ≥ 35 °C,Number of days when daily maximum air temperature ≥ 35 °C
 tr,Nopți tropicale,Tropical nights,urban,Numărul anual de zile când temperatura minimă zilnică este > 20 °C,Annual count of days when daily minimum temperature > 20 °C
 fd,Zile cu îngheț,Frost day,cultura,Numărul anual de zile când temperatura minimă zilnică este < 0 °C,Annual count of days when daily minimum temperature < 0°C
+hwf,Valuri de căldură frecvență,Heatwave frequency for EHF heatwaves,sanatate,Frecvența valurilor de căldură pe baza factorului de exces de căldură (HWF),Heatwave frequency for EHF heatwaves

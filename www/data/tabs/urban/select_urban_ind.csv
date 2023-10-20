@@ -1,7 +1,8 @@
 parameter,choice
-Valuri de căldură EHF,hwd
+Valuri de căldură durată ,hwd
 Valuri de frig ECF,cwd
 Vânt rafală,wsgsmax
 PP max 24 h,rx1day
 Zile caniculare,txge35
 Nopți tropicale,tr
+Valuri de căldură frecvență,hwf
