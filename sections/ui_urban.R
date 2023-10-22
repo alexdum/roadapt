@@ -184,7 +184,7 @@ ui_urban <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow (
+            fluidRow(
               h6(textOutput("condpan_urban_det"), style = "text-align:center;"),
               htmlOutput("urban_det_stat")
             ),

@@ -265,11 +265,11 @@ output$climgen_timeseries_det_plot <- renderPlotly({
 
 # pentru afisare subtab date
 output$climgen_timeseries_det_data <- DT::renderDT({
-  
+  print(head(variables_plot_climgen_det$input ))
   DT::datatable(
     variables_plot_climgen_det$input 
-    |> dplyr:: mutate(across(is.numeric, round, digits = 1)) |>
-      dplyr::select(-ID, -p01,-p25, -p75, -p99),
+    |> dplyr::mutate(across(is.numeric, round, digits = 1)) |>
+      dplyr::select(date, med, min, max, an, change_med,change_max,change_min, med_1971_2000),
     extensions = 'Buttons', rownames = F,
     options = list(
       dom = 'Bfrtip',digits = 1,

@@ -286,8 +286,8 @@ output$asigurari_timeseries_det_data <- DT::renderDT({
   
   DT::datatable(
     variables_plot_asigurari_det$input 
-    |> dplyr:: mutate(across(is.numeric, round, digits = 1)) |>
-      dplyr::select(-ID, -p10, -p90),
+    |> dplyr::mutate(across(is.numeric, round, digits = 1)) |>
+      dplyr::select(date, med, min, max, an, change_med,change_max,change_min, med_1971_2000),
     extensions = 'Buttons', rownames = F,
     options = list(
       dom = 'Bfrtip',digits = 1,
