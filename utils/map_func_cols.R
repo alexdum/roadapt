@@ -467,6 +467,26 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   }
   
   
+  
+  if (indic %in% c("txge30")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintReds(13), 
+          vals = seq(0,120,10)
+        ) 
+      }
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(10)[2]),colintReds(12)), 
+        vals = c(-5,0  ,5,10, 15, 20, 25, 30, 35, 40, 45, 50, 55)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  
   # print(head(df.col))
   # print(domain)
   ints <- findInterval(domain, df.col$vals, rightmost.closed = T, left.open = F)
