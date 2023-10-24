@@ -23,3 +23,4 @@ tr,Nopți tropicale,Tropical nights,urban,Numărul anual de zile când temperatu
 fd,Zile cu îngheț,Frost day,cultura,Numărul anual de zile când temperatura minimă zilnică este < 0 °C,Annual count of days when daily minimum temperature < 0°C
 hwf,Valuri de căldură frecvență,Heatwave frequency for EHF heatwaves,sanatate,Frecvența valurilor de căldură pe baza factorului de exces de căldură (HWF),Heatwave frequency for EHF heatwaves
 txge30,Zile tropicale,Tropical days,urban,Numărul anual de  zilele în care temperatura maximă a aerului este ≥ 30 °C,Number of days when daily maximum air temperature ≥ 30 °C
+r99p,Cantitatea de precipitații din zilele extrem de ploioase,Amount of rainfall from extremely wet days,biodivers,Cantitatea anuala de precipitatii înregistrata in zilele cu precipitații foarte abundente (p99),Annual sum of daily PR > 99th percentile
