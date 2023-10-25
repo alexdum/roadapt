@@ -504,6 +504,24 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
   }
+  if (indic %in% c("tx90p")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintReds(8), 
+          vals = seq(0,35, 5)
+        ) 
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+      } 
+      
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(10)[2]),colintReds(8)), 
+        vals =  c(-5,0  ,5,10, 15, 20, 25, 30, 35)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
   
   
   # print(head(df.col))
