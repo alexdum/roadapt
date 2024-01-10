@@ -4,3 +4,6 @@ Zile PP ≥ 20 mm,r20mm
 Durată a valurilor de căldură TX 90p,wsdi
 Durata valurilor de frig TN 10p,csdi
 Zile consecutive PP <  1.0 mm,cdd
+Număr de zile cu strat de zăpadă (> 1 cm),snd1cm
+Număr de zile cu strat de zăpadă (> 5 cm),snd5cm
+Număr de zile cu strat de zăpadă (> 30 cm),snd30cm
