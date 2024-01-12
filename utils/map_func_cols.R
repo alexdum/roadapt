@@ -1,3 +1,4 @@
+library(RColorBrewer)
 # culori culori leaflet ---------------------------------------------------------
 colintYlOrRd <- colorRampPalette( brewer.pal(9,"YlOrRd"),interpolate = "linear")
 colintRdYlBu <- colorRampPalette(brewer.pal(10,"RdYlBu"),interpolate = "linear")
@@ -504,6 +505,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
   }
+  
   if (indic %in% c("tx90p")) {
     if (ind_tip == 'absol') {
       if (perio_tip == "year") {
@@ -518,6 +520,82 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       df.col <- data.frame(
         cols = c(rev(colintBlues(10)[2]),colintReds(8)), 
         vals =  c(-5,0  ,5,10, 15, 20, 25, 30, 35)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("tmm15")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = rev(colintYlOrRd(11)), 
+          vals = seq(160,360, 20)
+        ) 
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+      } 
+      
+    } else {
+      df.col <- data.frame(
+        cols = rev(c(colintBlues(1),colintReds(9))), 
+        vals =  c( -80,-70,-60,-50, -40, -30, -20,-10 , 0,  10 )
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("tmm22")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintYlOrRd(11), 
+          vals = seq(0,100, 10)
+        ) 
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+      } 
+      
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintBlues(4)),colintReds(11)), 
+        vals =  c(-20,-10, -5, 0, 5, 10, 15, 20, 25, 30, 35, 40,45,50,60)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("snd1cm", "snd5cm")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBuPu(14), 
+          vals = seq(0,260, 20)
+        ) 
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+      } 
+      
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintReds(9)),colintReds(3)), 
+        vals =  c(-90,-70,-60,-50,-40, -30, -20, -10, 0, 10, 20, 30)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("snd30cm")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        df.col <- data.frame(
+          cols = colintBuPu(12), 
+          vals = seq(0,170, 15)
+        ) 
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+      } 
+      
+    } else {
+      df.col <- data.frame(
+        cols = c(rev(colintReds(12)),colintReds(3)), 
+        vals =  c(-120,-100,-90,-80,-70,-60,-50,-40, -30, -20, -10, 0, 10, 20, 30)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
@@ -540,6 +618,8 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   return(list(pal = pal, pal_rev = pal2, tit_leg = leaflet_titleg))
   
 }
+
+
 
 # indicators_def <- function(indicators) {
 #   switch (
