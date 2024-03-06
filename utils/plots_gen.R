@@ -18,6 +18,8 @@ plots_gen <- function(dd, tip, indic) {
     y_lab = "%" 
   } else if (indic %in% c("cddcold22")) {
     y_lab = "CDD (ΣTmed > 22°C)" 
+  }else if (indic %in% c("sndmean","sndmax")) {
+    y_lab = "cm" 
   } else if (indic %in% c("hddheat15.5")) {
     y_lab = "HDD (ΣTmed < 15.5°C)" 
   } else if (indic %in% c("wsgsmax","sfcwind")) {
@@ -29,7 +31,7 @@ plots_gen <- function(dd, tip, indic) {
   if (tip == "abate") {
     
     # schimba in procente pentru anomalii
-    if (indic %in% c("prAdjust", "hurs","rx1day")) y_lab <- "%"
+    if (indic %in% c("prAdjust", "hurs","rx1day", "sndmean","sndmax")) y_lab <- "%"
     
     gg <- ggplot(data = dd, aes(x = data, y = change_med)) + 
       geom_line(color = "black", size = 0.8) +

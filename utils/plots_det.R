@@ -17,8 +17,12 @@ plots_det <- function(dd, tip, indic) {
   } else if (indic %in% c("rsds")) {
     y_lab = "W/m²" 
   } else if (indic %in% c("cddcold22")) {
+    
     y_lab = "CDD (ΣTmed > 22°C)" 
-  } else if (indic %in% c("hddheat15.5")) {
+  } else if (indic %in% c("sndmean", "sndmax")) {
+    
+    y_lab = "cm" 
+  }else if (indic %in% c("hddheat15.5")) {
     y_lab = "HDD (ΣTmed < 15.5°C)" 
   } else if (indic %in% c("wsgsmax", "sfcwind")) {
     y_lab = "m/s" 
@@ -29,7 +33,7 @@ plots_det <- function(dd, tip, indic) {
   if (tip == "abate") {
     
     # schimba in procente pentru anomalii
-    if (indic %in% c("prAdjust", "hurs","rx1day")) y_lab <- "%"
+    if (indic %in% c("prAdjust", "hurs","rx1day", "sndmean","sndmax")) y_lab <- "%"
     
     gg <- ggplot(data = dd, aes(x = date, y = change_med)) + 
       geom_line(color = "black", size = 0.8) +
