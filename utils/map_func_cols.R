@@ -23,7 +23,7 @@ windabs2 <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF9
 colintHWD <- colorRampPalette(colors = c("#FFFF00", "#FFCC00", "#FF9900", "#FF6600", "#FF3300", "#FF0000", "#CC0000", "#990000", "#660000", "#330000"),  interpolate = "linear")
 colintCWDabs <- colorRampPalette(colors = c("#00FFFF", "#00CCFF", "#0099FF", "#0066FF", "#0033FF", "#0000FF", "#0000CC", "#000099", "#000066", "#000033"),  interpolate = "linear")
 colintCWDano <- colorRampPalette(colors = c("#00FF00", "#33FF33", "#66FF66", "#99FF99", "#CCFFCC", "#FFFFFF", "#CCCCFF", "#9999FF", "#6666FF", "#3333FF", "#0000FF"),  interpolate = "linear")
-colintsnow <- 
+colintsnow <- colorRampPalette(colors = c("#838383", "#c1bcc2", "#eee9ef", "#b3d5f6","#74a9cf", "#4d84be", "#344ca6", "#10067f","#310762","#5f0278","#9021b3","#c95fc1", "#a9266b","#b9603e","#b3952a","#dabe6b","#f5e1a4","#f7f8e9"))
   
   
 #windabs2 <- colorRampPalette(c("#6389B3","#5BB2B8", "#3AB284","#3AB284", "#8DCE6B", "#AEC356", "#CAB942", "#AC4D85", "#AC4D85", "#9645A3","#895CAC", "#9C49D5","#D3B4ED", "#F6DFDF" , "white"),interpolate = "linear")
@@ -65,10 +65,12 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
           vals = seq(110,180,10)
         ) 
       } else if  (perio_tip == "season") {
+        
         df.col <- data.frame(
           cols = colintOrRd(15), 
           vals = seq(20,300,20)
         ) 
+        
       } else {
         df.col <- data.frame(
           cols = colintOrRd(16),
@@ -603,12 +605,13 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   
   if (indic %in% c("sndmean")) {
     if (ind_tip == 'absol') {
-
-        df.col <- data.frame(
-          cols = colintBuPu(20), 
-          vals = c(0,1,5,10,15,20,25,30,35,40,45,50,60,70,80,90,100,120,140,150)
-        ) 
+      
+      df.col <- data.frame(
         
+        cols = colintsnow(17), 
+        vals = c(0,1,2,5,8,10,15,20,25,30,35,40,50,60,75,100,125)
+      ) 
+      
         leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "cm","</html>")
       
       
@@ -625,11 +628,13 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   if (indic %in% c("sndmax")) {
     if (ind_tip == 'absol') {
   
-        df.col <- data.frame(
-          cols = colintBuPu(18), 
-          
-          vals = c(0,1,5,10,15,20,25,30,40,50,60,75,100, 125,150, 175,200,225)
-        ) 
+      df.col <- data.frame(
+        
+        cols = colintsnow(18), 
+        vals = c(0,1,2,5,10,15,20,25,30,40,50,60,75,100,125,150, 175,200)
+      )  
+      
+      
         
         leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "cm","</html>")
        
@@ -638,7 +643,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       
       df.col <- data.frame(
         cols = c(rev(colintYlOrBr(12)), "white", colintBlues(3)), 
-        vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0, 5,5,10)
+        vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0,5,5,10)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
