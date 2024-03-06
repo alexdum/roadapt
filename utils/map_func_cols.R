@@ -608,8 +608,8 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       
       df.col <- data.frame(
         
-        cols = colintsnow(17), 
-        vals = c(0,1,2,5,8,10,15,20,25,30,35,40,50,60,75,100,125)
+        cols = colintsnow(18), 
+        vals = c(0,1,2,4,6,8,10,15,20,25,30,35,40,50,60,75,100,125)
       ) 
       
         leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "cm","</html>")
@@ -630,8 +630,8 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   
       df.col <- data.frame(
         
-        cols = colintsnow(18), 
-        vals = c(0,1,2,5,10,15,20,25,30,40,50,60,75,100,125,150, 175,200)
+        cols = colintsnow(19), 
+        vals = c(0,1,2,4,6,8,10,15,20,25,30,40,50,60,75,100,125,150,200)
       )  
       
       
