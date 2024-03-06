@@ -3,6 +3,7 @@
 calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   
   nc <- rast(nc_fil)
+  #time(nc) <- as.Date(seq(as.Date("1971-01-01"), as.Date("2100-12-31"), by = "years"))
   
   if(indic %in% c("tasAdjust", "tasminAdjust", "tasmaxAdjust", "prAdjust")) {
     dats <- names_to_date(nc) # extrage data din nume cu fct utils

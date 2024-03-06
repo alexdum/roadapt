@@ -309,6 +309,37 @@ map_func_min_max <- function(indic = NA, ind_tip = NA, perio_tip = NA) {
     }
   }
   
+  if (indic %in% c("sndmean")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        min_max <- c(0,135)
+      } else if  (perio_tip == "season") {
+        min_max <- c(0,135)
+      } else {
+        min_max <- c(0,135)
+      }
+    }  else {
+      min_max <-c(-150,10)
+      
+    }
+  }
+  
+  if (indic %in% c("sndmax")) {
+    if (ind_tip == 'absol') {
+      if (perio_tip == "year") {
+        min_max <- c(0,230)
+      } else if  (perio_tip == "season") {
+        min_max <-  c(0,230)
+      } else {
+        min_max <- c(0,230)
+      }
+    }  else {
+      min_max <-c(-150,10)
+      
+    }
+  }
+  
+  
   return(min_max)
 }
 

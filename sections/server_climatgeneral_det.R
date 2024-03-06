@@ -1,4 +1,22 @@
 
+observe({
+  indic <- input$climgen_ind_det
+  if (indic %in% c("sndmean", "sndmax")) {
+    updateSelectInput(
+      session, "climgen_perio",
+      choices = select_interv[c(1:4,11:14,16,17)],
+      selected = select_interv[1]
+    )
+    
+  } else { # doara anuala cand nu le ai pe celelalte
+    updateSelectInput(
+      session, "climgen_perio",
+      choices = select_interv,
+      selected = select_interv[1]
+    )
+  }
+})
+
 
 climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climgen_det)),{
   

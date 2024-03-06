@@ -1,8 +1,8 @@
 # 
 # 
-# nc_fil <- "www/data/ncs/agro/prAdjust_rcp45_season-50_19710101_21001231.nc"
-# xy <- c(25, 45)
-# 
+
+#nc_fil <- "www/data/ncs/turism/snd1cm_rcp45_year-50_19710101_21001231.nc"
+#xy <- c(25, 45)
 # extract_timeser_gen(nc_fil, xy, perio_sub = "year")
 
 extract_timeser_gen <- function(nc_fil,xy, perio_sub) {

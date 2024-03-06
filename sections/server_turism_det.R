@@ -8,7 +8,12 @@ observe({
       choices = select_interv,
       selected = select_interv[1]
     )
-  } else { # doara anuala cand nu le ai pe celelalte
+  }else if(indic %in% c("sndmean", "sndmax")){
+    updateSelectInput(
+      session, "turism_perio",
+      choices = select_interv[c(1:4,11:14,16,17)],
+      selected = select_interv[1]
+    )} else { # doara anuala cand nu le ai pe celelalte
     updateSelectInput(
       session, "turism_perio_det",
       choices = select_interv[17],

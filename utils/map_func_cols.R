@@ -575,8 +575,8 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
       
     } else {
       df.col <- data.frame(
-        cols = c(rev(colintReds(9)),colintReds(3)), 
-        vals =  c(-90,-70,-60,-50,-40, -30, -20, -10, 0, 10, 20, 30)
+        cols = c(rev(colintReds(12)),colintReds(3)), 
+        vals =  c(-120,-100,-90,-80,-70,-60,-50,-40, -30, -20, -10, 0, 10, 20, 30)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
     }
@@ -598,6 +598,49 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
         vals =  c(-120,-100,-90,-80,-70,-60,-50,-40, -30, -20, -10, 0, 10, 20, 30)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "zile","</html>")
+    }
+  }
+  
+  if (indic %in% c("sndmean")) {
+    if (ind_tip == 'absol') {
+
+        df.col <- data.frame(
+          cols = colintBuPu(20), 
+          vals = c(0,1,5,10,15,20,25,30,35,40,45,50,60,70,80,90,100,120,140,150)
+        ) 
+        
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "cm","</html>")
+      
+      
+    } else {
+      
+      df.col <- data.frame(
+        cols = c(rev(colintReds(15)), "white"), 
+        vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0, 5,5,10)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
+    }
+  }
+  
+  if (indic %in% c("sndmax")) {
+    if (ind_tip == 'absol') {
+  
+        df.col <- data.frame(
+          cols = colintBuPu(18), 
+          
+          vals = c(0,1,5,10,15,20,25,30,40,50,60,75,100, 125,150, 175,200,225)
+        ) 
+        
+        leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "cm","</html>")
+       
+      
+    } else {
+      
+      df.col <- data.frame(
+        cols = c(rev(colintReds(15)), "white"), 
+        vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0, 5,5,10)
+      )
+      leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
     }
   }
   
