@@ -615,7 +615,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     } else {
       
       df.col <- data.frame(
-        cols = c(rev(colintYlOrBr(15)), "white"), 
+        cols = c(rev(colintYlOrBr(12)), "white", colintBlues(3)), 
         vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0, 5,5,10)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
@@ -637,7 +637,7 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
     } else {
       
       df.col <- data.frame(
-        cols = c(rev(colintYlOrBr(15)), "white"), 
+        cols = c(rev(colintYlOrBr(12)), "white", colintBlues(3)), 
         vals =  c(-150,-125,-100, -75,-60,-50,-40,-30,-20,-15,-10,-5,0, 5,5,10)
       )
       leaflet_titleg <- paste0("<html>", gsub(",","",toString(rep("&nbsp;", 5))), "%","</html>")
