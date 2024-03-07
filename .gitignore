@@ -8,4 +8,4 @@ www/data/grids/*
 www/data/parquet/*
 misc/*
 .venv/*
-misc/
+misc
