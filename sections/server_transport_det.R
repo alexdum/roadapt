@@ -37,7 +37,7 @@ transport_rdet <- eventReactive(list(input$go_transportdet, isolate(input$tab_tr
   )
   
   
-  tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
   an1_abat <- input$slider_transport_abate_det[1]
   an2_abat <- input$slider_transport_abate_det[2]
