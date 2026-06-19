@@ -1,8 +1,8 @@
 ---
 output: 
   html_document: 
-    fig_caption: yes
-    self_contained: no
+    fig_caption: true
+    self_contained: false
     theme: spacelab
 ---
 

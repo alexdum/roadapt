@@ -12,10 +12,7 @@ calcul_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat, an2_aba
         filter(year >= an1_abat & year <= an2_abat) |>
         group_by(ID) |> summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
-          value = case_when(
-            indic %in% c("prAdjust", "hurs") ~  (((p50*100)/norm) - 100) |> round(1),
-            !indic %in% c("prAdjust", "hurs") ~  (p50 - norm) |> round(1)
-          )
+          value = if (indic %in% c("prAdjust", "hurs")) { (((p50*100)/norm) - 100) |> round(1) } else { (p50 - norm) |> round(1) }
         )
       
     } else {
@@ -26,10 +23,7 @@ calcul_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat, an2_aba
         group_by(ID) |> 
         summarise(p50 = mean(p50) , norm = mean(norm)) |>
         mutate(
-          value = case_when(
-            indic %in% c("prAdjust", "hurs") ~  (((p50*100)/norm) - 100) |> round(1),
-            !indic %in% c("prAdjust", "hurs") ~ (p50 - norm)  |> round(1)
-          )
+          value = if (indic %in% c("prAdjust", "hurs")) { (((p50*100)/norm) - 100) |> round(1) } else { (p50 - norm)  |> round(1) }
         )
     }
   } else {
