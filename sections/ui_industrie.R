@@ -8,6 +8,15 @@ ui_industrie <- tabPanel(
       title = h6("Național"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "industrie_scen",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "industrie_ind",
@@ -22,16 +31,7 @@ ui_industrie <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "industrie_scen",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "industrie_perio",
@@ -49,8 +49,8 @@ ui_industrie <- tabPanel(
           conditionalPanel(
             condition = "input.industrie_tip == 'absol'",
             sliderInput(
-              "slider_industrie_absol_gen", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_industrie_absol_gen", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -81,7 +81,7 @@ ui_industrie <- tabPanel(
             condition = "input.radio_industrie_gen == 2 && output.condpan_industrie_gen != 'nas'",
             
             tabsetPanel(
-              fluidRow (
+              header = fluidRow (
                 h6(textOutput("condpan_industrie_gen"), style = "text-align:center;")
               ),
               tabPanel(
@@ -115,6 +115,15 @@ ui_industrie <- tabPanel(
       title = h6("Administrativ"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "industrie_scen_det",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "industrie_admin_det",
@@ -137,16 +146,7 @@ ui_industrie <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "industrie_scen_det",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "industrie_perio_det",
@@ -164,8 +164,8 @@ ui_industrie <- tabPanel(
           conditionalPanel(
             condition = "input.industrie_tip_det== 'absol'",
             sliderInput(
-              "slider_industrie_absol_det", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_industrie_absol_det", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -184,7 +184,7 @@ ui_industrie <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow (
+            header = fluidRow (
               h6(textOutput("condpan_industrie_det"), style = "text-align:center;"),
               htmlOutput("industrie_det_stat")
             ),

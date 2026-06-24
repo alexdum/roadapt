@@ -5,8 +5,9 @@ calcul_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat, an2_aba
     
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
+      perio_sub_int <- as.integer(perio_sub)
       tab.sub <- tab |> 
-        filter( month ==  as.integer(perio_sub)) |>
+        filter( month ==  perio_sub_int) |>
         filter((year >= 1971 & year <= 2000) | (year >= an1_abat & year <= an2_abat)) |>
         collect() |>
         group_by(ID) |>
@@ -33,8 +34,9 @@ calcul_det <- function(tab, climgen_tip_det, perio_sub, indic, an1_abat, an2_aba
   } else {
     
     if (perio_sub != "year") { #daca ai an formateaza data diferit
+      perio_sub_int <- as.integer(perio_sub)
       tab.sub <- tab |> 
-        filter(month ==  as.integer(perio_sub) & year >= an1_abs & year <= an2_abs) |>
+        filter(month ==  perio_sub_int & year >= an1_abs & year <= an2_abs) |>
         collect() |>
         group_by(ID) |> summarise(value = mean(p50) |> round(1)) 
     } else {

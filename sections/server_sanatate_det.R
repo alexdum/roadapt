@@ -50,7 +50,7 @@ sanatate_rdet <- eventReactive(list(input$go_sanatatedet, isolate(input$tab_sana
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_sanatate_det.R
-  map_leg <- map_func_cols(indic, sanatate_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, sanatate_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

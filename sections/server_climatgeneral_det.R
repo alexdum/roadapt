@@ -17,6 +17,47 @@ observe({
   }
 })
 
+# Obs scenario: disable Schimbare, adjust slider ranges for det tab, and filter parameters
+observe({
+  scena <- input$climgen_scen_det
+  if (scena == "obs") {
+    
+    obs_params <- c("tasAdjust", "tasmaxAdjust", "tasminAdjust", "prAdjust")
+    updateSelectInput(
+      session, "climgen_ind_det",
+      choices = select_climgen_ind[select_climgen_ind %in% obs_params],
+      selected = ifelse(input$climgen_ind_det %in% obs_params, input$climgen_ind_det, "tasAdjust")
+    )
+    
+    updateSelectInput(
+      session, "climgen_tip_det",
+      choices = list(`Valori absolute` = "absol"),
+      selected = "absol"
+    )
+    updateSliderInput(
+      session, "slider_climgen_absol_det",
+      min = 1901, max = 2025, value = c(1971, 2000)
+    )
+  } else {
+    
+    updateSelectInput(
+      session, "climgen_ind_det",
+      choices = select_climgen_ind,
+      selected = input$climgen_ind_det
+    )
+    
+    updateSelectInput(
+      session, "climgen_tip_det",
+      choices = list(`Valori absolute` = "absol", `Schimbare` = "abate"),
+      selected = input$climgen_tip_det
+    )
+    updateSliderInput(
+      session, "slider_climgen_absol_det",
+      min = 1971, max = 2100, value = c(1971, 2000)
+    )
+  }
+})
+
 
 climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climgen_det)),{
   
@@ -25,6 +66,8 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   indic <- input$climgen_ind_det
   scena <- input$climgen_scen_det
   climgen_tip <- input$climgen_tip_det # absolut/abate
+  # forțează "absol" pentru observații (nu există "abate" pentru obs)
+  if (scena == "obs") climgen_tip <- "absol"
   perio_sub <- strsplit(input$climgen_perio_det, "-")[[1]][1] # number of month
   perio_tip <- strsplit(input$climgen_perio_det, "-")[[1]][2] # month/season/year
   indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director parquet)
@@ -38,7 +81,11 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   )
   
   
-  tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  if (scena == "obs") {
+    tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_obs_", perio_tip ,"-50_19010101_20251231.parquet"))
+  } else {
+    tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  }
   
   
   an1_abat <- input$slider_climgen_abate_det[1]
@@ -52,17 +99,18 @@ climgen_rdet <- eventReactive(list(input$go_climgendet, isolate(input$tab_climge
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_climgen_det.R
-  map_leg <- map_func_cols(indic, climgen_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, climgen_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta
   # text harta
   name_ind <- names(select_climgen_ind)[which(select_climgen_ind %in% indic)] #nume indicator clar
   climgen_perio <- names(select_interv)[which(select_interv %in% input$climgen_perio_det)] # luna.sezon clar
+  scena_label <- if (scena == "obs") "Observații" else paste("scenariul", toupper(scena))
   param_text<- ifelse (
     climgen_tip == "abate", 
-    paste(name_ind , " - scenariul", toupper(scena), "schimbare", climgen_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
-    paste(name_ind , " - scenariul", toupper(scena), "- medii multianuale - ", climgen_perio, an1_abs,"-", an2_abs)
+    paste(name_ind , " -", scena_label, "schimbare", climgen_perio, an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"),
+    paste(name_ind , " -", scena_label, "- medii multianuale - ", climgen_perio, an1_abs,"-", an2_abs)
   )
   
   list(
@@ -207,8 +255,9 @@ output$condpan_climgen_det <- renderText({
   if (admin == "reg") name_aadmin <- paste("regiunea", variables_plot_climgen_det$name)
   if (admin == "jud") name_aadmin <- paste("județul", variables_plot_climgen_det$name)
   if (admin == "uat") name_aadmin <- paste(variables_plot_climgen_det$name," - județul ",variables_plot_climgen_det$county)
+  scena_label <- if (scena == "obs") "Observații" else toupper(scena)
   paste0(
-    climgen_tip_name_ind," ", climgen_perio," ",toupper(scena), 
+    climgen_tip_name_ind," ", climgen_perio," ", scena_label, 
     " (",name_aadmin ,") 
     - perioada de referință 1971 - 2000"
   )

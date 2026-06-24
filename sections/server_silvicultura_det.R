@@ -50,7 +50,7 @@ silvicultura_rdet <- eventReactive(list(input$go_silviculturadet, isolate(input$
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_silvicultura_det.R
-  map_leg <- map_func_cols(indic, silvicultura_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, silvicultura_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

@@ -12,7 +12,10 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
   
   tab_sub <- tab |> dplyr::filter(ID == id)
   
-  if (perio_sub != "year")  tab_sub <- tab_sub |> dplyr::filter(month == as.integer(perio_sub))
+  if (perio_sub != "year") {
+    perio_sub_int <- as.integer(perio_sub)
+    tab_sub <- tab_sub |> dplyr::filter(month == perio_sub_int)
+  }
   
   dd <- tab_sub |> collect() |> mutate(
     an = format(date, "%Y"),

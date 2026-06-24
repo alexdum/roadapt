@@ -50,7 +50,7 @@ urban_rdet <- eventReactive(list(input$go_urbandet, isolate(input$tab_urban_det)
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_urban_det.R
-  map_leg <- map_func_cols(indic, urban_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, urban_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

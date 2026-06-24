@@ -51,7 +51,7 @@ energie_rdet <- eventReactive(list(input$go_energiedet, isolate(input$tab_energi
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_energie_det.R
-  map_leg <- map_func_cols(indic, energie_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, energie_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

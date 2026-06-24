@@ -3,27 +3,31 @@
 calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs) {
   
   nc <- rast(nc_fil)
-  #time(nc) <- as.Date(seq(as.Date("1971-01-01"), as.Date("2100-12-31"), by = "years"))
+  template <- nc[[1]]
   
-  if(indic %in% c("tasAdjust", "tasminAdjust", "tasmaxAdjust", "prAdjust")) {
-    dats <- names_to_date(nc) # extrage data din nume cu fct utils
-  } else {
-    dats <- terra::time(nc) # extrage data din nume cu fct utils
+  months_list <- list()
+  if (perio_sub != "year") { 
+    months_list <- as.integer(perio_sub) 
   }
   
   # selectare slider in functie de tipul hartii
   if (climgen_tip == "abate") {
     
-    dats.sub <- dats[dats >= as.Date(paste0(an1_abat, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2_abat , "1231"), format = "%Y%m%d") ]
-    dats.norm <- dats[dats >= as.Date("1971-01-01") & dats <= as.Date("2000-12-31")]
+    date1_sub <- paste0(an1_abat, "-01-01")
+    date2_sub <- paste0(an2_abat, "-12-31")
     
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-      dats.norm <- dats.norm[format(dats.norm, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-    }
+    date1_norm <- "1971-01-01"
+    date2_norm <- "2000-12-31"
     
-    nc.norm <- nc[[which(dats %in% dats.norm)]] |> mean(na.rm = T)
-    nc.abs <- nc[[which(dats %in% dats.sub)]] |> mean(na.rm = T)
+    arr_abs <- calc_mean_xarray(nc_fil, indic, date1_sub, date2_sub, months_list)
+    arr_norm <- calc_mean_xarray(nc_fil, indic, date1_norm, date2_norm, months_list)
+    
+    nc.abs <- template
+    values(nc.abs) <- as.vector(t(arr_abs))
+    
+    nc.norm <- template
+    values(nc.norm) <- as.vector(t(arr_norm))
+    
     # calcul abatere in functie de parametru
     if (indic %in% c("prAdjust", "hurs")) {
       ncf <- (((nc.abs*100)/nc.norm ) - 100) 
@@ -33,14 +37,13 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     
   } else {
     
-    dats.sub <- dats[dats >= as.Date(paste0(an1_abs, "0101"), format = "%Y%m%d") & dats <= as.Date(paste0(an2_abs , "1231"), format = "%Y%m%d") ]
+    date1_abs <- paste0(an1_abs, "-01-01")
+    date2_abs <- paste0(an2_abs, "-12-31")
     
-    if (perio_sub != "year") { #daca ai an formateaza data diferit
-      dats.sub <- dats.sub[format(dats.sub, "%m") %in% perio_sub] # daca ai an nu subseta pe perioade
-    }
+    arr_abs <- calc_mean_xarray(nc_fil, indic, date1_abs, date2_abs, months_list)
     
-    ncf <- nc[[which(dats %in% dats.sub)]] 
-    ncf <- mean(ncf, na.rm = T)
+    ncf <- template
+    values(ncf) <- as.vector(t(arr_abs))
   }
   
   return(ncf) 

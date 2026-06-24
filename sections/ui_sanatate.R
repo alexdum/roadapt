@@ -8,6 +8,15 @@ ui_sanatate <- tabPanel(
       title = h6("Național"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "sanatate_scen",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "sanatate_ind",
@@ -22,16 +31,7 @@ ui_sanatate <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "sanatate_scen",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "sanatate_perio",
@@ -49,8 +49,8 @@ ui_sanatate <- tabPanel(
           conditionalPanel(
             condition = "input.sanatate_tip == 'absol'",
             sliderInput(
-              "slider_sanatate_absol_gen", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_sanatate_absol_gen", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -80,7 +80,7 @@ ui_sanatate <- tabPanel(
             condition = "input.radio_sanatate_gen == 2 && output.condpan_sanatate_gen != 'nas'",
             
             tabsetPanel(
-              fluidRow (
+              header = fluidRow (
                 h6(textOutput("condpan_sanatate_gen"), style = "text-align:center;")
               ),
               tabPanel(
@@ -114,6 +114,15 @@ ui_sanatate <- tabPanel(
       title = h6("Administrativ"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "sanatate_scen_det",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "sanatate_admin_det",
@@ -136,16 +145,7 @@ ui_sanatate <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "sanatate_scen_det",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "sanatate_perio_det",
@@ -163,8 +163,8 @@ ui_sanatate <- tabPanel(
           conditionalPanel(
             condition = "input.sanatate_tip_det== 'absol'",
             sliderInput(
-              "slider_sanatate_absol_det", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_sanatate_absol_det", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -182,7 +182,7 @@ ui_sanatate <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow (
+            header = fluidRow (
               h6(textOutput("condpan_sanatate_det"), style = "text-align:center;"),
               htmlOutput("sanatate_det_stat")
             ),

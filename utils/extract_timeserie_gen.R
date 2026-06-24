@@ -10,18 +10,32 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   varia <- strsplit(nc_fil, "/|_")[[1]][5] # extrage nume variabila
   
   dd_50 <- extract_point(fname = nc_fil, lon = xy[1], lat = xy[2], variable = varia) 
-  dd_max <-extract_point(fname = gsub("-50", "-max", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
-  dd_min <-extract_point(fname = gsub("-50", "-min", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
   
-  dd <- dd_50 |> left_join(dd_max, by = c("time")) |> left_join(dd_min, by = c("time")) |>
-    dplyr::rename('med' = 'value.x', 'max' = 'value.y', 'min' = 'value', 'data' = 'time')  |>
-    # roling mean la extreme min max
-    mutate(
-      # max = zoo::rollmean(max, 3, na.pad = T) |> round(1),
-      # min = zoo::rollmean(min, 3, na.pad = T) |> round(1), 
-      med = round(med, 1), max = round(max, 1), min = round(min, 1),
-      data = as.Date(data)
-    ) 
+  # For obs, only the -50 file exists (no ensemble min/max)
+  is_obs <- grepl("_obs_", nc_fil)
+  if (is_obs) {
+    dd <- dd_50 |>
+      dplyr::rename('med' = 'value', 'data' = 'time') |>
+      mutate(
+        max = med,
+        min = med,
+        med = round(med, 1), max = round(max, 1), min = round(min, 1),
+        data = as.Date(data)
+      )
+  } else {
+    dd_max <-extract_point(fname = gsub("-50", "-max", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
+    dd_min <-extract_point(fname = gsub("-50", "-min", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
+    
+    dd <- dd_50 |> left_join(dd_max, by = c("time")) |> left_join(dd_min, by = c("time")) |>
+      dplyr::rename('med' = 'value.x', 'max' = 'value.y', 'min' = 'value', 'data' = 'time')  |>
+      # roling mean la extreme min max
+      mutate(
+        # max = zoo::rollmean(max, 3, na.pad = T) |> round(1),
+        # min = zoo::rollmean(min, 3, na.pad = T) |> round(1), 
+        med = round(med, 1), max = round(max, 1), min = round(min, 1),
+        data = as.Date(data)
+      ) 
+  }
   
   if (perio_sub != "year")  dd <- dd |> dplyr::filter(format(data, "%m") %in% perio_sub)
   
@@ -35,6 +49,7 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   
   return(dd)
 }
+
 
 
 

@@ -19,13 +19,56 @@ observe({
   }
 })
 
+# Obs scenario: disable Schimbare, adjust slider ranges, and filter parameters
+observe({
+  scena <- input$climgen_scen
+  if (scena == "obs") {
+    
+    obs_params <- c("tasAdjust", "tasmaxAdjust", "tasminAdjust", "prAdjust")
+    updateSelectInput(
+      session, "climgen_ind",
+      choices = select_climgen_ind[select_climgen_ind %in% obs_params],
+      selected = ifelse(input$climgen_ind %in% obs_params, input$climgen_ind, "tasAdjust")
+    )
+    
+    updateSelectInput(
+      session, "climgen_tip",
+      choices = list(`Valori absolute` = "absol"),
+      selected = "absol"
+    )
+    updateSliderInput(
+      session, "slider_climgen_absol_gen",
+      min = 1901, max = 2025, value = c(1971, 2000)
+    )
+  } else {
+    
+    updateSelectInput(
+      session, "climgen_ind",
+      choices = select_climgen_ind,
+      selected = input$climgen_ind
+    )
+    
+    updateSelectInput(
+      session, "climgen_tip",
+      choices = list(`Valori absolute` = "absol", `Schimbare` = "abate"),
+      selected = input$climgen_tip
+    )
+    updateSliderInput(
+      session, "slider_climgen_absol_gen",
+      min = 1971, max = 2100, value = c(1971, 2000)
+    )
+  }
+})
+
 
 # harta leaflet -----------------------------------------------------------
-climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen_gen)),{
+climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen_gen)), ignoreNULL = FALSE, {
   
   indic <- input$climgen_ind
   scena <-  input$climgen_scen
   climgen_tip <- input$climgen_tip 
+  # forțează "absol" pentru observații (nu există "abate" pentru obs)
+  if (scena == "obs") climgen_tip <- "absol"
   perio_tip <- strsplit(input$climgen_perio, "-")[[1]][2]
   perio_sub <- strsplit(input$climgen_perio, "-")[[1]][1]
   indic_path <- indicator_def$path[indicator_def$cod == indic] # calea catre fisier (director nc)
@@ -36,7 +79,11 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   an2_abs <- input$slider_climgen_absol_gen[2]
   
   # citeste fisierul
-  nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  if (scena == "obs") {
+    nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_obs_",perio_tip,"-50_19010101_20251231.nc")
+  } else {
+    nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
+  }
   
   
   # calcal abateri sau media multianuala cu functie calcul_climgen_gen din utils
@@ -61,13 +108,14 @@ climgen_rea <- eventReactive(list(input$go_climgengen, isolate(input$tab_climgen
   # text harta
   name_ind <- names(select_climgen_ind)[which(select_climgen_ind %in% indic)] #nume indicator clar
   climgen_perio <- names(select_interv)[which(select_interv %in% input$climgen_perio)] # luna.sezon clar
+  scena_label <- if (scena == "obs") "Observații" else paste("scenariul", toupper(scena))
   param_text<- ifelse (
     climgen_tip == "abate", 
-    paste(name_ind, " - scenariul", toupper(scena),
+    paste(name_ind, " -", scena_label,
           "schimbare", climgen_perio , 
           an1_abat,"-", an2_abat,  "(perioada de referință 1971-2000)"
     ),
-    paste( name_ind, " - scenariul", toupper(scena),
+    paste( name_ind, " -", scena_label,
            "- medii multianuale - ", climgen_perio, 
            an1_abs,"-", an2_abs
     )
@@ -181,6 +229,7 @@ observe({
 # sau datele de intrare in plot
 observe({
   
+  req(variables_plot_climgen_gen$input)
   if(!isTRUE(all.equal(variables_plot_climgen_gen$input, variables_plot_climgen_gen$update_input ))  |
      !isTRUE(all.equal(variables_plot_climgen_gen$tip, variables_plot_climgen_gen$update_input_tip_plt))) {
     

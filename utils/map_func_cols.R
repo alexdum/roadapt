@@ -652,6 +652,9 @@ map_func_cols <- function(indic = NA, ind_tip = NA, perio_tip = NA, domain = NA)
   
   # print(head(df.col))
   # print(domain)
+  if (any(is.na(domain)) || any(is.infinite(domain))) {
+    domain <- c(0, 0)
+  }
   ints <- findInterval(domain, df.col$vals, rightmost.closed = T, left.open = F)
   
   bins <-  df.col$vals[ints[1]:(ints[2] + 1)]
