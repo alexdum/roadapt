@@ -246,7 +246,7 @@ output$transport_det_stat <- renderUI({
       <td style='padding:5px 10px 5px 5px'>",change,"</td>
      </tr>
       </table>",
-     "<font size='2' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font>"
+     "<div style='margin-top:8px;'><font size='1' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font></div>"
       )
     )
   } else {
@@ -262,7 +262,7 @@ output$transport_det_stat <- renderUI({
       <td style='padding:5px 10px 5px 5px'>",value,"</td>
      </tr>
       </table>",
-     "<font size='2' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font>"
+     "<div style='margin-top:8px;'><font size='1' color='#E95420'>Click pe hartă (regiunea de interes) pentru actualizare grafic și valori </font></div>"
       )
     )
   }
