@@ -36,7 +36,7 @@ plots_det <- function(dd, tip, indic) {
     if (indic %in% c("prAdjust", "hurs","rx1day", "sndmean","sndmax")) y_lab <- "%"
     
     gg <- ggplot(data = dd, aes(x = date, y = change_med)) + 
-      geom_line(color = "black", size = 0.8) +
+      geom_line(color = "black", linewidth = 0.8) +
       geom_ribbon(aes(x = date, ymax = change_max, ymin = change_min), alpha = 0.5, fill = "gray") +
       scale_x_date(breaks = c(as.Date("1971-01-01"), seq(as.Date("2000-01-01"), as.Date("2100-12-31"), by = "20 years")), date_labels = "%Y") +
       xlab("") + ylab(y_lab)
@@ -46,7 +46,7 @@ plots_det <- function(dd, tip, indic) {
     
     
     gg <- ggplot(data = dd, aes(x = date, y = med)) + 
-      geom_line(color = "black", size = 0.8) +
+      geom_line(color = "black", linewidth = 0.8) +
       geom_line(aes(x = date,  y = med_1971_2000), col = "red") +
       geom_ribbon(aes(x = date, ymax = max, ymin = min), alpha = 0.5, fill = "gray") +
       scale_x_date(breaks = c(as.Date("1971-01-01"), seq(as.Date("2000-01-01"), as.Date("2100-12-31"), by = "20 years")), date_labels = "%Y") +

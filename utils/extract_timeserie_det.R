@@ -18,6 +18,8 @@ extract_timeser_det <- function(tab,id, perio_sub, indic) {
   }
   
   dd <- tab_sub |> collect() |> mutate(
+    date = as.Date(date)
+  ) |> mutate(
     an = format(date, "%Y"),
     change_med = if (indic %in% c("prAdjust", "hurs","rx1day")) { (((p50*100)/mean(p50[an <= 2000])) - 100)  %>% round(1) } else { (p50 - mean(p50[an <= 2000]))  %>% round(1) },
     change_max = if (indic %in% c("prAdjust", "hurs","rx1day")) { (((pmax*100)/mean(p50[an <= 2000])) - 100)  %>% round(1) } else { (pmax - mean(p50[an <= 2000]))  %>% round(1) },
