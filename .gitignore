@@ -9,3 +9,5 @@ www/data/parquet/*
 misc/*
 .venv/*
 misc
+app_cache/
+.DS_Store
