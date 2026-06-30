@@ -15,6 +15,7 @@ library(plotly)
 library(DT)
 
 source_python("utils/extract_point.py")
+source_python("utils/xarray_calc.py")
 source("utils/utils.R")
 source("utils/names_to_date.R") # extrage data din fisere netcdf
 source("utils/map_func_min_max.R") # setare min max raster/value plotate

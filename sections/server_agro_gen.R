@@ -16,18 +16,22 @@ agro_rea <- eventReactive(list(input$go_agrogen, isolate(input$tab_agro_gen)),{
   
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
-
+  print("agro_rea: calcul_gen start")
   # calcal abateri sau media multianuala cu functie calcul_agro_gen din utils
   ncf <- calcul_gen(nc_fil, agro_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
-  
+  print("agro_rea: calcul_gen done, terra::minmax start")
   # pentru legenda titlu §i intervale §i culori
   domain <- terra::minmax(ncf)
+  print("agro_rea: terra::minmax done, map_func_cols start")
   map_leg <- map_func_cols(indic, agro_tip, domain = domain, perio_tip)
+  print("agro_rea: map_func_cols done, starting project")
   
   
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
+  print("agro_rea: project done, starting mask")
   ncfm <- terra::mask(ncfm, mask, touches=F)
+  print("agro_rea: mask done")
   
   
   # text harta

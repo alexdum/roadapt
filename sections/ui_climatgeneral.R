@@ -8,6 +8,16 @@ ui_climatgeneral <- tabPanel(
       title = h6("Național"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "climgen_scen",
+            label = "Observații/Scenariu",
+            choices = list(
+              `Observații` = "obs",
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = "obs"
+          ),
           width = 2,
           selectInput(
             inputId = "climgen_ind",
@@ -22,16 +32,7 @@ ui_climatgeneral <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "climgen_scen",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "climgen_perio",
@@ -49,8 +50,8 @@ ui_climatgeneral <- tabPanel(
           conditionalPanel(
             condition = "input.climgen_tip == 'absol'",
             sliderInput(
-              "slider_climgen_absol_gen", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_climgen_absol_gen", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -80,7 +81,7 @@ ui_climatgeneral <- tabPanel(
             condition = "input.radio_climgen_gen == 2 && output.condpan_climgen_gen != 'nas'",
             
             tabsetPanel(
-              fluidRow (
+              header = fluidRow (
                 h6(textOutput("condpan_climgen_gen"), style = "text-align:center;")
               ),
               tabPanel(
@@ -114,6 +115,16 @@ ui_climatgeneral <- tabPanel(
       title = h6("Administrativ"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "climgen_scen_det",
+            label = "Observații/Scenariu",
+            choices = list(
+              `Observații` = "obs",
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = "obs"
+          ),
           width = 2,
           selectInput(
             inputId = "climgen_admin_det",
@@ -136,16 +147,7 @@ ui_climatgeneral <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "climgen_scen_det",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "climgen_perio_det",
@@ -163,8 +165,8 @@ ui_climatgeneral <- tabPanel(
           conditionalPanel(
             condition = "input.climgen_tip_det== 'absol'",
             sliderInput(
-              "slider_climgen_absol_det", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_climgen_absol_det", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -182,7 +184,7 @@ ui_climatgeneral <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow (
+            header = fluidRow (
               h6(textOutput("condpan_climgen_det"), style = "text-align:center;"),
               htmlOutput("climgen_det_stat")
             ),

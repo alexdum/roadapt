@@ -38,7 +38,7 @@ industrie_rdet <- eventReactive(list(input$go_industriedet, isolate(input$tab_in
   )
   
   
-  tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
 
   an1_abat <- input$slider_industrie_abate_det[1]
   an2_abat <- input$slider_industrie_abate_det[2]
@@ -55,7 +55,7 @@ industrie_rdet <- eventReactive(list(input$go_industriedet, isolate(input$tab_in
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_industrie_det.R
-  map_leg <- map_func_cols(indic, industrie_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, industrie_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

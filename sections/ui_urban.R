@@ -8,6 +8,15 @@ ui_urban <- tabPanel(
       title = h6("Național"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "urban_scen",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "urban_ind",
@@ -22,16 +31,7 @@ ui_urban <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "urban_scen",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "urban_perio",
@@ -49,8 +49,8 @@ ui_urban <- tabPanel(
           conditionalPanel(
             condition = "input.urban_tip == 'absol'",
             sliderInput(
-              "slider_urban_absol_gen", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_urban_absol_gen", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -81,7 +81,7 @@ ui_urban <- tabPanel(
             condition = "input.radio_urban_gen == 2 && output.condpan_urban_gen != 'nas'",
             
             tabsetPanel(
-              fluidRow (
+              header = fluidRow (
                 h6(textOutput("condpan_urban_gen"), style = "text-align:center;")
               ),
               tabPanel(
@@ -115,6 +115,15 @@ ui_urban <- tabPanel(
       title = h6("Administrativ"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "urban_scen_det",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "urban_admin_det",
@@ -137,16 +146,7 @@ ui_urban <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "urban_scen_det",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "urban_perio_det",
@@ -164,8 +164,8 @@ ui_urban <- tabPanel(
           conditionalPanel(
             condition = "input.urban_tip_det== 'absol'",
             sliderInput(
-              "slider_urban_absol_det", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_urban_absol_det", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -184,7 +184,7 @@ ui_urban <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow(
+            header = fluidRow(
               h6(textOutput("condpan_urban_det"), style = "text-align:center;"),
               htmlOutput("urban_det_stat")
             ),

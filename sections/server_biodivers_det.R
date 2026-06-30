@@ -39,7 +39,7 @@ biodivers_rdet <- eventReactive(list(input$go_biodiversdet, isolate(input$tab_bi
   )
   
   
-  tab <-  read_parquet(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
+  tab <-  open_dataset(paste0("www/data/parquet/",indic_path,"/",admin,"/", indic ,"_",scena,"_", perio_tip ,"-50_19710101_21001231.parquet"))
   
   an1_abat <- input$slider_biodivers_abate_det[1]
   an2_abat <- input$slider_biodivers_abate_det[2]
@@ -56,7 +56,7 @@ biodivers_rdet <- eventReactive(list(input$go_biodiversdet, isolate(input$tab_bi
   admin_spat_sub <- admin_spat |> left_join(tab_sub, by = c( "natcode" = "ID"))
   
   # legenda si intervale functie utils/cols_leg_biodivers_det.R
-  map_leg <- map_func_cols(indic, biodivers_tip, domain = range(admin_spat_sub$value), perio_tip)
+  map_leg <- map_func_cols(indic, biodivers_tip, domain = range(admin_spat_sub$value, na.rm = TRUE), perio_tip)
   
   
   # text harta

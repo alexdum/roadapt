@@ -8,6 +8,15 @@ ui_cultura <- tabPanel(
       title = h6("Național"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "cultura_scen",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "cultura_ind",
@@ -22,16 +31,7 @@ ui_cultura <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "cultura_scen",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "cultura_perio",
@@ -49,8 +49,8 @@ ui_cultura <- tabPanel(
           conditionalPanel(
             condition = "input.cultura_tip == 'absol'",
             sliderInput(
-              "slider_cultura_absol_gen", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_cultura_absol_gen", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -81,7 +81,7 @@ ui_cultura <- tabPanel(
             condition = "input.radio_cultura_gen == 2 && output.condpan_cultura_gen != 'nas'",
             
             tabsetPanel(
-              fluidRow (
+              header = fluidRow (
                 h6(textOutput("condpan_cultura_gen"), style = "text-align:center;")
               ),
               tabPanel(
@@ -115,6 +115,15 @@ ui_cultura <- tabPanel(
       title = h6("Administrativ"),
       fluidRow(
         column(
+          selectInput(
+            inputId = "cultura_scen_det",
+            label = "Observații/Scenariu",
+            choices = list(
+              `RCP4.5` = "rcp45",
+              `RCP8.5` = "rcp85"
+            ), 
+            selected = " rcp45"
+          ),
           width = 2,
           selectInput(
             inputId = "cultura_admin_det",
@@ -137,16 +146,7 @@ ui_cultura <- tabPanel(
               `Valori absolute` = "absol",
               `Schimbare` = "abate"
             ),
-            selected = "abate"
-          ),
-          selectInput(
-            inputId = "cultura_scen_det",
-            label = "Scenariu",
-            choices = list(
-              `RCP4.5` = "rcp45",
-              `RCP8.5` = "rcp85"
-            ), 
-            selected = " rcp45"
+            selected = "absol"
           ),
           selectInput(
             inputId = "cultura_perio_det",
@@ -164,8 +164,8 @@ ui_cultura <- tabPanel(
           conditionalPanel(
             condition = "input.cultura_tip_det== 'absol'",
             sliderInput(
-              "slider_cultura_absol_det", label = "Interval calcul", min = 1971, 
-              max = 2100, value = c(1971, 2000), dragRange = T, ticks = F,
+              "slider_cultura_absol_det", label = "Interval calcul", min = 1901, 
+              max = 2025, value = c(1971, 2000), dragRange = T, ticks = F,
               sep = "", step = 1)
           ),
           sliderInput(
@@ -184,7 +184,7 @@ ui_cultura <- tabPanel(
           ),
           br(),
           tabsetPanel(
-            fluidRow (
+            header = fluidRow (
               h6(textOutput("condpan_cultura_det"), style = "text-align:center;"),
               htmlOutput("cultura_det_stat")
             ),

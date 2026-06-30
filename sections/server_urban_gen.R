@@ -36,24 +36,27 @@ urban_rea <- eventReactive(list(input$go_urbangen, isolate(input$tab_urban_gen))
   
   # citeste fisierul
   nc_fil <- paste0("www/data/ncs/",indic_path,"/",indic,"_",scena,"_",perio_tip,"-50_19710101_21001231.nc")
-
+  print("urban_rea: calcul_gen start")
   # calcal abateri sau media multianuala cu functie calcul_urban_gen din utils
   ncf <- calcul_gen(nc_fil, urban_tip, perio_sub, indic, an1_abat, an2_abat, an1_abs, an2_abs)
-  
+  print("urban_rea: calcul_gen done, starting project")
   # mask raster
   ncfm <- project(ncf,  "EPSG:3857", res = 5000, method = "near")
+  print("urban_rea: project done, starting mask")
   ncfm <- terra::mask(ncfm, mask, touches = F)
-  
+  print("urban_rea: mask done, map_func_min_max start")
   # pentru legenda titlu §i intervale §i culori
   min_max <- map_func_min_max(indic, urban_tip, perio_tip)
   if (!is.na(min_max[1])) { # verifica daca ai valori disponibile, cel putin una
     ncfm[ncfm > min_max[2]] <- min_max[2]
     ncfm[ncfm < min_max[1]] <- min_max[1]
   }
+  print("urban_rea: minmax filter done, terra::minmax start")
   # pentru legenda titlu §i intervale §i culori
   domain <- terra::minmax(ncfm)
+  print("urban_rea: terra::minmax done, map_func_cols start")
   map_leg <- map_func_cols(indic, urban_tip, domain = domain, perio_tip)
-  
+  print("urban_rea: map_func_cols done")
   
   # text harta
   name_ind <- names(select_urban_ind)[which(select_urban_ind %in% indic)] #nume indicator clar
