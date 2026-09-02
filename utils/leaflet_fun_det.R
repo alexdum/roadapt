@@ -33,13 +33,8 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
         onClick = JS("function(btn, map){ map.setView([46, 25], 6); }"))) |>
     addMapPane(name = "maplabels", zIndex = 420) |>
-    addProviderTiles( "CartoDB.PositronNoLabels") |>
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Etichete") |>
     addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
+      baseGroups = "OpenFreeMap",
       overlayGroups = c("Etichete")) |>
     addScaleBar(
       position = c("bottomleft"),
@@ -49,7 +44,8 @@ leaflet_fun_det <- function(data, pal, pal_rev, tit_leg) {
       title = tit_leg,
       "bottomright", pal = pal_rev, values = ~value, opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    ) 
+    ) |>
+    addOpenFreeMap(baseGroup = "OpenFreeMap", labelGroup = "Etichete") 
   
   return(map)
   

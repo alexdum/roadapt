@@ -23,7 +23,10 @@ ui <- shinyUI(
       tags$style(
         type = 'text/css','.navbar-brand{display:none;}',
         "body { padding-top: 120px;}"
-      )
+      ),
+      tags$link(rel = "stylesheet", href = "css/maplibre-gl.css"),
+      tags$script(src = "js/maplibre-gl.js"),
+      tags$script(src = "js/leaflet-maplibre-gl.js")
     ),
     useShinyjs(),
     navbarPage(

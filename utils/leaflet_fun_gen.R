@@ -12,7 +12,6 @@ leaflet_fun_gen <- function(data, raster, domain, cols, cols_rev, tit_leg) {
     setMaxBounds(20, 43.5, 30, 48.2) |>
     addMapPane(name = "granita", zIndex = 410) %>%
     addMapPane(name = "maplabels", zIndex = 420) %>%
-    addProviderTiles( "CartoDB.PositronNoLabels")   %>% 
     addEasyButton(
       easyButton (
         icon    = "glyphicon glyphicon-home", title = "Reset zoom",
@@ -28,13 +27,8 @@ leaflet_fun_gen <- function(data, raster, domain, cols, cols_rev, tit_leg) {
       colors = cols, opacity = .8
     ) %>%
     addLayersControl(
-      baseGroups = "CartoDB.PositronNoLabels",
+      baseGroups = "OpenFreeMap",
       overlayGroups = c("Labels", "Granița"))  %>% 
-    addProviderTiles(
-      "CartoDB.PositronOnlyLabels",
-      options = pathOptions(pane = "maplabels"),
-      group = "Labels"
-    ) %>%
     addScaleBar(
       position = c("bottomleft"),
       options = scaleBarOptions(metric = TRUE)) |>
@@ -45,6 +39,7 @@ leaflet_fun_gen <- function(data, raster, domain, cols, cols_rev, tit_leg) {
       pal = cols_rev, values = domain,
       opacity = 1,
       labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE))
-    )
+    ) |>
+    addOpenFreeMap(baseGroup = "OpenFreeMap", labelGroup = "Labels")
   return(map)
 }
