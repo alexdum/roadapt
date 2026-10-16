@@ -10,6 +10,17 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     months_list <- as.integer(perio_sub) 
   }
   
+  to_matrix <- function(arr, tmpl) {
+    if (is.matrix(arr)) return(arr)
+    if (inherits(arr, "python.builtin.object")) {
+      arr <- reticulate::py_to_r(arr)
+    }
+    if (!is.matrix(arr) && length(arr) == (nrow(tmpl) * ncol(tmpl))) {
+      arr <- matrix(arr, nrow = nrow(tmpl), ncol = ncol(tmpl), byrow = TRUE)
+    }
+    arr
+  }
+  
   # selectare slider in functie de tipul hartii
   if (climgen_tip == "abate") {
     
@@ -19,8 +30,8 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     date1_norm <- "1971-01-01"
     date2_norm <- "2000-12-31"
     
-    arr_abs <- calc_mean_xarray(nc_fil, indic, date1_sub, date2_sub, months_list)
-    arr_norm <- calc_mean_xarray(nc_fil, indic, date1_norm, date2_norm, months_list)
+    arr_abs <- to_matrix(calc_mean_xarray(nc_fil, indic, date1_sub, date2_sub, months_list), template)
+    arr_norm <- to_matrix(calc_mean_xarray(nc_fil, indic, date1_norm, date2_norm, months_list), template)
     
     nc.abs <- template
     values(nc.abs) <- as.vector(t(arr_abs))
@@ -40,7 +51,7 @@ calcul_gen <- function(nc_fil, climgen_tip, perio_sub, indic, an1_abat, an2_abat
     date1_abs <- paste0(an1_abs, "-01-01")
     date2_abs <- paste0(an2_abs, "-12-31")
     
-    arr_abs <- calc_mean_xarray(nc_fil, indic, date1_abs, date2_abs, months_list)
+    arr_abs <- to_matrix(calc_mean_xarray(nc_fil, indic, date1_abs, date2_abs, months_list), template)
     
     ncf <- template
     values(ncf) <- as.vector(t(arr_abs))

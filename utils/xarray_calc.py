@@ -28,7 +28,6 @@ def calc_mean_xarray(nc_fil, var_name, start_date_str, end_date_str, months=None
         if "season" in nc_fil.lower():
             months = [12 if m == 1 else 3 if m == 4 else 6 if m == 7 else 9 if m == 10 else m for m in months]
 
-    print("Received months:", months, "Type:", type(months))
     if months is not None and len(months) > 0:
         da_sub = da_sub.sel({time_dim: da_sub[time_dim].dt.month.isin(months)})
         

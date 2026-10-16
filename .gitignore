@@ -11,3 +11,7 @@ misc/*
 misc
 app_cache/
 .DS_Store
+.agents/
+._*
+__pycache__/
+GEMINI.md

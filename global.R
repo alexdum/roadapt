@@ -10,6 +10,9 @@ library(dplyr)
 library(arrow)
 library(shinycssloaders)
 library(reticulate)
+if (file.exists(".venv/bin/python")) {
+  use_virtualenv(file.path(getwd(), ".venv"), required = FALSE)
+}
 library(ggplot2)
 library(plotly)
 library(DT)

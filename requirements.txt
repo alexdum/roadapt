@@ -1,0 +1,9 @@
+# Python dependencies for roadapt
+# NOTE: numpy MUST be <2.0 because reticulate 1.36.x C-API array conversion requires NumPy 1.x ABI
+numpy>=1.26.0,<2.0.0
+xarray>=2025.6.0
+netCDF4>=1.7.0
+pandas>=2.2.0
+scipy>=1.14.0
+dask>=2024.0.0
+cftime>=1.6.0
