@@ -1,5 +1,8 @@
+import warnings
 import xarray as xr
 import numpy as np
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 def calc_mean_xarray(nc_fil, var_name, start_date_str, end_date_str, months=None):
     ds = xr.open_dataset(nc_fil)

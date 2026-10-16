@@ -7,9 +7,10 @@
 
 extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   
-  varia <- strsplit(nc_fil, "/|_")[[1]][5] # extrage nume variabila
+  varia <- strsplit(basename(nc_fil), "_")[[1]][1] # extrage nume variabila curat
   
   dd_50 <- extract_point(fname = nc_fil, lon = xy[1], lat = xy[2], variable = varia) 
+  if (!"value" %in% names(dd_50)) names(dd_50)[names(dd_50) != "time"] <- "value"
   
   # For obs, only the -50 file exists (no ensemble min/max)
   is_obs <- grepl("_obs_", nc_fil)
@@ -23,8 +24,10 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
         data = as.Date(data)
       )
   } else {
-    dd_max <-extract_point(fname = gsub("-50", "-max", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
-    dd_min <-extract_point(fname = gsub("-50", "-min", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
+    dd_max <- extract_point(fname = gsub("-50", "-max", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
+    dd_min <- extract_point(fname = gsub("-50", "-min", nc_fil), lon = xy[1], lat = xy[2], variable = varia)
+    if (!"value" %in% names(dd_max)) names(dd_max)[names(dd_max) != "time"] <- "value"
+    if (!"value" %in% names(dd_min)) names(dd_min)[names(dd_min) != "time"] <- "value"
     
     dd <- dd_50 |> left_join(dd_max, by = c("time")) |> left_join(dd_min, by = c("time")) |>
       dplyr::rename('med' = 'value.x', 'max' = 'value.y', 'min' = 'value', 'data' = 'time')  |>
@@ -41,9 +44,9 @@ extract_timeser_gen <- function(nc_fil,xy, perio_sub) {
   
   dd <- dd |> mutate(
     an = format(data, "%Y"),
-    change_med = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((med*100)/mean(med[an <= 2000])) - 100)  %>% round(1) } else { (med - mean(med[an <= 2000]))  %>% round(1) },
-    change_max = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((max*100)/mean(med[an <= 2000])) - 100)  %>% round(1) } else { (max - mean(med[an <= 2000]))  %>% round(1) },
-    change_min = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((min*100)/mean(med[an <= 2000])) - 100)  %>% round(1) } else { (min - mean(med[an <= 2000]))  %>% round(1) },
+    change_med = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((med*100)/mean(med[an <= 2000])) - 100)  |> round(1) } else { (med - mean(med[an <= 2000]))  |> round(1) },
+    change_max = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((max*100)/mean(med[an <= 2000])) - 100)  |> round(1) } else { (max - mean(med[an <= 2000]))  |> round(1) },
+    change_min = if (varia %in% c("prAdjust", "hurs", "rx1day")) { (((min*100)/mean(med[an <= 2000])) - 100)  |> round(1) } else { (min - mean(med[an <= 2000]))  |> round(1) },
     med_1971_2000 = mean(med[an <= 2000]) |> round(1)
   )
   
